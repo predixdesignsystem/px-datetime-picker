@@ -9,14 +9,14 @@
  */
 
 //
-// Sass for the "sketch" notion of the px-date-picker component
+// Sass for the "sketch" notion of the px-datetime-picker component
 //
 // @author
 //
 
 /*
 THIS FILE SHOULD CONTAIN ONLY ABSTRACT/'SKETCH' THEME RULES, NOT SPECIFIC TO PREDIX BRANDING
-Predix branding rules go in px-date-picker-predix.scss, not in this file.
+Predix branding rules go in px-datetime-picker-predix.scss, not in this file.
 */
 
 
@@ -37,7 +37,7 @@ $inuit-enable-box--tiny : true;
 
 .container__box {
   position: absolute;
-  top: $inuit-base-spacing-unit--tiny;
+  top: $inuit-base-spacing-unit--small;
   display: inline-flex;
   background-color: $white;
   border: 1px solid;

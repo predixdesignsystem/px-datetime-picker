@@ -184,12 +184,12 @@ function testCase(options) {
 function runBaseTests() {
   px_date_picker_1 = document.getElementById('px_date_picker_1');
 
-  suite('Base Automation Tests for px-date-picker', function() {
+  suite('Base Automation Tests for px-datetime-picker', function() {
 
     test('Polymer exists', function() {
       assert.isTrue(Polymer !== null);
     });
-    test('px-date-picker fixture is created', function() {
+    test('px-datetime-picker fixture is created', function() {
       assert.isTrue(document.getElementById('px_date_picker_1') !== null);
     });
 

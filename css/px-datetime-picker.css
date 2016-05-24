@@ -10,7 +10,7 @@
  */
 /*
 THIS FILE SHOULD CONTAIN ONLY RULES SPECIFIC TO PREDIX BRANDING
-common/abstract rules go in px-date-picker-sketch.scss, not in this file.
+common/abstract rules go in px-datetime-picker-sketch.scss, not in this file.
 */
 /*------------------------------------*    #PX-COLORS-DESIGN
 \*------------------------------------*/
@@ -64,7 +64,7 @@ common/abstract rules go in px-date-picker-sketch.scss, not in this file.
  */
 /*
 THIS FILE SHOULD CONTAIN ONLY ABSTRACT/'SKETCH' THEME RULES, NOT SPECIFIC TO PREDIX BRANDING
-Predix branding rules go in px-date-picker-predix.scss, not in this file.
+Predix branding rules go in px-datetime-picker-predix.scss, not in this file.
 */
 /*! normalize.css v3.0.2 | MIT License | git.io/normalize */
 /**
@@ -570,7 +570,7 @@ a {
 
 .container__box {
   position: absolute;
-  top: 0.3333333333rem;
+  top: 0.6666666667rem;
   display: -ms-inline-flexbox;
   display: inline-flex;
   background-color: white;

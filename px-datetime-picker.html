@@ -15,15 +15,15 @@ Element allowing to pick a date using a calendar or by typing it
 
 ##### Usage
 
-    <px-date-picker></px-date-picker>
+    <px-datetime-picker></px-datetime-picker>
 
-@element px-date-picker
+@element px-datetime-picker
 @blurb Element allowing to pick a date using a calendar or by typing it
 @homepage index.html
 @demo demo.html
 -->
-<dom-module id="px-date-picker">
-  <link rel="import" type="css" href="css/px-date-picker.css"/>
+<dom-module id="px-datetime-picker">
+  <link rel="import" type="css" href="css/px-datetime-picker.css"/>
   <template>
 
     <div id="overlay" class="overlay visuallyhidden" on-tap="_close"></div>
@@ -34,10 +34,13 @@ Element allowing to pick a date using a calendar or by typing it
         id="field"
         time-zone="{{timeZone}}"
         moment-obj="{{momentObj}}"
-        show-time-zone="{{showTimeZone}}">
+        show-time={{showTime}}
+        show-time-zone="{{showTimeZone}}"
+        date-format="{{dateFormat}}"
+        time-format="{{timeFormat}}">
       </px-datetime-field>
-      <div id="box" class="visuallyhidden container" style="position:relative">
-        <div class="container__box flex--col">
+      <div id="box" class="visuallyhidden container">
+        <div class="container__box flex--col u-p-">
           <px-calendar-picker
             id="calendar"
             block-future-dates="{{blockFutureDates}}"
@@ -47,6 +50,14 @@ Element allowing to pick a date using a calendar or by typing it
             time-zone="{{timeZone}}">
           </px-calendar-picker>
           <div class="flex__item--middle today" on-tap="_todayClicked">Today</div>
+          <template is="dom-if" if="{{showTime}}">
+            <px-datetime-entry
+              date-or-time="Time"
+              moment-obj="{{momentObj}}"
+              hide-icon
+              moment-format="{{timeFormat}}">
+            </px-datetime-entry>
+          </template>
         </div>
       </div>
     </div>
@@ -57,7 +68,7 @@ Element allowing to pick a date using a calendar or by typing it
 <script>
   Polymer({
 
-    is: 'px-date-picker',
+    is: 'px-datetime-picker',
     behaviors:[pxDatetimeBehavior],
 
     /**
@@ -88,10 +99,33 @@ Element allowing to pick a date using a calendar or by typing it
         type: String,
         value: ''
       },
-
+      /**
+       * Whether this date picker should allow to pick time as well.
+       *
+       */
+      showTime: {
+        type: Boolean,
+        value: false
+      },
+      /**
+       * Moment format used for the date
+       *
+       */
+      dateFormat: {
+          type: String,
+          value: 'MM/DD/YYYY'
+      },
+      /**
+       * Moment format used for the time
+       *
+       */
+       timeFormat: {
+          type: String,
+          value: 'HH:mm A'
+      }
     },
     listeners: {
-      'px-datetime-entry-icon-clicked':'_toggleBoxOpen'},
+      'px-datetime-entry-icon-clicked':'_iconClicked'},
 
     attached: function() {
       //capture all clicks so that we can close the calendar if the user
@@ -107,10 +141,9 @@ Element allowing to pick a date using a calendar or by typing it
      * 'Today' button/text has been clicked
      */
     _todayClicked: function(evt) {
-      //close calendar
-      this.set('momentObj', moment());
-      this._close();
 
+      this.set('momentObj', this._preserveTime(this.momentObj, moment()));
+      this._close();
     },
     /**
      * Opens the calendar
@@ -140,6 +173,15 @@ Element allowing to pick a date using a calendar or by typing it
         this._close();
       } else {
         this._open();
+      }
+    },
+    /**
+     * Called when an icon in field is clicked
+     *
+     */
+    _iconClicked: function(evt) {
+      if(evt.detail.dateOrTime === "Date" || evt.detail.dateOrTime === "date") {
+        this._toggleBoxOpen();
       }
     },
     /**

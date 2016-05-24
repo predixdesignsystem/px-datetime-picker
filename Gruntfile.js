@@ -23,8 +23,8 @@ module.exports = function(grunt) {
       },
       dist: {
         files: {
-          'css/noprefix/px-date-picker-sketch.css': 'sass/px-date-picker-sketch.scss',
-          'css/noprefix/px-date-picker.css': 'sass/px-date-picker-predix.scss'
+          'css/noprefix/px-datetime-picker-sketch.css': 'sass/px-datetime-picker-sketch.scss',
+          'css/noprefix/px-datetime-picker.css': 'sass/px-datetime-picker-predix.scss'
         }
       }
     },

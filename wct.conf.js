@@ -28,6 +28,6 @@ module.exports = {
     }
   },
   suites: [
-    'test/px-date-picker-test-fixture.html'
+    'test/px-datetime-picker-test-fixture.html'
   ]
 };

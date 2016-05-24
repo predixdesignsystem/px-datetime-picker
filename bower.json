@@ -1,8 +1,8 @@
 {
-  "name": "px-date-picker",
+  "name": "px-datetime-picker",
   "version": "0.0.1",
   "main": [
-    "px-date-picker.html"
+    "px-datetime-picker.html"
   ],
   "ignore": [
     ".*",

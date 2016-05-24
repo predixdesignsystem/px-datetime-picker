@@ -1,8 +1,8 @@
-#Px-Date-Picker
+#Px-Datetime-Picker
 
 ## Overview
 
-Px-Date-Picker is a Predix UI component
+px-datetime-picker is a Predix UI component
 
 ## Usage
 
@@ -19,13 +19,13 @@ Node, npm and bower are necessary to install the component and dependencies. web
 First, install the component via bower on the command line.
 
 ```
-bower install Px-Date-Picker --save
+bower install px-datetime-picker --save
 ```
 
 Second, import the component to your application with the following tag in your head.
 
 ```
-<link rel="import" href="/bower_components/Px-Date-Picker/px-date-picker.html"/>
+<link rel="import" href="/bower_components/px-datetime-picker/px-datetime-picker.html"/>
 ```
 
 Finally, use the component in your application:
@@ -39,7 +39,7 @@ Insert Your demo code here.
 
 ## documentation
 
-Read the full API and view the demo [here](https://predixdev.github.io/Px-Date-Picker).
+Read the full API and view the demo [here](https://predixdev.github.io/px-datetime-picker).
 
 The documentation in this repository is supplemental to the official Predix documentation, which is continuously updated and maintained by the Predix documentation team. Go to [http://predix.io](http://predix.io)  to see the official Predix documentation.
 
@@ -79,4 +79,4 @@ $ grunt devmode
 
 ## Known Issues
 
-Please use [Github Issues](https://github.com/PredixDev/Px-Date-Picker/issues) to submit any bugs you might find.
+Please use [Github Issues](https://github.com/PredixDev/px-datetime-picker/issues) to submit any bugs you might find.

@@ -6,11 +6,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>
-      px-date-picker Demo</title>
+      px-datetime-picker Demo</title>
     <!-- Requires Webcomponents.js polyfill is provided by the page for browsers that don't support html imports -->
     <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
     <!-- Import custom element. Note: see comment about relative paths to dependencies in the *.html file referenced below -->
-    <link rel="import" href="px-date-picker.html" />
+    <link rel="import" href="px-datetime-picker.html" />
     <link rel="import" href="../px-theme/px-theme.html" />
   </head>
 
@@ -20,19 +20,23 @@
 
     <div>
       <h4>Abbreviated timezone</h4>
-      <px-date-picker id="picker" show-time-zone="abbreviatedText"></px-date-picker>
+      <px-datetime-picker id="picker" show-time-zone="abbreviatedText" show-time></px-datetime-picker>
     </div>
     <div>
       <h4>Full timezone name</h4>
-      <px-date-picker id="picker" show-time-zone="text"></px-date-picker>
+      <px-datetime-picker id="picker" show-time-zone="text"></px-datetime-picker>
     </div>
     <div>
       <h4>Dropdown timezone</h4>
-      <px-date-picker id="picker" show-time-zone="extendedDropdown"></px-date-picker>
+      <px-datetime-picker id="picker" show-time-zone="extendedDropdown" show-time></px-datetime-picker>
     </div>
     <div>
       <h4>Extended dropdown timezone</h4>
-      <px-date-picker id="picker" time-zone="UTC" show-time-zone="dropdown"></px-date-picker>
+      <px-datetime-picker id="picker" time-zone="UTC" show-time-zone="dropdown"></px-datetime-picker>
+    </div>
+    <div>
+      <h4>date and time format</h4>
+      <px-datetime-picker id="picker" show-time date-format="DD/MM/YYYY" time-format="mm:hh:ss.sss"></px-datetime-picker>
     </div>
   </body>
 </html>
