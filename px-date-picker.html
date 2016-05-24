@@ -1,0 +1,174 @@
+<!--
+    Relative paths assume component is being run from inside an app or another component, where dependencies are flat
+    siblings. When this component is run from its own repo (e.g. ui tests, examples), we assume the server is started with
+    'grunt depserve' (or similar server setup) to enable correct finding of bower dependencies for local runs.
+-->
+<link rel="import" href="../polymer/polymer.html"/>
+<link rel="import" href="../px-datetime-field/px-datetime-field.html"/>
+<link rel="import" href="../px-calendar-picker/px-calendar-picker.html"/>
+<link rel="import" href="../px-datetime-common/px-datetime-imports.html"/>
+<link rel="import" href="../px-datetime-common/px-datetime-behavior.html"/>
+
+
+<!--
+Element allowing to pick a date using a calendar or by typing it
+
+##### Usage
+
+    <px-date-picker></px-date-picker>
+
+@element px-date-picker
+@blurb Element allowing to pick a date using a calendar or by typing it
+@homepage index.html
+@demo demo.html
+-->
+<dom-module id="px-date-picker">
+  <link rel="import" type="css" href="css/px-date-picker.css"/>
+  <template>
+
+    <div id="overlay" class="overlay visuallyhidden" on-tap="_close"></div>
+
+    <div class="inline--flex flex--col">
+      <px-datetime-field
+        class="field"
+        id="field"
+        time-zone="{{timeZone}}"
+        moment-obj="{{momentObj}}"
+        show-time-zone="{{showTimeZone}}">
+      </px-datetime-field>
+      <div id="box" class="visuallyhidden container" style="position:relative">
+        <div class="container__box flex--col">
+          <px-calendar-picker
+            id="calendar"
+            allow-future-dates="{{allowFutureDates}}"
+            prevent-range-selection
+            from-moment="{{momentObj}}"
+            base-date="[[momentObj]]"
+            time-zone="{{timeZone}}">
+          </px-calendar-picker>
+          <div class="flex__item--middle today" on-tap="_todayClicked">Today</div>
+        </div>
+      </div>
+    </div>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'px-date-picker',
+    behaviors:[pxDatetimeBehavior],
+
+    /**
+     * Properties block, expose attribute values to the DOM via 'notify'
+     *
+     * @property properties
+     * @type Object
+     */
+    properties: {
+      /**
+       * Whether the Calendar box is opened
+       */
+      _opened: {
+        type: Boolean,
+        value: false
+      },
+      /**
+       *
+       * Can be set to show the timezone in the field. Can have 2 values:
+       *  'dropdown': shows the time zone as a dropdown which the user can use to
+       * select a different time zone. Only contains a subset of all timezones
+       *  'extendedDropdown': shows the time zone as a dropdown which the user can use to
+       * select a different time zone. Contains all existing timezones (588)
+       *  'text': shows the time zone as text, non editable
+       *  'abbreviatedText': shows the time zone as an abbreviated text, non editable (such as PST, EST...)
+       */
+      showTimeZone: {
+        type: String,
+        value: ''
+      },
+
+    },
+    listeners: {
+      'px-datetime-entry-icon-clicked':'_toggleBoxOpen'},
+
+    attached: function() {
+      //capture all clicks so that we can close the calendar if the user
+      //clicks anywhere outside the calendar
+      // Enable document-wide tap recognizer.
+      Polymer.Gestures.add(document, 'tap', null);
+      document.addEventListener('tap', this._onCaptureClick.bind(this), true);
+    },
+    detached: function() {
+      document.removeEventListener('tap', this._onCaptureClick.bind(this));
+    },
+    /*
+     * 'Today' button/text has been clicked
+     */
+    _todayClicked: function(evt) {
+      //close calendar
+      this.set('momentObj', moment());
+      this._close();
+
+    },
+    /**
+     * Opens the calendar
+     */
+    _open: function() {
+      this.toggleClass('visuallyhidden', false, this.$.box);
+      this.toggleClass('visuallyhidden', false, this.$.overlay);
+      this.toggleClass('aboveOverlay', true, this.$.field);
+
+      this.set('_opened', true);
+    },
+    /**
+     * Closes the calendar
+     */
+    _close: function() {
+      this.toggleClass('visuallyhidden', true, this.$.box);
+      this.toggleClass('visuallyhidden', true, this.$.overlay);
+      this.toggleClass('aboveOverlay', false, this.$.field);
+
+      this.set('_opened', false);
+    },
+    /**
+     * Opens the calendar if closed, closes it if opened
+     */
+    _toggleBoxOpen: function() {
+      if(this._opened) {
+        this._close();
+      } else {
+        this._open();
+      }
+    },
+    /**
+     * called whenever a click happens
+     */
+    _onCaptureClick: function(evt) {
+
+      //We're only interested in clicks:
+      // - not on ourselves
+      // - we're currently open
+      if(this._opened &&
+         !this._selfInPath(Polymer.dom(evt).path)) {
+
+        this._close();
+      }
+    },
+    /**
+     * Returns whether the calendar is within the path
+     * @param {?Array<Element>} path
+     * @return {Element|undefined}
+     * @private
+     */
+    _selfInPath: function(path) {
+      path = path || [];
+      for (var i = 0; i < path.length; i++) {
+        if (path[i] === this) {
+          return this;
+        }
+      }
+    },
+  });
+</script>

@@ -1,0 +1,27 @@
+{
+  "name": "px-date-picker",
+  "version": "0.0.1",
+  "main": [
+    "px-date-picker.html"
+  ],
+  "ignore": [
+    ".*",
+    "npm-debug.log",
+    "Gruntfile.js",
+    "sass",
+    "bower_components",
+    "node_modules",
+    "test"
+  ],
+  "dependencies": {
+    "polymer": "~1.4.0",
+    "px-theme": "https://github.com/PredixDev/px-theme.git#~0.7.1",
+    "px-datetime-field": "~0.1.0",
+    "px-calendar-picker": "~0.1.0",
+    "px-datetime-common": "~0.2.0"
+  },
+  "devDependencies": {
+    "iron-component-page": "PolymerElements/iron-component-page#~v1.1.6",
+    "px-starter-kit-design": "https://github.com/PredixDev/px-starter-kit-design.git#~0.5.5"
+  }
+}

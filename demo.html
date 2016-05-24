@@ -1,0 +1,38 @@
+<!doctype html>
+
+<html>
+
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>
+      px-date-picker Demo</title>
+    <!-- Requires Webcomponents.js polyfill is provided by the page for browsers that don't support html imports -->
+    <script src="../webcomponentsjs/webcomponents-lite.min.js"></script>
+    <!-- Import custom element. Note: see comment about relative paths to dependencies in the *.html file referenced below -->
+    <link rel="import" href="px-date-picker.html" />
+    <link rel="import" href="../px-theme/px-theme.html" />
+  </head>
+
+  <body>
+
+    <h3>Demo</h3>
+
+    <div>
+      <h4>Abbreviated timezone</h4>
+      <px-date-picker id="picker" show-time-zone="abbreviatedText"></px-date-picker>
+    </div>
+    <div>
+      <h4>Full timezone name</h4>
+      <px-date-picker id="picker" show-time-zone="text"></px-date-picker>
+    </div>
+    <div>
+      <h4>Dropdown timezone</h4>
+      <px-date-picker id="picker" show-time-zone="extendedDropdown"></px-date-picker>
+    </div>
+    <div>
+      <h4>Extended dropdown timezone</h4>
+      <px-date-picker id="picker" time-zone="UTC" show-time-zone="dropdown"></px-date-picker>
+    </div>
+  </body>
+</html>
