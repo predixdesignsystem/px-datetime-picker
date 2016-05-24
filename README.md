@@ -25,7 +25,7 @@ bower install Px-Date-Picker --save
 Second, import the component to your application with the following tag in your head.
 
 ```
-<link rel="import" href="/bower_components/Px-Date-Picker/Px-Date-Picker.html"/>
+<link rel="import" href="/bower_components/Px-Date-Picker/px-date-picker.html"/>
 ```
 
 Finally, use the component in your application:
