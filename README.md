@@ -25,7 +25,7 @@ bower install Px-Date-Picker --save
 Second, import the component to your application with the following tag in your head.
 
 ```
-<link rel="import" href="/bower_components/Px-Date-Picker/px-date-picker.html"/>
+<link rel="import" href="/bower_components/Px-Date-Picker/Px-Date-Picker.html"/>
 ```
 
 Finally, use the component in your application:
@@ -39,7 +39,7 @@ Insert Your demo code here.
 
 ## documentation
 
-Read the full API and view the demo [here](https://predixdev.github.io/Px-Date-Picker).
+Read the full API and view the demo [here](https://predixdev.github.io/px-date-picker).
 
 The documentation in this repository is supplemental to the official Predix documentation, which is continuously updated and maintained by the Predix documentation team. Go to [http://predix.io](http://predix.io)  to see the official Predix documentation.
 
