@@ -25,7 +25,7 @@ bower install px-datetime-picker --save
 Second, import the component to your application with the following tag in your head.
 
 ```
-<link rel="import" href="/bower_components/px-datetime-picker/px-datetime-picker.html"/>
+<link rel="import" href="/bower_components/Px-Datetime-Picker/Px-Datetime-Picker.html"/>
 ```
 
 Finally, use the component in your application:
