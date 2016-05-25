@@ -70,9 +70,33 @@ function runCustomTests() {
 
       assert.isFalse(picker._opened);
     });
+
+
+    test('pressing esc cancels selection', function() {
+
+      var button = document.getElementById('aButton'),
+          prevMom = picker.momentObj.clone();
+
+      picker._open();
+
+      assert.equal(prevMom.toISOString(), picker.momentObj.toISOString());
+
+      //simulate some selection
+      picker.momentObj = picker.momentObj.clone().add(1, 'day');
+      assert.isFalse(prevMom.toISOString() === picker.momentObj.toISOString());
+
+      //press esc
+      var evt = new CustomEvent('keydown',{detail:{'key':'esc','keyIdentifier':'esc'}});
+      picker.dispatchEvent(evt);
+
+      //should be closed and date reset
+      assert.isFalse(picker._opened);
+      assert.equal(prevMom.toISOString(), picker.momentObj.toISOString());
+    });
+
   });
 
-  suite('Open/Close', function() {
+  suite('synchronized date/time zones', function() {
 
     var picker = document.getElementById('px_date_picker_1'),
         field = Polymer.dom(picker.root).querySelector('px-datetime-field'),
@@ -100,6 +124,5 @@ function runCustomTests() {
       assert.equal(picker.timeZone, field.timeZone);
       assert.equal(picker.timeZone, calendar.timeZone);
     });
-
   });
 };

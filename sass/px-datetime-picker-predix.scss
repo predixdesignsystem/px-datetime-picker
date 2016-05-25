@@ -38,6 +38,10 @@ common/abstract rules go in px-datetime-picker-sketch.scss, not in this file.
   }
 }
 
+.divider {
+  border-top: 1px solid $gray4;
+}
+
 .overlay {
   background-color: rgba($black, 0.1);
 }

@@ -8,6 +8,7 @@
 <link rel="import" href="../px-calendar-picker/px-calendar-picker.html"/>
 <link rel="import" href="../px-datetime-common/px-datetime-imports.html"/>
 <link rel="import" href="../px-datetime-common/px-datetime-behavior.html"/>
+<link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
 
 
 <!--
@@ -25,9 +26,7 @@ Element allowing to pick a date using a calendar or by typing it
 <dom-module id="px-datetime-picker">
   <link rel="import" type="css" href="css/px-datetime-picker.css"/>
   <template>
-
     <div id="overlay" class="overlay visuallyhidden" on-tap="_close"></div>
-
     <div class="inline--flex flex--col">
       <px-datetime-field
         class="field"
@@ -37,31 +36,36 @@ Element allowing to pick a date using a calendar or by typing it
         show-time={{showTime}}
         show-time-zone="{{showTimeZone}}"
         date-format="{{dateFormat}}"
-        time-format="{{timeFormat}}">
+        time-format="{{timeFormat}}"
+        is-selected=[[_opened]]>
       </px-datetime-field>
       <div id="box" class="visuallyhidden container">
-        <div class="container__box flex--col u-p-">
+        <div class="container__box flex--col">
           <px-calendar-picker
             id="calendar"
+            class="u-m+"
             block-future-dates="{{blockFutureDates}}"
             prevent-range-selection
             from-moment="{{momentObj}}"
             base-date="[[momentObj]]"
             time-zone="{{timeZone}}">
           </px-calendar-picker>
-          <div class="flex__item--middle today" on-tap="_todayClicked">Today</div>
+          <div class="flex__item--middle today u-mb-" on-tap="_todayClicked">Today</div>
           <template is="dom-if" if="{{showTime}}">
-            <px-datetime-entry
-              date-or-time="Time"
+            <div class="divider"></div>
+            <px-datetime-field
+              class="flex__item--middle u-m+ container__box__time"
               moment-obj="{{momentObj}}"
               hide-icon
-              moment-format="{{timeFormat}}">
-            </px-datetime-entry>
+              hide-date
+              show-time
+              time-format="{{timeFormat}}">
+            </px-datetime-field>
+            <div class="divider"></div>
           </template>
         </div>
       </div>
     </div>
-
   </template>
 </dom-module>
 
@@ -69,7 +73,10 @@ Element allowing to pick a date using a calendar or by typing it
   Polymer({
 
     is: 'px-datetime-picker',
-    behaviors:[pxDatetimeBehavior],
+    behaviors:[
+      pxDatetimeBehavior,
+      Polymer.IronA11yKeysBehavior
+    ],
 
     /**
      * Properties block, expose attribute values to the DOM via 'notify'
@@ -84,6 +91,16 @@ Element allowing to pick a date using a calendar or by typing it
       _opened: {
         type: Boolean,
         value: false
+      },
+      /**
+       *
+       * Moment object to fallback on if we want to cancel the selection (typically pressing esc)
+       */
+      _momentObjFallback: {
+        type: Object,
+        value: function() {
+          return {};
+        }
       },
       /**
        *
@@ -125,7 +142,14 @@ Element allowing to pick a date using a calendar or by typing it
       }
     },
     listeners: {
-      'px-datetime-entry-icon-clicked':'_iconClicked'},
+      'px-datetime-entry-icon-clicked':'_toggleBoxOpen'
+    },
+    /**
+     * Key bindings for iron-a11y-keys-behavior
+     */
+    keyBindings: {
+      'esc' : '_onEsc',
+    },
 
     attached: function() {
       //capture all clicks so that we can close the calendar if the user
@@ -143,7 +167,15 @@ Element allowing to pick a date using a calendar or by typing it
     _todayClicked: function(evt) {
 
       this.set('momentObj', this._preserveTime(this.momentObj, moment()));
-      this._close();
+      if(!this.showTime) {
+        this._close();
+      }
+    },
+    _onEsc: function(evt) {
+      if(this._opened) {
+        this.set('momentObj', this._momentObjFallback);
+        this._close();
+      }
     },
     /**
      * Opens the calendar
@@ -154,6 +186,7 @@ Element allowing to pick a date using a calendar or by typing it
       this.toggleClass('aboveOverlay', true, this.$.field);
 
       this.set('_opened', true);
+      this._momentObjFallback = this.momentObj;
     },
     /**
      * Closes the calendar
@@ -173,15 +206,6 @@ Element allowing to pick a date using a calendar or by typing it
         this._close();
       } else {
         this._open();
-      }
-    },
-    /**
-     * Called when an icon in field is clicked
-     *
-     */
-    _iconClicked: function(evt) {
-      if(evt.detail.dateOrTime === "Date" || evt.detail.dateOrTime === "date") {
-        this._toggleBoxOpen();
       }
     },
     /**

@@ -18,7 +18,8 @@
     "px-theme": "https://github.com/PredixDev/px-theme.git#~0.7.1",
     "px-datetime-field": "~0.1.0",
     "px-calendar-picker": "~0.1.0",
-    "px-datetime-common": "~0.2.0"
+    "px-datetime-common": "~0.2.0",
+    "iron-a11y-keys-behavior": "PolymerElements/iron-a11y-keys-behavior#~1.1.0"
   },
   "devDependencies": {
     "iron-component-page": "PolymerElements/iron-component-page#~v1.1.6",
