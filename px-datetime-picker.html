@@ -35,7 +35,7 @@ Element allowing to pick a date using a calendar or by typing it
         id="field"
         time-zone="{{timeZone}}"
         moment-obj="{{momentObj}}"
-        show-time={{showTime}}
+        hide-time={{hideTime}}
         show-time-zone="{{showTimeZone}}"
         date-format="{{dateFormat}}"
         time-format="{{timeFormat}}"
@@ -53,24 +53,10 @@ Element allowing to pick a date using a calendar or by typing it
             time-zone="{{timeZone}}">
           </px-calendar-picker>
           <div class="flex__item--middle today u-mb-" on-tap="_todayClicked">Today</div>
-          <template is="dom-if" if="{{showTime}}">
-            <div class="divider"></div>
-            <px-datetime-field
-              id="time"
-              class="flex__item--middle u-m+ container__box__time"
-              moment-obj="{{momentObj}}"
-              hide-icon
-              hide-date
-              show-time
-              time-is-valid="{{_timeIsValid}}"
-              time-format="{{timeFormat}}">
-            </px-datetime-field>
-            <div class="divider"></div>
-          </template>
           <template is="dom-if" if={{showButtons}}>
             <px-datetime-buttons
               class="flex__item--bottom u-m-"
-              is-submit-button-valid="{{_isTimeOk}}"
+              is-submit-button-valid
               submit-text="Apply">
             </px-datetime-buttons>
           </template>
@@ -132,7 +118,7 @@ Element allowing to pick a date using a calendar or by typing it
        * Whether this date picker should allow to pick time as well.
        *
        */
-      showTime: {
+      hideTime: {
         type: Boolean,
         value: false
       },
@@ -151,23 +137,10 @@ Element allowing to pick a date using a calendar or by typing it
        timeFormat: {
         type: String,
         value: 'HH:mm A'
-      },
-      _timeIsValid: {
-        type: Boolean,
-        value: true
-      },
-      /**
-       * true if:
-       *  -not showing time
-       *  -showing time and time is valid
-       */
-      _isTimeOk: {
-        type: Boolean,
-        computed: '_getIsTimeOk(showTime, _timeIsValid)'
       }
     },
     listeners: {
-      'px-datetime-entry-icon-clicked':'_toggleBoxOpen',
+      'px-datetime-entry-icon-clicked':'_iconClicked',
       'px-datetime-button-clicked': '_buttonClicked'
     },
     observers: [
@@ -185,7 +158,7 @@ Element allowing to pick a date using a calendar or by typing it
     _todayClicked: function(evt) {
 
       this.set('momentObj', this._preserveTime(this.momentObj, moment.tz(moment(), this.timeZone)));
-      if(!this.showTime && !this.showButtons) {
+      if(!this.showButtons) {
         this._close();
       }
     },
@@ -227,7 +200,7 @@ Element allowing to pick a date using a calendar or by typing it
     },
     _processClose: function() {
       //If we show time make sure it is valid on closing. If we show buttons don't validate
-      if(!this.showButtons && this._isTimeOk) {
+      if(!this.showButtons) {
         this._closeAndValidate();
       }else {
         this._closeAndCancel();
@@ -250,8 +223,8 @@ Element allowing to pick a date using a calendar or by typing it
         if(this.$.calendar.fromMoment.toISOString() === this.momentObj.toISOString()) {
           //changes comes from calendar (not from field). If it comes from field
           //do nothing as we're open (the calendar moment will be updated through binding)
-          //if we don't show time and buttons close on selection
-          if(!this.showTime && !this.showButtons) {
+          //if we don't show buttons close on selection
+          if(!this.showButtons) {
             this._closeAndValidate();
           }
         }
@@ -269,9 +242,10 @@ Element allowing to pick a date using a calendar or by typing it
         this._closeAndCancel();
       }
     },
-
-    _getIsTimeOk: function(showTime, _timeIsValid) {
-      return !showTime || _timeIsValid;
+    _iconClicked: function(evt) {
+      if(evt.detail.dateOrTime === "Date") {
+        this._toggleBoxOpen();
+      }
     }
   });
 </script>

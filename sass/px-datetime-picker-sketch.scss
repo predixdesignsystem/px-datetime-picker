@@ -33,11 +33,6 @@ Predix branding rules go in px-datetime-picker-predix.scss, not in this file.
 $inuit-enable-box--tiny : true;
 @import "px-box-design/_objects.box.scss";
 
-:host {
-
-}
-
-
 .container__box {
   position: absolute;
   top: $inuit-base-spacing-unit--small;
@@ -72,7 +67,7 @@ $inuit-enable-box--tiny : true;
 .container__box__time {
     border: solide 1px $gray4;
     font-size: 36;
-    --px-datetime-entry-font-size: x-large;
+    --px-datetime-entry-font-size: xx-large;
 }
 
 .divider {
