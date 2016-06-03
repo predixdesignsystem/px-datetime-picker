@@ -236,7 +236,7 @@ Element allowing to pick a date using a calendar or by typing it
     },
 
     _buttonClicked: function(evt) {
-      if(evt.detail.action === true && this._isTimeOk) {
+      if(evt.detail.action === true) {
         this._closeAndValidate();
       }else {
         this._closeAndCancel();
