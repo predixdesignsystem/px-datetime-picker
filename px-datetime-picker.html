@@ -92,16 +92,6 @@ Element allowing to pick a date using a calendar or by typing it
       },
       /**
        *
-       * Moment object to fallback on if we want to cancel the selection (typically pressing esc)
-       */
-      _momentObjFallback: {
-        type: Object,
-        value: function() {
-          return {};
-        }
-      },
-      /**
-       *
        * Can be set to show the timezone in the field. Can have 2 values:
        *  'dropdown': shows the time zone as a dropdown which the user can use to
        * select a different time zone. Only contains a subset of all timezones
@@ -151,6 +141,7 @@ Element allowing to pick a date using a calendar or by typing it
      */
     keyBindings: {
       'esc' : '_onEsc',
+      'enter': '_onEnter'
     },
     /*
      * 'Today' button/text has been clicked
@@ -163,9 +154,12 @@ Element allowing to pick a date using a calendar or by typing it
       }
     },
     _onEsc: function(evt) {
-      if(this._opened) {
-        this._closeAndCancel();
-      }
+      this._applyCurrentValues(false);
+      this._close();
+    },
+    _onEnter: function(evt) {
+      this._applyCurrentValues(this.$.field.isValid);
+      this._close();
     },
     /**
      * Opens the calendar
@@ -176,7 +170,6 @@ Element allowing to pick a date using a calendar or by typing it
       this.toggleClass('aboveOverlay', true, this.$.field);
 
       this.set('_opened', true);
-      this._momentObjFallback = this.momentObj;
     },
     /**
      * Closes the calendar
@@ -199,22 +192,9 @@ Element allowing to pick a date using a calendar or by typing it
       }
     },
     _processClose: function() {
-      //If we show time make sure it is valid on closing. If we show buttons don't validate
-      if(!this.showButtons) {
-        this._closeAndValidate();
-      }else {
-        this._closeAndCancel();
-      }
-    },
-    _closeAndValidate: function() {
+      //If we show buttons don't validate
+      this._applyCurrentValues(!this.showButtons);
       this._close();
-      if(this.$.field.isValid) {
-        this.set('dateTime', this.momentObj.toISOString());
-      }
-    },
-    _closeAndCancel: function() {
-      this._close();
-      this.set('momentObj', this._momentObjFallback);
     },
 
     _momentChanged: function(momentObj) {
@@ -225,22 +205,21 @@ Element allowing to pick a date using a calendar or by typing it
           //do nothing as we're open (the calendar moment will be updated through binding)
           //if we don't show buttons close on selection
           if(!this.showButtons) {
-            this._closeAndValidate();
+            this._applyCurrentValues(this.$.field.isValid);
+            this._close();
           }
         }
       }
       //we're closed, moment has changed by user changing the input fields.
       else {
-        this._closeAndValidate();
+        this._applyCurrentValues(this.$.field.isValid);
       }
     },
 
     _buttonClicked: function(evt) {
-      if(evt.detail.action === true) {
-        this._closeAndValidate();
-      }else {
-        this._closeAndCancel();
-      }
+      var canApplyValue = evt.detail.action && this.$.field.isValid;
+      this._applyCurrentValues(canApplyValue);
+      this._close();
     },
     _iconClicked: function(evt) {
       if(evt.detail.dateOrTime === "Date") {
