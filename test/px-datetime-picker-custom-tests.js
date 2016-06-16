@@ -26,7 +26,7 @@ function runCustomTests() {
 
       assert.isFalse(picker._opened);
 
-      field.fire('px-datetime-entry-icon-clicked');
+      field.fire('px-datetime-entry-icon-clicked', {dateOrTime: 'Date'});
 
       assert.isTrue(picker._opened);
       assert.isFalse(overlay.classList.contains('visuallyhidden'));
@@ -62,38 +62,30 @@ function runCustomTests() {
       assert.isFalse(picker._opened);
     });
 
-    test('click on other stuff in the page closes it', function() {
-
-      var button = document.getElementById('aButton');
-      picker._open();
-      button.click();
-
-      assert.isFalse(picker._opened);
-    });
-
-
     test('pressing esc cancels selection', function() {
 
-      var button = document.getElementById('aButton'),
-          prevMom = picker.momentObj.clone();
+      var prevMom = picker.momentObj.clone();
 
-      picker._open();
+      picker.showButtons = true;
+      flush(function(){
+        picker._open();
 
-      assert.equal(prevMom.toISOString(), picker.momentObj.toISOString());
+        assert.equal(prevMom.toISOString(), picker.momentObj.toISOString());
 
-      //simulate some selection
-      picker.momentObj = picker.momentObj.clone().add(1, 'day');
-      assert.isFalse(prevMom.toISOString() === picker.momentObj.toISOString());
+        //simulate some selection
+        picker.momentObj = picker.momentObj.clone().add(1, 'day');
+        assert.isFalse(prevMom.toISOString() === picker.momentObj.toISOString());
 
-      //press esc
-      var evt = new CustomEvent('keydown',{detail:{'key':'esc','keyIdentifier':'esc'}});
-      picker.dispatchEvent(evt);
+        //press esc
+        var evt = new CustomEvent('keydown',{detail:{'key':'esc','keyIdentifier':'esc'}});
+        picker.dispatchEvent(evt);
 
-      //should be closed and date reset
-      assert.isFalse(picker._opened);
-      assert.equal(prevMom.toISOString(), picker.momentObj.toISOString());
+        //should be closed and date reset
+        assert.isFalse(picker._opened);
+        assert.equal(prevMom.toISOString(), picker.momentObj.toISOString());
+        picker.showButtons = false
+      });
     });
-
   });
 
   suite('synchronized date/time zones', function() {
