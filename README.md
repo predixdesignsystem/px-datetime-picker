@@ -1,4 +1,4 @@
-#Px-Datetime-Picker
+#Px-Datetime-Picker [![Build Status](https://travis-ci.org/PredixDev/px-datetime-picker.svg?branch=master)](https://travis-ci.org/PredixDev/px-datetime-picker)
 
 ## Overview
 
