@@ -2,7 +2,7 @@
     "name": "px-datetime-picker",
     "author": "General Electric",
     "description": "A Px component allowing to pick a date using a calendar or by typing it",
-    "version": "0.0.2",
+    "version": "0.0.3",
     "private": true,
     "extName" : null,
     "repository" :

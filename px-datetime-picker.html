@@ -149,7 +149,7 @@ Element allowing to pick a date using a calendar or by typing it
      */
     _todayClicked: function(evt) {
 
-      this.set('momentObj', this._preserveTime(this.momentObj, moment.tz(moment(), this.timeZone)));
+      this.set('momentObj', this._preserveTime(this.momentObj, Px.moment.tz(Px.moment(), this.timeZone)));
       if(!this.showButtons) {
         this._close();
       }
