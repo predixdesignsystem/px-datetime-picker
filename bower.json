@@ -1,6 +1,6 @@
 {
   "name": "px-datetime-picker",
-  "version": "0.0.3",
+  "version": "0.1.0",
   "main": [
     "px-datetime-picker.html"
   ],
@@ -16,9 +16,9 @@
   "dependencies": {
     "polymer": "^1.5.0",
     "px-theme": "~0.8.0",
-    "px-datetime-field": "~0.3.0",
-    "px-calendar-picker": "~0.2.0",
-    "px-datetime-common": "~0.4.0",
+    "px-datetime-field": "~0.4.0",
+    "px-calendar-picker": "~0.3.0",
+    "px-datetime-common": "~0.5.0",
     "iron-a11y-keys-behavior": "PolymerElements/iron-a11y-keys-behavior#~1.1.0"
   },
   "devDependencies": {
