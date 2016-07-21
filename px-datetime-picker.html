@@ -40,7 +40,9 @@ Element allowing to pick a date using a calendar or by typing it
         date-format="{{dateFormat}}"
         time-format="{{timeFormat}}"
         is-selected=[[_opened]]
-        prevent-notification-on-change>
+        prevent-notification-on-change
+        block-future-dates="{{blockFutureDates}}"
+        block-past-dates="{{blockPastDates}}">
       </px-datetime-field>
       <div id="box" class="visuallyhidden container">
         <div class="container__box flex--col">
