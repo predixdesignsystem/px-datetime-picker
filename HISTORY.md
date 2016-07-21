@@ -1,3 +1,7 @@
+v0.1.1
+==================
+* Added new demos
+
 v0.1.0
 ==================
 * Added blockPastDates
