@@ -31,10 +31,11 @@
   		<p>
   			The	<code>px-datetime-picker</code> component includes various elements used for structuring responsive layouts.
   		</p>
-      <p>
-        This component allows the user to select a date and time precisely to the second or millisecond.
-      </p>
-      <p class="description-text">This counter represents when the px-datetime-picker event property of the
+
+      <p class="description-text">
+      This component allows the user to select a date and time precisely to the second or millisecond.
+      <br>
+      This counter represents when the px-datetime-picker event property of the
       picker is being fired/updated. The behavior depends on whether the picker uses
       buttons. It is defined as followed:
       <br>
@@ -73,7 +74,7 @@
               <div class="flex u-mb-">
                 <input id="toggleButtons{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.showButtons::change}}">
                 <label for$="toggleButtons{{indexPlusOne(index)}}" class="toggle__label toggle__label--small"></label>
-                <div class="u-ml-">Show buttons</div>
+                <div class="u-ml-">Show buttons in panel</div>
               </div>
               <div class="flex u-mb-">
                 <input id="toggleFutureDates{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.blockFutureDates::change}}">
