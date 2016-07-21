@@ -590,6 +590,35 @@ a {
 .viewport--full-height {
   min-height: 100vh; }
 
+/*------------------------------------*    #CLEARFIX
+\*------------------------------------*/
+/**
+ * Micro clearfix, as per: css-101.org/articles/clearfix/latest-new-clearfix-so-far.php
+ * Extend the clearfix class with Sass to avoid the `.clearfix` class appearing
+ * over and over in your markup.
+ */
+.clearfix:after,
+.box:after {
+  content: "";
+  display: table;
+  clear: both; }
+
+/**
+* 1. So we can apply the `.box` class to naturally-inline elements.
+*/
+.box {
+  display: block;
+  /* [1] */
+  padding: 1rem; }
+  .box > :last-child {
+    margin-bottom: 0; }
+
+/**
+   * Tiny box.
+   */
+.box--tiny {
+  padding: 0.3333333333rem; }
+
 .container__box {
   position: absolute;
   top: 0.6666666667rem;
@@ -625,18 +654,6 @@ a {
 
 .divider {
   width: 100%; }
-
-/*------------------------------------*    #CLEARFIX
-\*------------------------------------*/
-/**
- * Micro clearfix, as per: css-101.org/articles/clearfix/latest-new-clearfix-so-far.php
- * Extend the clearfix class with Sass to avoid the `.clearfix` class appearing
- * over and over in your markup.
- */
-.clearfix:after {
-  content: "";
-  display: table;
-  clear: both; }
 
 /**
  * Margin and padding helper classes with breakpoint prefixes. Use these to tweak layout on a micro

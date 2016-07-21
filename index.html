@@ -12,7 +12,7 @@
   <link rel="import" href="../px-tabs/px-tab-set.html" />
   <link rel="import" href="../iron-component-page/iron-component-page.html"/>
   <link rel="import" href="px-datetime-picker.html"/>
-  <link rel="icon" href="px-favicon.png" type="image/x-icon"/>
+  <link rel="icon" href="favicon.ico" type="image/x-icon"/>
 
   <link rel="import" href="../px-demo-snippet/px-demo-snippet.html">
   <link rel="import" href="../polymer-font-awesome/polymer-font-awesome.html">
@@ -31,12 +31,15 @@
   		<p>
   			The	<code>px-datetime-picker</code> component includes various elements used for structuring responsive layouts.
   		</p>
-      <p class="description-text">This counter represents when the px-datetime-picker event/range property of the
-      range field are being fired/updated. The behavior depends on whether the range field uses
+      <p>
+        This component allows the user to select a date and time precisely to the second or millisecond.
+      </p>
+      <p class="description-text">This counter represents when the px-datetime-picker event property of the
+      picker is being fired/updated. The behavior depends on whether the picker uses
       buttons. It is defined as followed:
       <br>
       - If it has buttons then it is fired when the user clicks the apply button AND the date/time is valid<br>
-      - If it doesn't have button then it is fired every time a change is made to the date/time AND the date/time is valid
+      - If it doesn't have buttons then it is fired every time a valid change is made to the date or time
       </p>
   		<div class="flex">
   			<img class="u-mr--" src="https://img.shields.io/travis/PredixDev/px-datetime-picker.svg?style=flat-square" alt="Travis" onerror="this.style.display='none'"/>
@@ -68,11 +71,6 @@
                 <div class="u-ml-">Hide time</div>
               </div>
               <div class="flex u-mb-">
-                <input id="toggleDate{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.hideDate::change}}">
-                <label for$="toggleDate{{indexPlusOne(index)}}" class="toggle__label toggle__label--small"></label>
-                <div class="u-ml-">Hide date</div>
-              </div>
-              <div class="flex u-mb-">
                 <input id="toggleButtons{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.showButtons::change}}">
                 <label for$="toggleButtons{{indexPlusOne(index)}}" class="toggle__label toggle__label--small"></label>
                 <div class="u-ml-">Show buttons</div>
@@ -81,6 +79,11 @@
                 <input id="toggleFutureDates{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.blockFutureDates::change}}">
                 <label for$="toggleFutureDates{{indexPlusOne(index)}}" class="toggle__label toggle__label--small"></label>
                 <div class="u-ml-">Block future dates</div>
+              </div>
+              <div class="flex u-mb-">
+                <input id="togglePastDates{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.blockPastDates::change}}">
+                <label for$="togglePastDates{{indexPlusOne(index)}}" class="toggle__label toggle__label--small"></label>
+                <div class="u-ml-">Block past dates</div>
               </div>
               <div class="u-mb-">Date format: <input id="dateFormat" class="text-input" type="text" placeholder="YYYY/MM/DD" value="{{item.dateFormat::input}}" /></div>
               <div class="u-mb-">Time format: <input id="timeFormat" class="text-input" type="text" placeholder="hh:mm:ss A" value="{{item.timeFormat::input}}" /></div>
@@ -107,22 +110,21 @@
               <div class="flex flex--col">
                 <div class="flex__item demo u-ph+ u-pb+ u-mt++">
                   <br />
-                  <span id="counter"><strong>px-datetime-range-submitted</strong> fired <strong>0</strong> time</span>
+                  <span id="counter"><strong>px-datetime-field-submitted</strong> fired <strong>0</strong> time</span>
                   <div>
-                    Current range object: From: <strong>{{item.range.from}}</strong> To: <strong>{{item.range.to}}</strong>
+                    Current dateTime object: <strong>{{item.dateTime}}</strong>
                   </div>
                   <br />
                   <px-datetime-picker
-                    id="range"
-                    range={{item.range}}
+                    id="dateTime"
+                    date-time="{{item.dateTime}}"
                     date-format="{{item.dateFormat}}"
                     time-format="{{item.timeFormat}}"
                     show-buttons="{{item.showButtons}}"
                     block-future-dates="{{item.blockFutureDates}}"
+                    block-past-dates="{{item.blockPastDates}}"
                     hide-time="{{item.hideTime}}"
-                    hide-date="{{item.hideDate}}"
                     show-time-zone="{{item.showTimeZone}}"
-                    is-valid="{{item.isValid}}"
                     time-zone="{{item.timeZone}}">
                   </px-datetime-picker>
                 </div>
@@ -170,44 +172,46 @@
 <script>
 window.addEventListener('WebComponentsReady', function() {
   var template = document.querySelector('template[is=dom-bind]'),
-      range = {"from": "2016-07-01T01:00:00.000Z", "to": "2016-07-08T14git :00:00.000Z"},
-      dateFormat = ["YYYY/MM/DD","MM/DD/YY"],
-      timeFormat = ["hh:mm:ss A","HH:mm:ss.SSS"],
-      showTimeZone = ["text","dropdown"],
       year = new Date(),
-      timeZone =["UTC","America/Los_Angeles"];
+      dateTime = "2016-02-01T01:00:00.000Z",
+      dateFormat = ["YYYY/MM/DD","MM/DD/YY","DD/MM/YY"],
+      timeFormat = ["hh:mm A","HH:mm:ss.SSS"],
+      showTimeZone = ["text","abbreviatedText","dropdown"],
+      timeZone =["UTC","America/Los_Angeles","America/New_York"];
 
   var optionsArray = [
     {
-      "range":range,
-      "dateFormat":dateFormat[0],
-      "timeFormat":timeFormat[0],
-      "showButtons":true,
-      "blockFutureDates":true,
-      "hideTime":false,
-      "hideDate":false,
-      "showTimeZone":showTimeZone[0],
-      "timeZone":timeZone[0]
-    },
-    {
-      "range":range,
+      "dateTime":dateTime,
       "dateFormat":dateFormat[1],
+      "timeFormat":timeFormat[0],
       "showButtons":false,
+      "blockPastDates":false,
       "blockFutureDates":false,
       "hideTime":true,
-      "hideDate":false,
       "showTimeZone":showTimeZone[1],
       "timeZone":timeZone[1]
     },
     {
-      "range":range,
+      "dateTime":dateTime,
+      "dateFormat":dateFormat[0],
+      "timeFormat":timeFormat[0],
+      "showButtons":true,
+      "blockFutureDates":true,
+      "blockPastDates":false,
+      "hideTime":false,
+      "showTimeZone":showTimeZone[0],
+      "timeZone":timeZone[0]
+    },
+    {
+      "dateTime":dateTime,
+      "dateFormat":dateFormat[2],
       "timeFormat":timeFormat[1],
       "showButtons":false,
       "blockFutureDates":true,
+      "blockPastDates":false,
       "hideTime":false,
-      "hideDate":true,
-      "showTimeZone":showTimeZone[0],
-      "timeZone":timeZone[0]
+      "showTimeZone":showTimeZone[2],
+      "timeZone":timeZone[2]
     }
   ];
 
