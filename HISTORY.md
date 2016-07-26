@@ -1,3 +1,7 @@
+v0.1.4
+==================
+* Added vulcanize
+
 v0.1.3
 ==================
 * Updated wording in demo
