@@ -2,13 +2,13 @@
     "name": "px-datetime-picker",
     "author": "General Electric",
     "description": "A Px component allowing to pick a date using a calendar or by typing it",
-    "version": "0.1.4",
+    "version": "0.1.5",
     "private": true,
     "extName" : null,
     "repository" :
     {
         "type": "git",
-        "url": "https://github.com/PredixDev/change-this-in-package.json-please.git"
+        "url": "https://github.com/PredixDev/px-datetime-picker.git"
     },
     "homepage": "http://predix.io/",
     "devDependencies": {

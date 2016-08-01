@@ -1,3 +1,7 @@
+v0.1.5
+==================
+* added image to readme, removed watch, added view on github
+
 v0.1.4
 ==================
 * Added vulcanize

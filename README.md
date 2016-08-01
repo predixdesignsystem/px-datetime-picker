@@ -1,5 +1,8 @@
 #Px-Datetime-Picker [![Build Status](https://travis-ci.org/PredixDev/px-datetime-picker.svg?branch=master)](https://travis-ci.org/PredixDev/px-datetime-picker)
 
+
+[![px-datetime-picker demo](px-datetime-picker.png?raw=true)](https://predixdev.github.io/px-datetime-picker)
+
 ## Overview
 
 px-datetime-picker is a Predix UI component
