@@ -29,20 +29,20 @@
     <div class="hero u-p++ text--shadow">
       <a class="actionable flex flex--right flex--middle" href="https://github.com/PredixDev/px-datetime-picker" target="_blank"><iron-icon class="menu__open" icon="fa:fa-github"></iron-icon>View on Github</a>
   		<h1 class="delta">px-datetime-picker</h1>
-  		<p>
-  			The	<code>px-datetime-picker</code> component includes various elements used for structuring responsive layouts.
-  		</p>
-
-      <p class="description-text">
-      This component allows the user to select a date and time precisely to the second or millisecond.
-      <br>
-      This counter represents when the px-datetime-picker event property of the
-      picker is being fired/updated. The behavior depends on whether the picker uses
-      buttons. It is defined as followed:
-      <br>
-      - If it has buttons then it is fired when the user clicks the apply button AND the date/time is valid<br>
-      - If it doesn't have buttons then it is fired every time a valid change is made to the date or time
-      </p>
+      <div class="description-text">
+    		<p>
+    			The	<code>px-datetime-picker</code> component includes various elements used for structuring responsive layouts.
+    		</p>
+        <p>
+        This component allows the user to select a date and time precisely to the second or millisecond.
+        This counter represents when the px-datetime-picker event property of the
+        picker is being fired/updated. The behavior depends on whether the picker uses
+        buttons. It is defined as followed:
+        <br>
+        - If it has buttons then it is fired when the user clicks the apply button AND the date/time is valid<br>
+        - If it doesn't have buttons then it is fired every time a valid change is made to the date or time
+        </p>
+      </div>
   		<div class="flex">
   			<img class="u-mr--" src="https://img.shields.io/travis/PredixDev/px-datetime-picker.svg?style=flat-square" alt="Travis" onerror="this.style.display='none'"/>
   			<img class="u-mr--" src="https://img.shields.io/bower/v/px-datetime-picker.svg?style=flat-square" alt="Bower" onerror="this.style.display='none'"/>
@@ -55,121 +55,122 @@
       <div class="tabContainer u-pt++ u-pl++">
         <px-tab-set selected="{{selected}}" bare no-bottom-border>
           <template is="dom-repeat" items="{{optionsArray}}">
-            <px-tab>Configuration {{indexPlusOne(index)}}</px-tab>
+            <px-tab>Option {{indexPlusOne(index)}}</px-tab>
           </template>
         </px-tab-set>
       </div>
       <px-tab-pages selected="{{selected}}">
         <template is="dom-repeat" items="{{optionsArray}}">
-          <section class="tab-page flex flex--right flex--wrap">
-            <div class="mega-demo flex u-pb++">
-            <!-- Properties -->
-            <div class="properties u-ph+ u-pb+ u-mt++ u-mh++" id="properties">
-              <p class="epsilon">Properties</p>
-              <div class="flex u-mb-">
-                <input id="toggleTime{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.hideTime::change}}">
-                <label for$="toggleTime{{indexPlusOne(index)}}" class="toggle__label toggle__label--small"></label>
-                <div class="u-ml-">Hide time</div>
-              </div>
-              <div class="flex u-mb-">
-                <input id="toggleButtons{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.showButtons::change}}">
-                <label for$="toggleButtons{{indexPlusOne(index)}}" class="toggle__label toggle__label--small"></label>
-                <div class="u-ml-">Show buttons in panel</div>
-              </div>
-              <div class="flex u-mb-">
-                <input id="toggleFutureDates{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.blockFutureDates::change}}">
-                <label for$="toggleFutureDates{{indexPlusOne(index)}}" class="toggle__label toggle__label--small"></label>
-                <div class="u-ml-">Block future dates</div>
-              </div>
-              <div class="flex u-mb-">
-                <input id="togglePastDates{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.blockPastDates::change}}">
-                <label for$="togglePastDates{{indexPlusOne(index)}}" class="toggle__label toggle__label--small"></label>
-                <div class="u-ml-">Block past dates</div>
-              </div>
-              <div class="u-mb-">Date format: <input id="dateFormat" class="text-input" type="text" placeholder="YYYY/MM/DD" value="{{item.dateFormat::input}}" /></div>
-              <div class="u-mb-">Time format: <input id="timeFormat" class="text-input" type="text" placeholder="hh:mm:ss A" value="{{item.timeFormat::input}}" /></div>
-              <div class="u-mb-">Time zone: <input id="timeZone" class="text-input" type="text" placeholder="UTC" value="{{item.timeZone::input}}" /></div>
-              <div class="u-mb-">Show time zone:
-                <div style="width: 100%;">
-                  <px-dropdown id="showTimeZone" value="{{item.showTimeZone}}" display-value="{{item.showTimeZone}}" bound-target="properties">
-                    <px-dropdown-content
-                      items='[
-                        {"key":"one", "val": "none"},
-                        {"key":"two", "val": "dropdown"},
-                        {"key":"three", "val": "extendedDropdown"},
-                        {"key":"four", "val": "text"},
-                        {"key":"five", "val": "abbreviatedText"}]'>
-                    </px-dropdown-content>
-                  </px-dropdown>
+          <section class="tab-page">
+            <div class="mega-demo flex flex--wrap u-ph++ u-pb++">
+              <!-- Properties -->
+              <div class="properties u-ph+ u-pb+ u-mt+">
+                <p class="epsilon">Properties</p>
+                <div class="flex u-mb-">
+                  <input id="toggleTime{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.hideTime::change}}">
+                  <label for$="toggleTime{{indexPlusOne(index)}}" class="toggle__label toggle__label--small"></label>
+                  <div class="u-ml-">Hide time</div>
                 </div>
-              </div>
-              <div>More info on date and time format at <a href="http://momentjs.com/docs/#/parsing/string-format/" target="_blank" class="actionable">momentjs</a></div>
-            </div>
-
-            <div class="demoContainer u-mr++">
-              <!-- demo -->
-              <div class="flex flex--col">
-                <div class="flex__item demo u-ph+ u-pb+ u-mt++">
-                  <br />
-                  <span id="counter"><strong>px-datetime-field-submitted</strong> fired <strong>0</strong> time</span>
-                  <div>
-                    Current dateTime object: <strong>{{item.dateTime}}</strong>
+                <div class="flex u-mb-">
+                  <input id="toggleButtons{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.showButtons::change}}">
+                  <label for$="toggleButtons{{indexPlusOne(index)}}" class="toggle__label toggle__label--small"></label>
+                  <div class="u-ml-">Show buttons in panel</div>
+                </div>
+                <div class="flex u-mb-">
+                  <input id="toggleFutureDates{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.blockFutureDates::change}}">
+                  <label for$="toggleFutureDates{{indexPlusOne(index)}}" class="toggle__label toggle__label--small"></label>
+                  <div class="u-ml-">Block future dates</div>
+                </div>
+                <div class="flex u-mb-">
+                  <input id="togglePastDates{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.blockPastDates::change}}">
+                  <label for$="togglePastDates{{indexPlusOne(index)}}" class="toggle__label toggle__label--small"></label>
+                  <div class="u-ml-">Block past dates</div>
+                </div>
+                <div class="u-mb-">Date format: <input id="dateFormat" class="text-input" type="text" placeholder="YYYY/MM/DD" value="{{item.dateFormat::input}}" /></div>
+                <div class="u-mb-">Time format: <input id="timeFormat" class="text-input" type="text" placeholder="hh:mm:ss A" value="{{item.timeFormat::input}}" /></div>
+                <div class="u-mb-">Time zone: <input id="timeZone" class="text-input" type="text" placeholder="UTC" value="{{item.timeZone::input}}" /></div>
+                <div class="u-mb-">Show time zone:
+                  <div style="width: 100%;">
+                    <px-dropdown id="showTimeZone" value="{{item.showTimeZone}}" display-value="{{item.showTimeZone}}" bound-target="properties">
+                      <px-dropdown-content
+                        items='[
+                          {"key":"one", "val": "none"},
+                          {"key":"two", "val": "dropdown"},
+                          {"key":"three", "val": "extendedDropdown"},
+                          {"key":"four", "val": "text"},
+                          {"key":"five", "val": "abbreviatedText"}]'>
+                      </px-dropdown-content>
+                    </px-dropdown>
                   </div>
-                  <br />
-                  <px-datetime-picker
-                    id="dateTime"
-                    date-time="{{item.dateTime}}"
-                    date-format="{{item.dateFormat}}"
-                    time-format="{{item.timeFormat}}"
-                    show-buttons="{{item.showButtons}}"
-                    block-future-dates="{{item.blockFutureDates}}"
-                    block-past-dates="{{item.blockPastDates}}"
-                    hide-time="{{item.hideTime}}"
-                    show-time-zone="{{item.showTimeZone}}"
-                    time-zone="{{item.timeZone}}">
-                  </px-datetime-picker>
                 </div>
-                <div class="flex__item">
-                  <px-demo-snippet
-                    element-properties={{item}}
-                    element-name="px-datetime-picker">
-                  </px-demo-snippet>
+                <div>More info on date and time format at <a href="http://momentjs.com/docs/#/parsing/string-format/" target="_blank" class="actionable">momentjs</a></div>
+              </div>
+
+              <div class="demoContainer u-mt+">
+                <!-- demo -->
+                <div class="flex flex--col">
+                  <div class="flex__item demo u-p+">
+
+                    <span id="counter"><strong>px-datetime-field-submitted</strong> fired <strong>0</strong> time</span>
+                    <div>
+                      Current dateTime object: <strong>{{item.dateTime}}</strong>
+                    </div>
+                    <br />
+                    <px-datetime-picker
+                      id="dateTime"
+                      date-time="{{item.dateTime}}"
+                      date-format="{{item.dateFormat}}"
+                      time-format="{{item.timeFormat}}"
+                      show-buttons="{{item.showButtons}}"
+                      block-future-dates="{{item.blockFutureDates}}"
+                      block-past-dates="{{item.blockPastDates}}"
+                      hide-time="{{item.hideTime}}"
+                      show-time-zone="{{item.showTimeZone}}"
+                      time-zone="{{item.timeZone}}">
+                    </px-datetime-picker>
+                    
+                  </div>
+                  <div class="flex__item">
+                    <px-demo-snippet
+                      element-properties={{item}}
+                      element-name="px-datetime-picker">
+                    </px-demo-snippet>
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div class="apiContainer">
-            <div class="flex flex--col api u-mt++" >
-              <div>
-                <px-api-viewer source="px-datetime-picker"></px-api-viewer>
+            <div class="apiContainer">
+              <div class="flex flex--col api u-mt++" >
+                <div>
+                  <px-api-viewer source="px-datetime-picker"></px-api-viewer>
+                </div>
               </div>
             </div>
-          </div>
-        </section>
-      </template>
-    </px-tab-pages>
-  </div>
-  <footer class="footer flex flex--center">
-    <div class="footer__container u-pv++">
-      <div>
-        <a href="https://ge.com/digital" >
-          <img src="monogram-wdmk.png" alt="GE Monogram" class="footer__img">
-        </a>
-      </div>
-      <div class="footer__list">
-        <ul class="list-inline list-inline--delimited">
-          <li>
-            <a href="http://predix.io/legal" class="footer__list--lnk">Legal</a>
-          </li>
-          <li>
-            <a href="mailto:info@predix.io" class="footer__list--lnk">Contact Us</a>
-          </li>
-          <li>Copyright &copy; {{year}} General Electric Company. All rights reserved.</li>
-        </ul>
-      </div>
+          </section>
+        </template>
+      </px-tab-pages>
     </div>
-  </footer>
-</template>
+    <footer class="footer flex flex--center">
+      <div class="footer__container u-pv++">
+        <div>
+          <a href="https://ge.com/digital" >
+            <img src="monogram-wdmk.png" alt="GE Monogram" class="footer__img">
+          </a>
+        </div>
+        <div class="footer__list">
+          <ul class="list-inline list-inline--delimited">
+            <li>
+              <a href="http://predix.io/legal" class="footer__list--lnk">Legal</a>
+            </li>
+            <li>
+              <a href="mailto:info@predix.io" class="footer__list--lnk">Contact Us</a>
+            </li>
+            <li>Copyright &copy; {{year}} General Electric Company. All rights reserved.</li>
+          </ul>
+        </div>
+      </div>
+    </footer>
+  </template>
 <script>
 window.addEventListener('WebComponentsReady', function() {
   var template = document.querySelector('template[is=dom-bind]'),

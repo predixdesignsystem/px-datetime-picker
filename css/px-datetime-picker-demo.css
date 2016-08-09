@@ -10,7 +10,7 @@
  */
 /*
 THIS FILE SHOULD CONTAIN ONLY ABSTRACT/'SKETCH' THEME RULES, NOT SPECIFIC TO PREDIX BRANDING
-Predix branding rules go in px-rangepicker-predix.scss, not in this file.
+Predix branding rules go in px-datetime-picker.scss, not in this file.
 */
 /*------------------------------------*    #PX-COLORS-DESIGN
 \*------------------------------------*/
@@ -1115,19 +1115,19 @@ textarea {
   max-width: 46.6666666667rem; }
 
 .properties {
-  -webkit-flex-basis: 16.6666666667rem;
-      -ms-flex-preferred-size: 16.6666666667rem;
-          flex-basis: 16.6666666667rem;
+  -webkit-flex: 0 0 16.6666666667rem;
+      -ms-flex: 0 0 16.6666666667rem;
+          flex: 0 0 16.6666666667rem;
   background: white;
   border: 1px solid #d1d0d8;
   overflow-x: hidden;
   overflow-y: auto;
-  max-height: 39.3333333333rem; }
+  margin-right: 1.3333333333rem; }
 
 .demoContainer {
-  -webkit-flex: 1 1;
-      -ms-flex: 1 1;
-          flex: 1 1; }
+  -webkit-flex: 1 1 auto;
+      -ms-flex: 1 1 auto;
+          flex: 1 1 auto; }
 
 .demoSnippet {
   -webkit-flex-basis: 10rem;
@@ -1146,7 +1146,8 @@ textarea {
       -ms-flex-preferred-size: 26.6666666667rem;
           flex-basis: 26.6666666667rem;
   background: white;
-  border: 1px solid #d1d0d8; }
+  border: 1px solid #d1d0d8;
+  overflow: auto; }
 
 .componentList a {
   color: #2886af; }
@@ -1162,17 +1163,13 @@ textarea {
   margin: 0 auto;
   max-width: 80rem; }
 
-.tabContainer {
-  -webkit-flex: 0 0 100%;
-      -ms-flex: 0 0 100%;
-          flex: 0 0 100%;
-  height: 4rem;
-  margin-top: 2.3333333333rem;
-  background: #f7f7fc; }
-
 .apiContainer {
-  background-color: white;
-  margin: 0 auto; }
+  margin: 0 auto;
+  background-color: white; }
+
+.tabContainer {
+  height: auto;
+  background: #f7f7fc; }
 
 .footer {
   background-color: #7c7c84; }
@@ -1211,8 +1208,8 @@ textarea {
     -webkit-flex-direction: column;
         -ms-flex-direction: column;
             flex-direction: column; }
-  .demoContainer {
-    margin-left: 2rem; }
+  .properties {
+    margin-right: 0px; }
   .footer__container {
     -webkit-flex-direction: column;
         -ms-flex-direction: column;
@@ -1612,7 +1609,7 @@ textarea {
       -ms-flex: none !important;
           flex: none !important; }
 
-@media screen and (max-width: 47.9rem) {
+@media screen and (max-width: 47.9375rem) {
   .u-1\/1-palm {
     width: 100% !important; }
   .u-1\/2-palm {
@@ -1671,7 +1668,7 @@ textarea {
         -ms-flex: none !important;
             flex: none !important; } }
 
-@media screen and (min-width: 48rem) and (max-width: 63.9rem) {
+@media screen and (min-width: 48rem) and (max-width: 68.204166667rem) {
   .u-1\/1-lap {
     width: 100% !important; }
   .u-1\/2-lap {
@@ -1789,7 +1786,7 @@ textarea {
         -ms-flex: none !important;
             flex: none !important; } }
 
-@media screen and (max-width: 63.9rem) {
+@media screen and (max-width: 68.2rem) {
   .u-1\/1-portable {
     width: 100% !important; }
   .u-1\/2-portable {
@@ -1848,7 +1845,7 @@ textarea {
         -ms-flex: none !important;
             flex: none !important; } }
 
-@media screen and (min-width: 63.9rem) {
+@media screen and (min-width: 68.266666667rem) {
   .u-1\/1-desk {
     width: 100% !important; }
   .u-1\/2-desk {
@@ -1907,7 +1904,7 @@ textarea {
         -ms-flex: none !important;
             flex: none !important; } }
 
-@media screen and (min-width: 100%) {
+@media screen and (min-width: 80rem) {
   .u-1\/1-desk-wide {
     width: 100% !important; }
   .u-1\/2-desk-wide {
