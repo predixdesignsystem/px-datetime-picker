@@ -1,3 +1,7 @@
+v0.1.8
+==================
+* Fixed demo event counter
+
 v0.1.7
 ==================
 * added overflow to demoContainer and removed flex__wrap from mega-demo

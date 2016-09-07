@@ -117,7 +117,7 @@
                 <div class="flex flex--col">
                   <div class="demo u-p+">
 
-                    <span id="counter"><strong>px-datetime-field-submitted</strong> fired <strong>0</strong> time</span>
+                    <span id="counter{{indexPlusOne(index)}}"><strong>px-datetime-submitted</strong> fired <strong>0</strong> time(s)</span>
                     <div>
                       Current dateTime object: <strong>{{item.dateTime}}</strong>
                     </div>
@@ -171,7 +171,7 @@
             <li>
               <a href="mailto:info@predix.io" class="footer__list--lnk">Contact Us</a>
             </li>
-            <li>Copyright &copy; {{year}} General Electric Company. All rights reserved.</li>
+            <li>Copyright &copy; 2016 General Electric Company. All rights reserved.</li>
           </ul>
         </div>
       </div>
@@ -180,12 +180,12 @@
 <script>
 window.addEventListener('WebComponentsReady', function() {
   var template = document.querySelector('template[is=dom-bind]'),
-      year = new Date(),
       dateTime = "2016-02-01T01:00:00.000Z",
       dateFormat = ["YYYY/MM/DD","MM/DD/YY","DD/MM/YY"],
       timeFormat = ["hh:mm A","HH:mm:ss.SSS"],
       showTimeZone = ["text","abbreviatedText","dropdown"],
-      timeZone =["UTC","America/Los_Angeles","America/New_York"];
+      timeZone =["UTC","America/Los_Angeles","America/New_York"],
+      counter = 0;
 
   var optionsArray = [
     {
@@ -227,12 +227,18 @@ window.addEventListener('WebComponentsReady', function() {
       return num + 1;
     };
 
-    year = year.getFullYear();
+    document.addEventListener('px-datetime-submitted', function(evt) {
+      counter++;
+      for(var i=1; i<=optionsArray.length; i++) {
+        var span = document.getElementById('counter'+i);
+        span.innerHTML = '<strong>px-datetime-submitted</strong> fired <strong>' + counter + '</strong> time(s)';
+      }
+    });
+
 
     template.selected = "0";
     template.optionsArray = optionsArray;
     template.indexPlusOne = indexPlusOne;
-    template.year = year;
 });
 </script>
 
