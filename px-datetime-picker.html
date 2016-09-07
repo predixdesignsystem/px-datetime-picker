@@ -25,9 +25,13 @@ Element allowing to pick a date using a calendar or by typing it
 @homepage index.html
 @demo demo.html
 -->
+
+<link rel="import" href="css/px-datetime-picker-styles.html">
+
 <dom-module id="px-datetime-picker">
-  <link rel="import" type="css" href="css/px-datetime-picker.css"/>
   <template>
+    <style include="px-datetime-picker-styles"></style>
+    <style include="px-theme-styles"></style>
     <div id="overlay" class="overlay visuallyhidden" on-tap="_processClose"></div>
     <div class="inline--flex flex--col">
       <px-datetime-field
