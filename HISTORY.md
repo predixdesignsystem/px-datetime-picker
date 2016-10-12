@@ -1,3 +1,15 @@
+v0.2.2
+==================
+* Latest gulpfile update to latest demo snippet component
+
+v0.2.1
+==================
+* Fixing up dependency versions
+
+v0.2.0
+==================
+* Grunt to gulp migration & style modules
+
 v0.1.8
 ==================
 * Fixed demo event counter
