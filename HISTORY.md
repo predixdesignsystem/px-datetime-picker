@@ -1,3 +1,7 @@
+v0.2.5
+==================
+* bumped calendar picker to fix icons not showing up
+
 v0.2.4
 ==================
 * Fixed codepen
