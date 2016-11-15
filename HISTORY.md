@@ -1,3 +1,8 @@
+
+v0.2.6
+==================
+* bower updating px-demo-snippet
+
 v0.2.5
 ==================
 * bumped calendar picker to fix icons not showing up

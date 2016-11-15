@@ -1,49 +1,49 @@
 {
-  "name": "px-datetime-picker",
-  "version": "0.2.5",
-  "main": [
-    "px-datetime-picker.html"
-  ],
-  "ignore": [
-    ".*",
-    "npm-debug.log",
-    "Gruntfile.js",
-    "sass",
-    "bower_components",
-    "node_modules",
-    "test",
-    "scripts",
-    ".github",
-    "px-datetime-picker",
-    "OSS_Notice.pdf"
-  ],
-  "dependencies": {
-    "polymer": "^1.6.1",
-    "px-theme": "~1.1.2",
-    "px-datetime-field": "~0.5.0",
-    "px-calendar-picker": "~0.5.0",
-    "px-datetime-common": "~0.6.3",
-    "iron-a11y-keys-behavior": "PolymerElements/iron-a11y-keys-behavior#~1.1.0",
-    "px-box-design": "^0.3.13"
-  },
-  "devDependencies": {
-    "px-starter-kit-design": "~0.6.0",
-    "px-slider": "~0.6.0",
-    "px-spacing-design": "~0.3.8",
-    "px-buttons-design": "~0.4.26",
-    "px-forms-design": "#~0.3.15",
-    "px-button-group-design": "~0.3.12",
-    "px-typography-design": "~1.1.1",
-    "iron-demo-helpers": "PolymerElements/iron-demo-helpers#~1.2.3",
-    "px-tabs": "~0.5.2",
-    "px-api-viewer": "^0.1.0",
-    "px-demo-snippet": "^0.6.4",
-    "px-list-inline-design": "^0.2.11",
-    "px-toggle-design": "^0.2.12",
-    "px-headings-design": "^0.2.14",
-    "px-actionable-text-icons-design": "^0.1.0",
-    "px-code-design": "~0.2.11",
-    "px-dropdown": "^0.12.1",
-    "px-polymer-font-awesome": "^0.1.9"
-  }
+    "name": "px-datetime-picker",
+    "version": "0.2.6",
+    "main": [
+        "px-datetime-picker.html"
+    ],
+    "ignore": [
+        ".*",
+        "npm-debug.log",
+        "Gruntfile.js",
+        "sass",
+        "bower_components",
+        "node_modules",
+        "test",
+        "scripts",
+        ".github",
+        "px-datetime-picker",
+        "OSS_Notice.pdf"
+    ],
+    "dependencies": {
+        "polymer": "^1.6.1",
+        "px-theme": "~1.1.2",
+        "px-datetime-field": "~0.5.0",
+        "px-calendar-picker": "~0.5.0",
+        "px-datetime-common": "~0.6.3",
+        "iron-a11y-keys-behavior": "PolymerElements/iron-a11y-keys-behavior#~1.1.0",
+        "px-box-design": "^0.3.13"
+    },
+    "devDependencies": {
+        "px-starter-kit-design": "~0.6.0",
+        "px-slider": "~0.6.0",
+        "px-spacing-design": "~0.3.8",
+        "px-buttons-design": "~0.4.26",
+        "px-forms-design": "#~0.3.15",
+        "px-button-group-design": "~0.3.12",
+        "px-typography-design": "~1.1.1",
+        "iron-demo-helpers": "PolymerElements/iron-demo-helpers#~1.2.3",
+        "px-tabs": "~0.5.2",
+        "px-api-viewer": "^0.1.0",
+        "px-demo-snippet": "^0.6.9",
+        "px-list-inline-design": "^0.2.11",
+        "px-toggle-design": "^0.2.12",
+        "px-headings-design": "^0.2.14",
+        "px-actionable-text-icons-design": "^0.1.0",
+        "px-code-design": "~0.2.11",
+        "px-dropdown": "^0.12.1",
+        "px-polymer-font-awesome": "^0.1.9"
+    }
 }
