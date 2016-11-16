@@ -25,23 +25,23 @@ common/abstract rules go in px-datetime-picker-sketch.scss, not in this file.
 @import 'px-datetime-picker-sketch.scss';
 
 .today {
-  color: $primary-blue;
+  color: var(--px-datetime-picker-background-color, $primary-blue);
   cursor: pointer;
   &:hover {
-    color: $primary-blue-hover;
+    color: var(--px-datetime-picker-background-color--hover, $primary-blue-hover);
   }
   &:active {
-    color: $primary-blue-pressed;
+    color: var(--px-datetime-picker-background-color--pressed, $primary-blue-pressed);
   }
   &:focus {
-    color: $primary-blue;
+    color: var(--px-datetime-picker-background-color, $primary-blue);
   }
 }
 
 .divider {
-  border-top: 1px solid $gray4;
+  border-top: 1px solid var(--px-datetime-picker-border-color, $gray4);
 }
 
 .overlay {
-  background-color: rgba($black, 0.1);
+  background-color: var(--px-datetime-picker-overlay-color, rgba($black, 0.1));
 }
