@@ -1,3 +1,8 @@
+
+v0.2.8
+==================
+* changing Gruntfile.js to gulpfile.js
+
 v0.2.7
 ==================
 * added style variables for theming
