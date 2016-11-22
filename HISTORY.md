@@ -1,3 +1,7 @@
+v0.2.11
+==================
+* fixed the bug that prevented the up and down arrows from going to a past or future date if blocked  
+
 v0.2.10
 ==================
 * update dependencies for dropdown
