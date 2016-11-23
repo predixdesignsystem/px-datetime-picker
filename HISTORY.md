@@ -1,10 +1,14 @@
+v0.2.13
+==================
+* Update dependencies
+
 v0.2.12
 ==================
 * Update px-theme to 2.0.1 and update test fixtures
 
 v0.2.11
 ==================
-* fixed the bug that prevented the up and down arrows from going to a past or future date if blocked  
+* fixed the bug that prevented the up and down arrows from going to a past or future date if blocked
 
 v0.2.10
 ==================
