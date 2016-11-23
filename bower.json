@@ -1,6 +1,6 @@
 {
     "name": "px-datetime-picker",
-    "version": "0.2.11",
+    "version": "0.2.12",
     "main": [
         "px-datetime-picker.html"
     ],
@@ -19,7 +19,7 @@
     ],
     "dependencies": {
         "polymer": "^1.6.1",
-        "px-theme": "~1.1.2",
+        "px-theme": "^2.0.1",
         "px-datetime-field": "~0.5.0",
         "px-calendar-picker": "~0.5.0",
         "px-datetime-common": "~0.6.3",
