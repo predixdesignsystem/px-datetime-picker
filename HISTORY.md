@@ -1,3 +1,7 @@
+v0.2.14
+==================
+* changing all devDeps to ^
+
 v0.2.13
 ==================
 * Update dependencies
