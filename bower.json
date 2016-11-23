@@ -1,6 +1,6 @@
 {
     "name": "px-datetime-picker",
-    "version": "0.2.14",
+    "version": "0.2.15",
     "main": [
         "px-datetime-picker.html"
     ],
@@ -28,7 +28,7 @@
     },
     "devDependencies": {
         "px-starter-kit-design": "^0.6.0",
-        "px-slider": "^0.7.5",
+        "px-slider": "^0.7.6",
         "px-spacing-design": "^0.3.8",
         "px-buttons-design": "^0.4.26",
         "px-forms-design": "^0.3.15",
