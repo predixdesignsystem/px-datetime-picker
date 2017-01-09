@@ -1,6 +1,10 @@
+v0.3.2
+==================
+* fixed demo (#9)
+
 v0.3.1
 ==================
-* Update missed design depndencies
+* Update missed design dependencies
 
 v0.3.0
 ==================
