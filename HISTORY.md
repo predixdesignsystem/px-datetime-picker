@@ -1,3 +1,9 @@
+v0.3.2
+==================
+* Update to px-demo
+* removed demosass
+* Updated to cool grays
+
 v0.3.1
 ==================
 * Update missed design depndencies

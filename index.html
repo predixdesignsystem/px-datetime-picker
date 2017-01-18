@@ -1,249 +1,95 @@
-<!doctype html>
+<!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>px-datetime-picker Demo</title>
-  <link rel="stylesheet" type="text/css" href="css/px-datetime-picker-demo.css"/>
-  <!-- Import custom element. Note: see comment about relative paths to dependencies in the *.html file referenced below -->
-  <script src="../webcomponentsjs/webcomponents-lite.js"></script>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Predix UI</title>
 
-  <link rel="import" href="../px-theme/px-theme-styles.html">
-  <style include="px-theme-styles" is="custom-style"></style>
+    <!--
+      Fast bootstrapping of the webcomponents-lite library. Only loads the library
+      if the browser doesn't natively support web components.
+    -->
+    <script type="text/javascript">
+    (function() {
+      'use strict';
 
-  <link rel="import" href="../px-api-viewer/px-api-viewer.html" />
-  <link rel="import" href="../px-tabs/px-tab-set.html" />
-  <link rel="import" href="px-datetime-picker.html"/>
-  <link rel="icon" href="favicon.ico" type="image/x-icon"/>
+      var onload = function() {
+        // For native Imports, manually fire WebComponentsReady so user code
+        // can use the same code path for native and polyfill'd imports.
+        if (!window.HTMLImports) {
+          document.dispatchEvent(
+            new CustomEvent('WebComponentsReady', {bubbles: true})
+          );
+        }
+      };
 
-  <link rel="import" href="../px-demo-snippet/px-demo-snippet.html">
-  <link rel="import" href="../px-polymer-font-awesome/polymer-font-awesome.html" />
-  <!-- Requires Webcomponents.js polyfill is provided by the page for browsers that don't support html imports -->
-  <style>
-      .demo{
-        flex-basis: 450px;
+      var webComponentsSupported = (
+        'registerElement' in document
+        && 'import' in document.createElement('link')
+        && 'content' in document.createElement('template')
+      );
+
+      if (!webComponentsSupported) {
+        var script = document.createElement('script');
+        script.async = true;
+        script.src = '../webcomponentsjs/webcomponents-lite.min.js';
+        script.onload = onload;
+        document.head.appendChild(script);
+      } else {
+        onload();
+      }
+    })();
+    </script>
+
+    <!--
+      Load the Polymer library.
+    -->
+    <link rel="import" href="../polymer/polymer.html" />
+
+    <!--
+      Asynchronously import the px-catalog element, which is the entrypoint
+      for our application.
+    -->
+    <link
+        async
+        id="main-element-import"
+        rel="import"
+        href="demo/index.html">
+
+    <!--
+      Load the app icon and manifest for Android devices.
+    -->
+    <link defer rel="icon" href="favicon.ico" type="image/x-icon" />
+
+    <!--
+      Basic page styles.
+    -->
+    <style>
+      html, body {
+        margin: 0;
+        padding: 0;
       }
     </style>
   </head>
 
-<body>
+  <body>
+    <!-- Elements wait on the page and are upgraded after demo/index.html is loaded. -->
+    <local-element-demo></local-element-demo>
 
-  <!-- Wrap elements with auto-binding template to -->
-  <!-- allow use of Polymer bindings in main document -->
-  <template id="just-for-demo" is="dom-bind" >
-    <!-- discription -->
-    <div class="hero u-p++ text--shadow">
-      <a class="actionable flex flex--right flex--middle" href="https://github.com/PredixDev/px-datetime-picker" target="_blank"><iron-icon class="menu__open" icon="fa:fa-github"></iron-icon>View on Github</a>
-  		<h1 class="delta">px-datetime-picker</h1>
-      <div class="description-text">
-    		<p>
-    			The	<code>px-datetime-picker</code> component includes various elements used for structuring responsive layouts.
-    		</p>
-        <p>
-        This component allows the user to select a date and time precisely to the second or millisecond.
-        This counter represents when the px-datetime-picker event property of the
-        picker is being fired/updated. The behavior depends on whether the picker uses
-        buttons. It is defined as followed:
-        <br>
-        - If it has buttons then it is fired when the user clicks the apply button AND the date/time is valid<br>
-        - If it doesn't have buttons then it is fired every time a valid change is made to the date or time
-        </p>
-      </div>
-  		<div class="flex">
-  			<img class="u-mr--" src="https://img.shields.io/travis/PredixDev/px-datetime-picker.svg?style=flat-square" alt="Travis" onerror="this.style.display='none'"/>
-  			<img class="u-mr--" src="https://img.shields.io/bower/v/px-datetime-picker.svg?style=flat-square" alt="Bower" onerror="this.style.display='none'"/>
-  			<img class="u-mr--" src="https://img.shields.io/github/issues-raw/PredixDev/px-datetime-picker.svg?style=flat-square" alt="Issues" onerror="this.style.display='none'"/>
-  		</div>
-  	</div>
-    <br />
-    <!-- mega demo -->
-    <div style="position: relative;" class="u-pb++ flex flex--col" id="defaultTab">
-      <div class="tabContainer u-pt++ u-pl++">
-        <px-tab-set selected="{{selected}}" bare no-bottom-border>
-          <template is="dom-repeat" items="{{optionsArray}}">
-            <px-tab>Option {{indexPlusOne(index)}}</px-tab>
-          </template>
-        </px-tab-set>
-      </div>
-      <px-tab-pages selected="{{selected}}">
-        <template is="dom-repeat" items="{{optionsArray}}">
-          <section class="tab-page">
-            <div class="mega-demo flex u-ph++ u-pb++">
-              <!-- Properties -->
-              <div class="properties u-ph+ u-pb+ u-mt+">
-                <p class="epsilon">Properties</p>
-                <div class="flex u-mb-">
-                  <input id="toggleTime{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.hideTime::change}}">
-                  <label for$="toggleTime{{indexPlusOne(index)}}" class="toggle__label toggle__label--small"></label>
-                  <div class="u-ml-">Hide time</div>
-                </div>
-                <div class="flex u-mb-">
-                  <input id="toggleButtons{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.showButtons::change}}">
-                  <label for$="toggleButtons{{indexPlusOne(index)}}" class="toggle__label toggle__label--small"></label>
-                  <div class="u-ml-">Show buttons in panel</div>
-                </div>
-                <div class="flex u-mb-">
-                  <input id="toggleFutureDates{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.blockFutureDates::change}}">
-                  <label for$="toggleFutureDates{{indexPlusOne(index)}}" class="toggle__label toggle__label--small"></label>
-                  <div class="u-ml-">Block future dates</div>
-                </div>
-                <div class="flex u-mb-">
-                  <input id="togglePastDates{{indexPlusOne(index)}}" class="toggle__input toggle__input--small" type="checkbox" checked="{{item.blockPastDates::change}}">
-                  <label for$="togglePastDates{{indexPlusOne(index)}}" class="toggle__label toggle__label--small"></label>
-                  <div class="u-ml-">Block past dates</div>
-                </div>
-                <div class="u-mb-">Date format: <input id="dateFormat" class="text-input" type="text" placeholder="YYYY/MM/DD" value="{{item.dateFormat::input}}" /></div>
-                <div class="u-mb-">Time format: <input id="timeFormat" class="text-input" type="text" placeholder="hh:mm:ss A" value="{{item.timeFormat::input}}" /></div>
-                <div class="u-mb-">Time zone: <input id="timeZone" class="text-input" type="text" placeholder="UTC" value="{{item.timeZone::input}}" /></div>
-                <div class="u-mb-">Show time zone:
-                  <div style="width: 100%;">
-                    <px-dropdown id="showTimeZone" value="{{item.showTimeZone}}" display-value="{{item.showTimeZone}}" bound-target="properties">
-                      <px-dropdown-content
-                        items='[
-                          {"key":"one", "val": "none"},
-                          {"key":"two", "val": "dropdown"},
-                          {"key":"three", "val": "extendedDropdown"},
-                          {"key":"four", "val": "text"},
-                          {"key":"five", "val": "abbreviatedText"}]'>
-                      </px-dropdown-content>
-                    </px-dropdown>
-                  </div>
-                </div>
-                <div>More info on date and time format at <a href="http://momentjs.com/docs/#/parsing/string-format/" target="_blank" class="actionable">momentjs</a></div>
-              </div>
-
-              <div class="demoContainer u-mt+">
-                <!-- demo -->
-                <div class="flex flex--col">
-                  <div class="demo u-p+">
-
-                    <span id="counter{{indexPlusOne(index)}}"><strong>px-datetime-submitted</strong> fired <strong>0</strong> time(s)</span>
-                    <div>
-                      Current dateTime object: <strong>{{item.dateTime}}</strong>
-                    </div>
-                    <br />
-                    <px-datetime-picker
-                      id="dateTime"
-                      date-time="{{item.dateTime}}"
-                      date-format="{{item.dateFormat}}"
-                      time-format="{{item.timeFormat}}"
-                      show-buttons="{{item.showButtons}}"
-                      block-future-dates="{{item.blockFutureDates}}"
-                      block-past-dates="{{item.blockPastDates}}"
-                      hide-time="{{item.hideTime}}"
-                      show-time-zone="{{item.showTimeZone}}"
-                      time-zone="{{item.timeZone}}">
-                    </px-datetime-picker>
-
-                  </div>
-                  <div>
-                    <px-demo-snippet
-                      element-properties={{item}}
-                      element-name="px-datetime-picker"
-                      links-includes="[[linksIncludes]]">
-                    </px-demo-snippet>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div class="apiContainer">
-              <div class="flex flex--col api u-mt++" >
-                <div>
-                  <px-api-viewer source="px-datetime-picker"></px-api-viewer>
-                </div>
-              </div>
-            </div>
-          </section>
-        </template>
-      </px-tab-pages>
-    </div>
-    <footer class="footer flex flex--center">
-      <div class="footer__container u-pv++">
-        <div>
-          <a href="https://ge.com/digital" >
-            <img src="monogram-wdmk.png" alt="GE Monogram" class="footer__img">
-          </a>
-        </div>
-        <div class="footer__list">
-          <ul class="list-inline list-inline--delimited">
-            <li>
-              <a href="http://predix.io/legal" class="footer__list--lnk">Legal</a>
-            </li>
-            <li>
-              <a href="mailto:info@predix.io" class="footer__list--lnk">Contact Us</a>
-            </li>
-            <li>Copyright &copy; 2016 General Electric Company. All rights reserved.</li>
-          </ul>
-        </div>
-      </div>
-    </footer>
-  </template>
-<script>
-window.addEventListener('WebComponentsReady', function() {
-  var template = document.querySelector('template[is=dom-bind]'),
-      dateTime = "2016-02-05T05:30:00.000Z",
-      dateFormat = ["YYYY/MM/DD","MM/DD/YY","DD/MM/YY"],
-      timeFormat = ["hh:mm A","HH:mm:ss.SSS"],
-      showTimeZone = ["text","abbreviatedText","dropdown"],
-      timeZone =["UTC","America/Los_Angeles","America/New_York"],
-      counter = 0;
-
-  var optionsArray = [
-    {
-      "dateTime":dateTime,
-      "dateFormat":dateFormat[1],
-      "timeFormat":timeFormat[0],
-      "showButtons":false,
-      "blockPastDates":false,
-      "blockFutureDates":false,
-      "hideTime":true,
-      "showTimeZone":showTimeZone[1],
-      "timeZone":timeZone[1]
-    },
-    {
-      "dateTime":dateTime,
-      "dateFormat":dateFormat[0],
-      "timeFormat":timeFormat[0],
-      "showButtons":true,
-      "blockFutureDates":true,
-      "blockPastDates":false,
-      "hideTime":false,
-      "showTimeZone":showTimeZone[0],
-      "timeZone":timeZone[0]
-    },
-    {
-      "dateTime":dateTime,
-      "dateFormat":dateFormat[2],
-      "timeFormat":timeFormat[1],
-      "showButtons":false,
-      "blockFutureDates":true,
-      "blockPastDates":false,
-      "hideTime":false,
-      "showTimeZone":showTimeZone[2],
-      "timeZone":timeZone[2]
-    }
-  ];
-
-    var indexPlusOne = function(num) {
-      return num + 1;
-    };
-
-    document.addEventListener('px-datetime-submitted', function(evt) {
-      counter++;
-      for(var i=1; i<=optionsArray.length; i++) {
-        var span = document.getElementById('counter'+i);
-        span.innerHTML = '<strong>px-datetime-submitted</strong> fired <strong>' + counter + '</strong> time(s)';
-      }
-    });
-
-
-    template.selected = "0";
-    template.optionsArray = optionsArray;
-    template.indexPlusOne = indexPlusOne;
-    template.linksIncludes = ['px-datetime-common/px-polygit-imports-datetime.html'];
-
-});
-</script>
-
-</body>
+    <!--
+      Attempt to register a service worker with the correct scope. Fail quietly
+      if this doesn't work, but log the result to the console.
+    -->
+    <script type="text/javascript">
+      // if ('serviceWorker' in navigator) {
+      //   navigator.serviceWorker.register('service-worker.js').then(function(registration) {
+      //     // Registration was successful
+      //     console.log('ServiceWorker registration successful with scope: ', registration.scope);
+      //   }).catch(function(err) {
+      //     // registration failed :(
+      //     console.log('ServiceWorker registration failed: ', err);
+      //   });
+      // }
+    </script>
+  </body>
 </html>
