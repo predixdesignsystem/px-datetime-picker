@@ -1,12 +1,24 @@
-v0.3.2
+v0.3.5
 ==================
 * Update to px-demo
 * removed demosass
 * Updated to cool grays
 
+v0.3.4
+==================
+* Update colors design to pick up new colors
+
+v0.3.3
+==================
+* changing ghp.sh to account for Alpha releases
+
+v0.3.2
+==================
+* fixed demo (#9)
+
 v0.3.1
 ==================
-* Update missed design depndencies
+* Update missed design dependencies
 
 v0.3.0
 ==================
@@ -43,7 +55,6 @@ v0.2.10
 v0.2.9
 ==================
 * removing px-theme style call
-
 
 v0.2.8
 ==================
