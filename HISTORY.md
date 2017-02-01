@@ -1,3 +1,7 @@
+v0.3.8
+==================
+* fixed timing bug that prevented the dateTime property from getting applied
+
 v0.3.7
 ==================
 * Moved theming style includes and updated ghp.sh
