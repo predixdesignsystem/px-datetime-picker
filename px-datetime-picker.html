@@ -14,11 +14,19 @@
 
 
 <!--
-Element allowing to pick a date using a calendar or by typing it
-
-##### Usage
+#### Usage
 
     <px-datetime-picker></px-datetime-picker>
+
+#### Styling
+The following custom properties are available for styling. Please also refer to px-forms-design and px-buttons-design for additional style variables used by this component.
+
+Custom property | Description | Default
+----------------|-------------|----------
+`--px-datetime-picker-background-color` | Text color for the "Today" link | `$primary-blue`
+`--px-datetime-picker-background-color--hover` | Text color for the "Today" link when hovered | `$primary-blue-hover`
+`--px-datetime-picker-background-color--pressed` | Text color for the "Today" link when pressed | `$primary-blue-pressed`
+`--px-datetime-picker-overlay-color` | Overlay color for the rest of the screen when the picker is invoked | `rgba($black, 0.1)`
 
 @element px-datetime-picker
 @blurb Element allowing to pick a date using a calendar or by typing it
@@ -31,7 +39,7 @@ Element allowing to pick a date using a calendar or by typing it
 <dom-module id="px-datetime-picker">
   <template>
     <style include="px-datetime-picker-styles"></style>
-    
+
     <div id="overlay" class="overlay visuallyhidden" on-tap="_processClose"></div>
     <div class="inline--flex flex--col">
       <px-datetime-field
@@ -210,7 +218,7 @@ Element allowing to pick a date using a calendar or by typing it
 
     _momentChanged: function(momentObj) {
       if(this._isAttached) {
-      
+
         if(this._opened) {
           if(this.$.calendar.fromMoment.toISOString() === this.momentObj.toISOString()) {
             //changes comes from calendar (not from field). If it comes from field
@@ -228,7 +236,7 @@ Element allowing to pick a date using a calendar or by typing it
             this._applyCurrentValues(true);
           }
         }
-        
+
       }
     },
 

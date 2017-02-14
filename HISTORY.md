@@ -1,3 +1,7 @@
+v0.3.9
+==================
+* added styling section to API documentation
+
 v0.3.8
 ==================
 * fixed timing bug that prevented the dateTime property from getting applied
