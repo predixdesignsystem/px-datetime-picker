@@ -36,16 +36,10 @@
 
       <!-- Component ---------------------------------------------------------->
       <px-demo-component>
-        <!--Figure out how to make this work with the new demo-->
-        <!--<template is="dom-if" if="{{props.preventRangeSelection.value}}">
-          <p><strong>px-datetime-selected</strong> fired <strong>0</strong> time(s)</p>
-          <p id="dateTimeString{{indexPlusOne(index)}}">Current dateTime object:</p>
-        </template>
 
-        <template is="dom-if" if="{{!props.preventRangeSelection.value}}">
-          <p id="counterRange"><strong>px-datetime-range-selected</strong> fired <strong>0</strong> time(s)</p>
-          <p id="rangeString">Current range object:</p>
-        </template>-->
+        <p class=u-mb0>Event fired: <strong>px-datetime-submitted</strong></p>
+        <p class="zeta u-mt0">See API Reference below for more details</p>
+        <p class="u-mb++">Current dateTime object: <strong>{{props.dateTime.value}}</strong></p>
 
         <div style="width:250px">
           <px-datetime-picker
@@ -131,7 +125,7 @@
               blockPastDates: false,
               hideTime: true,
               showTimeZone: "abbreviatedText",
-              timeZone: "America/Los_Angeles" 
+              timeZone: "America/Los_Angeles"
             },
 
             { configName: "Show buttons",
@@ -166,7 +160,7 @@
      * A reference for `this.props`. Read the documentation there.
      */
     demoProps: {
-      
+
       hideTime: {
         type: Boolean,
         defaultValue: false,
@@ -228,7 +222,7 @@
         inputDisabled: true
       }
 
-      
+
     },
 
     ready: function () {
@@ -244,4 +238,3 @@
     }
   });
 </script>
-

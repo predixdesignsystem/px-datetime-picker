@@ -1,3 +1,7 @@
+v0.3.12
+==================
+* add Event Fired information
+
 v0.3.11
 ==================
 * merged PR fixing attached typo
