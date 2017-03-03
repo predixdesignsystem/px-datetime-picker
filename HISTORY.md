@@ -1,3 +1,7 @@
+v0.3.11
+==================
+* merged PR fixing attached typo
+
 v0.3.10
 ==================
 * add link to Moment documentation
