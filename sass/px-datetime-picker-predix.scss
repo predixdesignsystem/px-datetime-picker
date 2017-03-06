@@ -38,6 +38,10 @@ common/abstract rules go in px-datetime-picker-sketch.scss, not in this file.
   }
 }
 
+.container__box {
+  border-color: var(--px-datetime-picker-border-color, $gray4);
+}
+
 .overlay {
   background-color: var(--px-datetime-picker-overlay-color, rgba($black, 0.1));
 }

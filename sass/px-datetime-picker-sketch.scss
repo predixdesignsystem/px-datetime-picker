@@ -38,7 +38,8 @@ $inuit-enable-box--tiny : true;
   top: $inuit-base-spacing-unit--small;
   display: inline-flex;
   background-color: $white;
-  border: 1px solid;
+  border-width: 1px;
+  border-style: solid;
   border-radius: 3px;
   z-index:2;
 }

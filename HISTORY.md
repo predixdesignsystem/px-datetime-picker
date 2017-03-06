@@ -1,3 +1,7 @@
+v0.3.13
+==================
+* fixed border color and exposed css variable
+
 v0.3.12
 ==================
 * add Event Fired information
