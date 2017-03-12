@@ -1,3 +1,7 @@
+v0.3.14
+==================
+* converted time zone property to typeahead 
+
 v0.3.13
 ==================
 * fixed border color and exposed css variable

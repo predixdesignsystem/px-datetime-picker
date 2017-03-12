@@ -32,7 +32,7 @@
       <px-demo-configs configs="[[configs]]" props="{{props}}" chosen-config="{{chosenConfig}}"></px-demo-configs>
 
       <!-- Props -->
-      <px-demo-props props="{{props}}" config="[[chosenConfig]]"></px-demo-props>
+      <px-demo-props props="{{props}}" config="[[chosenConfig]]" class="flex__item flex__item--msfix"></px-demo-props>
 
       <!-- Component ---------------------------------------------------------->
       <px-demo-component>
@@ -97,8 +97,13 @@
        */
       props: {
         type: Object,
-        value: function(){ return this.demoProps; }
+        value: function(){ 
+          var props =  this.demoProps; 
+              props.timeZone.inputLocalCandidates = Px.moment.tz.names();
+            return props;
+          }
       },
+
 
       /**
        * An array of pre-configured `props` that can be used to provide the user
@@ -203,8 +208,8 @@
       timeZone: {
         type: String,
         defaultValue: 'UTC',
-        inputType: 'text',
-        inputPlaceholder: 'America/Los_Angeles',
+        inputType: 'typeahead',
+        inputPlaceholder: 'UTC'
       },
 
       showTimeZone: {
@@ -221,20 +226,11 @@
         inputPlaceholder: 'ISO 8601 String',
         inputDisabled: true
       }
-
-
     },
 
     ready: function () {
-      // document.addEventListener('px-datetime-submitted', function(evt) {
-      // counter++;
-      // for(var i=1; i<=optionsArray.length; i++) {
-      //     var span = document.getElementById('counter'+i);
-      //     span.innerHTML = '<strong>px-datetime-submitted</strong> fired <strong>' + counter + '</strong> time(s)';
-      //   }
-      // });
-
       this.linksIncludes = ['px-datetime-common/px-polygit-imports-datetime.html'];
     }
+    
   });
 </script>
