@@ -1,0 +1,236 @@
+<!-- Common imports -->
+<link rel="import" href="../../polymer/polymer.html" />
+<link rel="import" href="../../px-polymer-font-awesome/polymer-font-awesome.html" />
+
+<!-- Common demo imports -->
+<link rel="import" href="../../px-demo/px-demo-header.html" />
+<link rel="import" href="../../px-demo/px-demo-api-viewer.html" />
+<link rel="import" href="../../px-demo/px-demo-footer.html" />
+<link rel="import" href="../../px-demo/px-demo-configs.html" />
+<link rel="import" href="../../px-demo/px-demo-props.html" />
+<link rel="import" href="../../px-demo/px-demo-interactive.html" />
+<link rel="import" href="../../px-demo/px-demo-component-snippet.html" />
+
+<!-- Imports for this componnent -->
+<link rel="import" href="../../px-demo/css/px-demo-styles.html" />
+<link rel="import" href="../px-datetime-picker.html" />
+
+<!-- Demo DOM module -->
+<dom-module id="local-element-demo">
+  <template>
+    <style include="px-demo-styles" is="custom-style"></style>
+
+    <!-- Header -->
+    <px-demo-header
+        module-name="px-datetime-picker"
+        description="The px-datetime-picker component includes various elements used for structuring responsive layouts. This component allows the user to select a date or date range. The main use of this component is to be used in the px-range-panel.">
+    </px-demo-header>
+
+    <!-- Interactive -->
+    <px-demo-interactive>
+      <!-- Configs -->
+      <px-demo-configs configs="[[configs]]" props="{{props}}" chosen-config="{{chosenConfig}}"></px-demo-configs>
+
+      <!-- Props -->
+      <px-demo-props props="{{props}}" config="[[chosenConfig]]" class="flex__item flex__item--msfix"></px-demo-props>
+
+      <!-- Component ---------------------------------------------------------->
+      <px-demo-component>
+
+        <p class=u-mb0>Event fired: <strong>px-datetime-submitted</strong></p>
+        <p class="zeta u-mt0">See API Reference below for more details</p>
+        <p class="u-mb++">Current dateTime object: <strong>{{props.dateTime.value}}</strong></p>
+
+        <div style="width:250px">
+          <px-datetime-picker
+              date-time="{{props.dateTime.value}}"
+              date-format="{{props.dateFormat.value}}"
+              time-format="{{props.timeFormat.value}}"
+              show-buttons="{{props.showButtons.value}}"
+              block-future-dates="{{props.blockFutureDates.value}}"
+              block-past-dates="{{props.blockPastDates.value}}"
+              hide-time="{{props.hideTime.value}}"
+              show-time-zone="{{props.showTimeZone.value}}"
+              time-zone="{{props.timeZone.value}}">
+          </px-datetime-picker>
+        </div>
+      </px-demo-component>
+      <!-- END Component ------------------------------------------------------>
+
+      <px-demo-component-snippet
+          element-properties="{{props}}"
+          element-name="px-datetime-picker"
+          links-includes="[[linksIncludes]]">
+      </px-demo-component-snippet>
+    </px-demo-interactive>
+
+    <!-- API Viewer -->
+    <px-demo-api-viewer source="px-datetime-picker"></px-demo-api-viewer>
+
+    <!-- Footer -->
+    <px-demo-footer></px-demo-footer>
+
+  </template>
+
+</dom-module>
+<script>
+  Polymer({
+    is: 'local-element-demo',
+
+    properties: {
+
+      /**
+       * Note: The actual data/values for `props` are placed in `this.demoProps`
+       * to create a static reference that Polymer shouldn't overwrite.
+       *
+       * On object containing all the properties the user can configure for this
+       * demo. Usually a pretty similar copy of the component's `properties` block
+       * with some additional sugar added to describe what kind of input the
+       * user will be shown and how that input should be configured.
+       *
+       * Note that `value` for each property is the default that will be set
+       * unless a config from `configs` is applied by default.
+       *
+       *
+       * @property demoProps
+       * @type {Object}
+       */
+      props: {
+        type: Object,
+        value: function(){ 
+          var props =  this.demoProps; 
+              props.timeZone.inputLocalCandidates = Px.moment.tz.names();
+            return props;
+          }
+      },
+
+
+      /**
+       * An array of pre-configured `props` that can be used to provide the user
+       * with a set of common examples. These configs will be made available
+       * as a set of tabs the user can click that will automatically change
+       * the `props` to specific values.
+       *
+       * @property demoProps
+       * @type {Array}
+       */
+      configs: {
+        type: Array,
+        value: function(){
+          return [
+            { configName: "International",
+              configReset: true },
+
+            { configName: "Hide time",
+              dateTime: "2016-02-05T05:30:00.000Z",
+              dateFormat: "MM/DD/YY",
+              timeFormat: "hh:mm A",
+              showButtons: false,
+              blockFutureDates: false,
+              blockPastDates: false,
+              hideTime: true,
+              showTimeZone: "abbreviatedText",
+              timeZone: "America/Los_Angeles"
+            },
+
+            { configName: "Show buttons",
+              dateTime: "2016-02-05T05:30:00.000Z",
+              dateFormat: "YYYY/MM/DD",
+              timeFormat: "hh:mm A",
+              showButtons: true,
+              blockFutureDates: true,
+              blockPastDates: false,
+              hideTime: false,
+              showTimeZone: "text",
+              timeZone: "UTC"
+            },
+
+            { configName: "24 hour time",
+              dateTime: "2016-02-05T05:30:00.000Z",
+              dateFormat: "DD/MM/YY",
+              timeFormat: "HH:mm:ss.SSS",
+              showButtons: false,
+              blockFutureDates: true,
+              blockPastDates: false,
+              hideTime: false,
+              showTimeZone: "extendedDropdown",
+              timeZone: "America/New_York"
+            }
+          ]
+        }
+      }
+    },
+
+    /**
+     * A reference for `this.props`. Read the documentation there.
+     */
+    demoProps: {
+
+      hideTime: {
+        type: Boolean,
+        defaultValue: false,
+        inputType: 'toggle'
+      },
+
+      showButtons: {
+        type: Boolean,
+        inputLabel : 'Show Buttons in Panel',
+        defaultValue: false,
+        inputType: 'toggle'
+      },
+
+      blockFutureDates: {
+        type: Boolean,
+        defaultValue: false,
+        inputType: 'toggle'
+      },
+
+      blockPastDates: {
+        type: Boolean,
+        defaultValue: false,
+        inputType: 'toggle'
+      },
+
+      dateFormat: {
+        type: String,
+        defaultValue: 'YYYY/MM/DD',
+        inputType: 'text',
+        inputPlaceholder: 'YYYY/MM/DD',
+      },
+
+      timeFormat: {
+        type: String,
+        defaultValue: 'HH:mm:ss',
+        inputType: 'text',
+        inputPlaceholder: 'HH:mm:ss',
+      },
+
+      timeZone: {
+        type: String,
+        defaultValue: 'UTC',
+        inputType: 'typeahead',
+        inputPlaceholder: 'UTC'
+      },
+
+      showTimeZone: {
+        type: String,
+        defaultValue: 'abbreviatedText',
+        inputType: 'dropdown',
+        inputChoices: ['none', 'dropdown', 'extendedDropdown', 'text', 'abbreviatedText']
+      },
+
+      dateTime: {
+        type: String,
+        defaultValue: '2016-02-05T05:30:00.000Z',
+        inputType: 'text',
+        inputPlaceholder: 'ISO 8601 String',
+        inputDisabled: true
+      }
+    },
+
+    ready: function () {
+      this.linksIncludes = ['px-datetime-common/px-polygit-imports-datetime.html'];
+    }
+    
+  });
+</script>

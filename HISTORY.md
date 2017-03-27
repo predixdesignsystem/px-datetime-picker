@@ -1,3 +1,66 @@
+v0.3.14
+==================
+* converted time zone property to typeahead 
+
+v0.3.13
+==================
+* fixed border color and exposed css variable
+
+v0.3.12
+==================
+* add Event Fired information
+
+v0.3.11
+==================
+* merged PR fixing attached typo
+
+v0.3.10
+==================
+* add link to Moment documentation
+
+v0.3.9
+==================
+* added styling section to API documentation
+
+v0.3.8
+==================
+* fixed timing bug that prevented the dateTime property from getting applied
+
+v0.3.7
+==================
+* Moved theming style includes and updated ghp.sh
+* updated api for new colors
+
+v0.3.6
+==================
+* fix component link in demo
+
+v0.3.5
+==================
+* Update to px-demo
+* removed demosass
+* Updated to cool grays
+
+v0.3.4
+==================
+* Update colors design to pick up new colors
+
+v0.3.3
+==================
+* changing ghp.sh to account for Alpha releases
+
+v0.3.2
+==================
+* fixed demo (#9)
+
+v0.3.1
+==================
+* Update missed design dependencies
+
+v0.3.0
+==================
+* Updated dependencies
+
 v0.2.16
 ==================
 * changing browser in wct testing from safari 8 to safari 10 on elcapitan
@@ -29,7 +92,6 @@ v0.2.10
 v0.2.9
 ==================
 * removing px-theme style call
-
 
 v0.2.8
 ==================

@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "name": "px-datetime-picker",
     "version": "0.2.16",
     "main": [
@@ -46,4 +47,44 @@
         "px-dropdown": "^2.0.0",
         "px-polymer-font-awesome": "^0.1.9"
     }
+=======
+  "name": "px-datetime-picker",
+  "version": "0.3.14",
+  "main": [
+    "px-datetime-picker.html"
+  ],
+  "ignore": [
+    ".*",
+    "node_modules",
+    "bower_components",
+    "sass",
+    "HISTORY.md",
+    "CONTRIBUTING.md",
+    "OSS_Notice.pdf",
+    "scripts",
+    ".github",
+    ".editorconfig",
+    ".jshintrc",
+    ".gitignore",
+    "LICENSE.md",
+    "gulpfile.js",
+    "monogram-wdmk.png",
+    "README.md",
+    "wct.conf.json",
+    "px-datetime-picker.png"
+  ],
+  "dependencies": {
+    "polymer": "^1.6.1",
+    "px-theme": "^2.0.1",
+    "px-datetime-field": "^0.6.0",
+    "px-calendar-picker": "^0.6.0",
+    "px-datetime-common": "^0.7.0",
+    "iron-a11y-keys-behavior": "PolymerElements/iron-a11y-keys-behavior#~1.1.0",
+    "px-box-design": "^0.4.0"
+  },
+  "devDependencies": {
+    "px-starter-kit-design": "^0.7.0",
+    "px-demo": "^1.0.3"
+  }
+>>>>>>> 2b3867dea4e169f7404230a269e6030c97435fe8
 }
