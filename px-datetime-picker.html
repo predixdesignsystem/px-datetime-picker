@@ -31,7 +31,7 @@ Element allowing to pick a date using a calendar or by typing it
 <dom-module id="px-datetime-picker">
   <template>
     <style include="px-datetime-picker-styles"></style>
-    
+
     <div id="overlay" class="overlay visuallyhidden" on-tap="_processClose"></div>
     <div class="inline--flex flex--col">
       <px-datetime-field
@@ -60,12 +60,12 @@ Element allowing to pick a date using a calendar or by typing it
             base-date="[[momentObj]]"
             time-zone="{{timeZone}}">
           </px-calendar-picker>
-          <div class="flex__item--middle today u-mb-" on-tap="_todayClicked">Today</div>
-          <template is="dom-if" if={{showButtons}}>
+          <div class="flex__item--middle today u-mb-" on-tap="_todayClicked">[[localize('Today')]]</div>
+          <template is="dom-if" if="{{showButtons}}">
             <px-datetime-buttons
               class="flex__item--bottom u-m-"
               is-submit-button-valid
-              submit-text="Apply">
+              submit-text="[[localize('Apply')]]">
             </px-datetime-buttons>
           </template>
         </div>
@@ -80,8 +80,7 @@ Element allowing to pick a date using a calendar or by typing it
     is: 'px-datetime-picker',
     behaviors:[
       pxDatetimeBehavior,
-      pxDatetimeButtonBehavior,
-      Polymer.IronA11yKeysBehavior
+      pxDatetimeButtonBehavior
     ],
 
     /**
