@@ -11,6 +11,7 @@
 <link rel="import" href="../px-datetime-common/px-datetime-buttons.html"/>
 <link rel="import" href="../px-datetime-common/px-datetime-button-behavior.html"/>
 <link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
+<link rel="import" href="../app-localize-behavior/app-localize-behavior.html" />
 
 
 <!--
@@ -57,7 +58,10 @@ Custom property | Description | Default
         is-selected=[[_opened]]
         prevent-notification-on-change
         block-future-dates="{{blockFutureDates}}"
-        block-past-dates="{{blockPastDates}}">
+        block-past-dates="{{blockPastDates}}"
+        resources="[[resources]]"
+        language="[[language]]"
+        formats="[[formats]]">
       </px-datetime-field>
       <div id="box" class="visuallyhidden container">
         <div class="container__box flex--col">
@@ -70,14 +74,19 @@ Custom property | Description | Default
             from-moment="{{momentObj}}"
             base-date="[[momentObj]]"
             time-zone="{{timeZone}}"
-            day-week-start-index="[[dayWeekStartIndex]]">
+            day-week-start-index="[[dayWeekStartIndex]]"
+            resources="[[resources]]"
+            language="[[language]]"
+            formats="[[formats]]">
           </px-calendar-picker>
           <div class="flex__item--middle today u-mb-" on-tap="_todayClicked">[[localize('Today')]]</div>
           <template is="dom-if" if="{{showButtons}}">
             <px-datetime-buttons
               class="flex__item--bottom u-m-"
               is-submit-button-valid
-              submit-text="[[localize('Apply')]]">
+              resources="[[resources]]"
+              language="[[language]]"
+              formats="[[formats]]">
             </px-datetime-buttons>
           </template>
         </div>
@@ -92,8 +101,7 @@ Custom property | Description | Default
     is: 'px-datetime-picker',
     behaviors:[
       pxDatetimeBehavior,
-      pxDatetimeButtonBehavior,
-      pxDatetimeSharedBehavior.dayWeekStartIndex
+      pxDatetimeButtonBehavior
     ],
 
     /**
@@ -147,6 +155,17 @@ Custom property | Description | Default
        timeFormat: {
         type: String,
         value: 'HH:mm A'
+      },
+      /**
+       * List of key/values to be included for translating this component
+       */
+      resources: {
+        type: Object,
+        value: {
+          'en': {
+            'Today': 'Today'
+          }
+        }
       }
     },
     listeners: {

@@ -1,6 +1,6 @@
 v0.4.0
 ==================
-* added localization and dayWeekStartIndex (controlling at which week day the calendar week starts)
+* added localization through resources, language, formats and Px.moment.changeLocale()
 
 v0.3.14
 ==================
