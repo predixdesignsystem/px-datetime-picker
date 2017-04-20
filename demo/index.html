@@ -51,8 +51,7 @@
               block-past-dates="{{props.blockPastDates.value}}"
               hide-time="{{props.hideTime.value}}"
               show-time-zone="{{props.showTimeZone.value}}"
-              time-zone="{{props.timeZone.value}}"
-              day-week-start-index="{{props.dayWeekStartIndex.value}}">
+              time-zone="{{props.timeZone.value}}">
           </px-datetime-picker>
         </div>
       </px-demo-component>
@@ -204,13 +203,6 @@
         defaultValue: 'HH:mm:ss',
         inputType: 'text',
         inputPlaceholder: 'HH:mm:ss',
-      },
-
-      dayWeekStartIndex: {
-        type: Number,
-        inputLabel: 'Day Week Start Index (0-6)',
-        defaultValue: 0,
-        inputType: 'number'
       },
 
       timeZone: {
