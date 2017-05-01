@@ -161,10 +161,12 @@ Custom property | Description | Default
        */
       resources: {
         type: Object,
-        value: {
-          'en': {
-            'Today': 'Today'
-          }
+        value: function() {
+          return {
+            'en': {
+              'Today': 'Today'
+            }
+          };
         }
       }
     },
