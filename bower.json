@@ -28,9 +28,9 @@
   "dependencies": {
     "polymer": "^1.6.1",
     "px-theme": "^2.0.1",
-    "px-datetime-field": "^0.6.0",
-    "px-calendar-picker": "^1.0.0",
-    "px-datetime-common": "^1.0.0",
+    "px-datetime-field": "^0.7.0",
+    "px-calendar-picker": "^0.7.0",
+    "px-datetime-common": "^0.8.0",
     "iron-a11y-keys-behavior": "PolymerElements/iron-a11y-keys-behavior#~1.1.0",
     "px-box-design": "^0.4.0"
   },
