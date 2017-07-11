@@ -1,3 +1,8 @@
+v0.4.1
+==================
+* update readme and remove old component image
+* add resolution for webcomponentsjs
+
 v0.4.0
 ==================
 * added localization through resources, language, formats and Px.moment.changeLocale()
