@@ -1,11 +1,8 @@
-#Px-Datetime-Picker [![Build Status](https://travis-ci.org/PredixDev/px-datetime-picker.svg?branch=master)](https://travis-ci.org/PredixDev/px-datetime-picker)
-
-
-[![px-datetime-picker demo](px-datetime-picker.png?raw=true)](https://predixdev.github.io/px-datetime-picker)
+# px-datetime-picker [![Build Status](https://travis-ci.org/PredixDev/px-datetime-picker.svg?branch=master)](https://travis-ci.org/PredixDev/px-datetime-picker)
 
 ## Overview
 
-px-datetime-picker is a Predix UI component
+The px-datetime-picker allows a user to select a date and a time.
 
 ## Usage
 
@@ -40,7 +37,7 @@ Insert Your demo code here.
 <br />
 <hr />
 
-## documentation
+## Documentation
 
 Read the full API and view the demo [here](https://predixdev.github.io/px-datetime-picker).
 
