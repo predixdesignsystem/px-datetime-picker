@@ -28,29 +28,33 @@ Predix branding rules go in px-datetime-picker-predix.scss, not in this file.
 
 // Base
 @import "px-flexbox-design/_base.flexbox.scss";
-@import "px-viewport-design/_base.viewport.scss";
 
+//Objects
 $inuit-enable-box--tiny : true;
 @import "px-box-design/_objects.box.scss";
+@import 'px-actionable-design/_objects.actionable.scss';
+
+//Component
+.today {
+  color: var(--px-datetime-picker-background-color, blue);
+  cursor: pointer;
+  &:hover {
+    color: var(--px-datetime-picker-background-color--hover, darkblue);
+  }
+  &:active {
+    color: var(--px-datetime-picker-background-color--pressed, navy);
+  }
+  &:focus {
+    color: var(--px-datetime-picker-background-color, blue);
+  }
+}
 
 .container__box {
   position: absolute;
-  top: $inuit-base-spacing-unit--small;
-  display: inline-flex;
   background-color: $white;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 3px;
-  z-index:2;
-}
-
-.overlay {
-  z-index:1;
-  position:fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
+  border: 1px solid var(--px-datetime-picker-border-color, lightgray);
+  z-index: var(--px-datetime-picker-z-index, 300);
+  padding: $inuit-base-spacing-unit--small $inuit-base-spacing-unit--large $inuit-base-spacing-unit--large;
 }
 
 .container {
@@ -61,12 +65,8 @@ $inuit-enable-box--tiny : true;
   position: relative;
 }
 
-.aboveOverlay {
-  z-index: 2;
-}
-
 .container__box__time {
-    border: solide 1px $gray4;
+    border: solid 1px gray;
     font-size: 36;
     --px-datetime-entry-font-size: xx-large;
 }
@@ -75,14 +75,11 @@ $inuit-enable-box--tiny : true;
   width:100%;
 }
 
-// Component
+// Trumps
 $inuit-enable-margins--small      : true;
 $inuit-enable-margins--large      : true;
 $inuit-enable-margins             : true;
 $inuit-enable-margins--none       : true;
 $inuit-enable-paddings--small     : true;
 $inuit-enable-paddings--large     : true;
-
-// Trumps
-@import "px-spacing-responsive-design/_trumps.spacing-responsive.scss";
-@import "px-widths-responsive-design/_trumps.widths-responsive.scss";
+@import "px-spacing-design/_trumps.spacing.scss";

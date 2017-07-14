@@ -22,13 +22,13 @@ The datetime components rely on <a href="https://momentjs.com/" target="_blank">
 #### Styling
 The following custom properties are available for styling. Please also refer to px-forms-design and px-buttons-design for additional style variables used by this component.
 
-Custom property | Description | Default
-----------------|-------------|----------
-`--px-datetime-picker-background-color` | Text color for the "Today" link | `$primary-blue`
-`--px-datetime-picker-background-color--hover` | Text color for the "Today" link when hovered | `$primary-blue-hover`
-`--px-datetime-picker-background-color--pressed` | Text color for the "Today" link when pressed | `$primary-blue-pressed`
-`--px-datetime-picker-overlay-color` | Overlay color for the rest of the screen when the picker is invoked | `rgba($black, 0.1)`
-`--px-datetime-picker-border-color` | Border color for the picker panel | `$gray4`
+Custom property | Description
+:----------------|:-------------
+`--px-datetime-picker-background-color` | Text color for the "Today" link
+`--px-datetime-picker-background-color--hover` | Text color for the "Today" link when hovered
+`--px-datetime-picker-background-color--pressed` | Text color for the "Today" link when pressed
+`--px-datetime-picker-border-color` | Border color for the picker panel
+`--px-datetime-picker-z-index` | The z-index of the container
 
 @element px-datetime-picker
 @blurb Element allowing to pick a date using a calendar or by typing it
@@ -42,52 +42,48 @@ Custom property | Description | Default
   <template>
     <style include="px-datetime-picker-styles"></style>
 
-    <div id="overlay" class="overlay visuallyhidden" on-tap="_processClose"></div>
-    <div class="inline--flex flex--col">
-      <px-datetime-field
-        class="field"
-        id="field"
-        time-zone="{{timeZone}}"
-        moment-obj="{{momentObj}}"
-        hide-time={{hideTime}}
-        show-time-zone="{{showTimeZone}}"
-        date-format="{{dateFormat}}"
-        time-format="{{timeFormat}}"
-        is-selected=[[_opened]]
-        prevent-notification-on-change
-        block-future-dates="{{blockFutureDates}}"
-        block-past-dates="{{blockPastDates}}"
-        resources="[[resources]]"
-        language="[[language]]"
-        formats="[[formats]]">
-      </px-datetime-field>
-      <div id="box" class="visuallyhidden container">
-        <div class="container__box flex--col">
-          <px-calendar-picker
-            id="calendar"
-            class="u-m+"
-            block-future-dates="{{blockFutureDates}}"
-            block-past-dates="{{blockPastDates}}"
-            prevent-range-selection
-            from-moment="{{momentObj}}"
-            base-date="[[momentObj]]"
-            time-zone="{{timeZone}}"
-            day-week-start-index="[[dayWeekStartIndex]]"
+    <px-datetime-field
+      class="field"
+      id="field"
+      time-zone="{{timeZone}}"
+      moment-obj="{{momentObj}}"
+      hide-time={{hideTime}}
+      show-time-zone="{{showTimeZone}}"
+      date-format="{{dateFormat}}"
+      time-format="{{timeFormat}}"
+      is-selected=[[_opened]]
+      prevent-notification-on-change
+      block-future-dates="{{blockFutureDates}}"
+      block-past-dates="{{blockPastDates}}"
+      resources="[[resources]]"
+      language="[[language]]"
+      formats="[[formats]]">
+    </px-datetime-field>
+    <div id="box" class=" container"> <!--visuallyhidden-->
+      <div class="container__box u-mt+">
+        <px-calendar-picker
+          id="calendar"
+          block-future-dates="{{blockFutureDates}}"
+          block-past-dates="{{blockPastDates}}"
+          prevent-range-selection
+          from-moment="{{momentObj}}"
+          base-date="[[momentObj]]"
+          time-zone="{{timeZone}}"
+          day-week-start-index="[[dayWeekStartIndex]]"
+          resources="[[resources]]"
+          language="[[language]]"
+          formats="[[formats]]">
+        </px-calendar-picker>
+        <div class="flex flex--center actionable caps u-mt-" on-tap="_todayClicked">[[localize('Today')]]</div>
+        <template is="dom-if" if="{{showButtons}}">
+          <px-datetime-buttons
+            class="flex flex--row--rev u-mt+"
+            is-submit-button-valid
             resources="[[resources]]"
             language="[[language]]"
             formats="[[formats]]">
-          </px-calendar-picker>
-          <div class="flex__item--middle today u-mb-" on-tap="_todayClicked">[[localize('Today')]]</div>
-          <template is="dom-if" if="{{showButtons}}">
-            <px-datetime-buttons
-              class="flex__item--bottom u-m-"
-              is-submit-button-valid
-              resources="[[resources]]"
-              language="[[language]]"
-              formats="[[formats]]">
-            </px-datetime-buttons>
-          </template>
-        </div>
+          </px-datetime-buttons>
+        </template>
       </div>
     </div>
   </template>
@@ -208,8 +204,6 @@ Custom property | Description | Default
      */
     _open: function() {
       this.toggleClass('visuallyhidden', false, this.$.box);
-      this.toggleClass('visuallyhidden', false, this.$.overlay);
-      this.toggleClass('aboveOverlay', true, this.$.field);
 
       this.set('_opened', true);
     },
@@ -217,9 +211,7 @@ Custom property | Description | Default
      * Closes the calendar
      */
     _close: function() {
-      this.toggleClass('visuallyhidden', true, this.$.box);
-      this.toggleClass('visuallyhidden', true, this.$.overlay);
-      this.toggleClass('aboveOverlay', false, this.$.field);
+      // this.toggleClass('visuallyhidden', true, this.$.box);
 
       this.set('_opened', false);
     },
