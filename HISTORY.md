@@ -1,3 +1,7 @@
+v0.4.2
+==================
+* part of the timezone time issue fix. px-rangepicker issue #39
+
 v0.4.1
 ==================
 * update readme and remove old component image
