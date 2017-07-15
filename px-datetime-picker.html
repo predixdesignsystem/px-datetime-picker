@@ -47,7 +47,7 @@ Custom property | Description | Default
       <px-datetime-field
         class="field"
         id="field"
-        time-zone="{{timeZone}}"
+        time-zone="[[timezone]]"
         moment-obj="{{momentObj}}"
         hide-time={{hideTime}}
         show-time-zone="{{showTimeZone}}"
@@ -71,7 +71,7 @@ Custom property | Description | Default
             prevent-range-selection
             from-moment="{{momentObj}}"
             base-date="[[momentObj]]"
-            time-zone="{{timeZone}}"
+            time-zone="[[timezone]]"
             day-week-start-index="[[dayWeekStartIndex]]"
             resources="[[resources]]"
             language="[[language]]"
