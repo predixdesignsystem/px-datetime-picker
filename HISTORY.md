@@ -1,3 +1,9 @@
+v1.0.0
+==================
+* component redesign
+* combined -predix and -sketch sass files
+* update dependencies for design refresh
+
 v0.4.1
 ==================
 * update readme and remove old component image
