@@ -43,7 +43,6 @@ Custom property | Description
     <style include="px-datetime-picker-styles"></style>
 
     <px-datetime-field
-      class="field"
       id="field"
       time-zone="[[timeZone]]"
       moment-obj="{{momentObj}}"
@@ -59,8 +58,8 @@ Custom property | Description
       language="[[language]]"
       formats="[[formats]]">
     </px-datetime-field>
-    <div id="box" class=" container"> <!--visuallyhidden-->
-      <div class="container__box u-mt+">
+    <div id="box" class="visuallyhidden">
+      <div class="dt-container__box shadow-temporary u-mt+">
         <px-calendar-picker
           id="calendar"
           block-future-dates="{{blockFutureDates}}"
@@ -74,7 +73,7 @@ Custom property | Description
           language="[[language]]"
           formats="[[formats]]">
         </px-calendar-picker>
-        <div class="flex flex--center actionable caps u-mt-" on-tap="_todayClicked">[[localize('Today')]]</div>
+        <div class="actionable caps dt-today u-mt-" on-tap="_todayClicked">[[localize('Today')]]</div>
         <template is="dom-if" if="{{showButtons}}">
           <px-datetime-buttons
             class="flex flex--row--rev u-mt+"
@@ -166,7 +165,8 @@ Custom property | Description
     },
     listeners: {
       'px-datetime-entry-icon-clicked':'_iconClicked',
-      'px-datetime-button-clicked': '_buttonClicked'
+      'px-datetime-button-clicked': '_buttonClicked',
+      'opened-changed' : '_handleOpenPanels'
     },
     observers: [
       '_momentChanged(momentObj)'
@@ -185,16 +185,19 @@ Custom property | Description
      * 'Today' button/text has been clicked
      */
     _todayClicked: function(evt) {
-
       this.set('momentObj', this._preserveTime(this.momentObj, Px.moment.tz(Px.moment(), this.timeZone)));
       if(!this.showButtons) {
         this._close();
       }
     },
+    /**
+     */
     _onEsc: function(evt) {
       this._applyCurrentValues(false);
       this._close();
     },
+    /**
+     */
     _onEnter: function(evt) {
       this._applyCurrentValues(this.$.field.isValid);
       this._close();
@@ -211,7 +214,7 @@ Custom property | Description
      * Closes the calendar
      */
     _close: function() {
-      // this.toggleClass('visuallyhidden', true, this.$.box);
+      this.toggleClass('visuallyhidden', true, this.$.box);
 
       this.set('_opened', false);
     },
@@ -225,12 +228,23 @@ Custom property | Description
         this._open();
       }
     },
+    /**
+     * If the calendar is open and the dropdown is selected, close the calendar
+     */
+    _handleOpenPanels: function(evt){
+      if(this._opened === true){
+        this._close();
+      }
+    },
+    /**
+     */
     _processClose: function() {
       //If we show buttons don't validate
       this._applyCurrentValues(!this.showButtons);
       this._close();
     },
-
+    /**
+     */
     _momentChanged: function(momentObj) {
       if(this._isAttached) {
 
@@ -254,12 +268,15 @@ Custom property | Description
 
       }
     },
-
+    /**
+     */
     _buttonClicked: function(evt) {
       var canApplyValue = evt.detail.action && this.$.field.isValid;
       this._applyCurrentValues(canApplyValue);
       this._close();
     },
+    /**
+     */
     _iconClicked: function(evt) {
       if(evt.detail.dateOrTime === "Date") {
         this._toggleBoxOpen();

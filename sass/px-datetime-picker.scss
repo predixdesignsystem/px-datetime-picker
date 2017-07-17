@@ -33,53 +33,25 @@ Predix branding rules go in px-datetime-picker-predix.scss, not in this file.
 $inuit-enable-box--tiny : true;
 @import "px-box-design/_objects.box.scss";
 @import 'px-actionable-design/_objects.actionable.scss';
+@import "px-shadows-design/_objects.shadows.scss";
 
 //Component
-.today {
-  color: var(--px-datetime-picker-background-color, blue);
-  cursor: pointer;
-  &:hover {
-    color: var(--px-datetime-picker-background-color--hover, darkblue);
-  }
-  &:active {
-    color: var(--px-datetime-picker-background-color--pressed, navy);
-  }
-  &:focus {
-    color: var(--px-datetime-picker-background-color, blue);
-  }
+.dt-today {
+  height: $inuit-base-spacing-unit--huge;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.container__box {
+.dt-container__box {
   position: absolute;
-  background-color: $white;
+  background-color: var(--px-datetime-picker-background-color, white);
   border: 1px solid var(--px-datetime-picker-border-color, lightgray);
   z-index: var(--px-datetime-picker-z-index, 300);
   padding: $inuit-base-spacing-unit--small $inuit-base-spacing-unit--large $inuit-base-spacing-unit--large;
 }
 
-.container {
-  position: relative;
-}
-
-.field {
-  position: relative;
-}
-
-.container__box__time {
-    border: solid 1px gray;
-    font-size: 36;
-    --px-datetime-entry-font-size: xx-large;
-}
-
-.divider {
-  width:100%;
-}
-
 // Trumps
 $inuit-enable-margins--small      : true;
 $inuit-enable-margins--large      : true;
-$inuit-enable-margins             : true;
-$inuit-enable-margins--none       : true;
-$inuit-enable-paddings--small     : true;
-$inuit-enable-paddings--large     : true;
 @import "px-spacing-design/_trumps.spacing.scss";
