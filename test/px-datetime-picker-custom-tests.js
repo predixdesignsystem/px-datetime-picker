@@ -8,10 +8,17 @@ function runCustomTests() {
 
     var picker = document.getElementById('px_date_picker_1'),
         field = Polymer.dom(picker.root).querySelector('px-datetime-field'),
+        overlay = Polymer.dom(picker.root).querySelector('.overlay'),
         box = Polymer.dom(picker.root).querySelector('#box');
 
     setup(function() {
       picker._close();
+    });
+
+    test('calendar and overlay hidden by default', function() {
+      assert.isFalse(picker._opened);
+      assert.isTrue(overlay.classList.contains('visuallyhidden'));
+      assert.isTrue(overlay.classList.contains('visuallyhidden'));
     });
 
     test('calendar opens on event and close with close function', function() {
@@ -21,6 +28,8 @@ function runCustomTests() {
       field.fire('px-datetime-entry-icon-clicked', {dateOrTime: 'Date'});
 
       assert.isTrue(picker._opened);
+      assert.isFalse(overlay.classList.contains('visuallyhidden'));
+      assert.isFalse(overlay.classList.contains('visuallyhidden'));
 
       picker._close();
 
@@ -42,6 +51,14 @@ function runCustomTests() {
       field.click();
 
       assert.isTrue(picker._opened);
+    });
+
+    test('click on overlay closes it', function() {
+
+      picker._open();
+      overlay.click();
+
+      assert.isFalse(picker._opened);
     });
 
     test('pressing esc cancels selection', function() {
@@ -93,7 +110,6 @@ function runCustomTests() {
       assert.equal(picker.timeZone, calendar.timeZone);
 
       field.timeZone = 'UTC';
-      debugger;
 
       assert.equal(picker.timeZone, field.timeZone);
       assert.equal(picker.timeZone, calendar.timeZone);

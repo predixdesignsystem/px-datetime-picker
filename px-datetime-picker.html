@@ -42,6 +42,7 @@ Custom property | Description
   <template>
     <style include="px-datetime-picker-styles"></style>
 
+    <div id="overlay" class="overlay visuallyhidden" on-tap="_processClose"></div>
     <px-datetime-field
       id="field"
       time-zone="{{timeZone}}"
@@ -207,6 +208,8 @@ Custom property | Description
      */
     _open: function() {
       this.toggleClass('visuallyhidden', false, this.$.box);
+      this.toggleClass('visuallyhidden', false, this.$.overlay);
+      this.toggleClass('aboveOverlay', true, this.$.field);
 
       this.set('_opened', true);
     },
@@ -215,6 +218,8 @@ Custom property | Description
      */
     _close: function() {
       this.toggleClass('visuallyhidden', true, this.$.box);
+      this.toggleClass('visuallyhidden', true, this.$.overlay);
+      this.toggleClass('aboveOverlay', false, this.$.field);
 
       this.set('_opened', false);
     },
