@@ -16,7 +16,6 @@ function runCustomTests() {
     });
 
     test('calendar and overlay hidden by default', function() {
-
       assert.isFalse(picker._opened);
       assert.isTrue(overlay.classList.contains('visuallyhidden'));
       assert.isTrue(overlay.classList.contains('visuallyhidden'));
@@ -107,7 +106,6 @@ function runCustomTests() {
     });
 
     test('calendar, field and datepicker have synchronized time zones', function() {
-
       assert.equal(picker.timeZone, field.timeZone);
       assert.equal(picker.timeZone, calendar.timeZone);
 

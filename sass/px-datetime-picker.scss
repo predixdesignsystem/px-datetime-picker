@@ -28,61 +28,47 @@ Predix branding rules go in px-datetime-picker-predix.scss, not in this file.
 
 // Base
 @import "px-flexbox-design/_base.flexbox.scss";
-@import "px-viewport-design/_base.viewport.scss";
 
+//Objects
 $inuit-enable-box--tiny : true;
 @import "px-box-design/_objects.box.scss";
+@import 'px-actionable-design/_objects.actionable.scss';
+@import "px-shadows-design/_objects.shadows.scss";
 
-.container__box {
+//Component
+.dt-today {
+  height: $inuit-base-spacing-unit--huge;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dt-container__box {
   position: absolute;
-  top: $inuit-base-spacing-unit--small;
-  display: inline-flex;
-  background-color: $white;
-  border-width: 1px;
-  border-style: solid;
-  border-radius: 3px;
-  z-index:2;
+  background-color: var(--px-datetime-picker-background-color, white);
+  border: 1px solid var(--px-datetime-picker-border-color, lightgray);
+  z-index: var(--px-datetime-picker-z-index, 300);
+  padding: $inuit-base-spacing-unit--small $inuit-base-spacing-unit--large $inuit-base-spacing-unit--large;
 }
 
 .overlay {
-  z-index:1;
-  position:fixed;
+  z-index: auto;
+  position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
 }
 
-.container {
-  position: relative;
-}
-
-.field {
-  position: relative;
-}
-
 .aboveOverlay {
   z-index: 2;
 }
 
-.container__box__time {
-    border: solide 1px $gray4;
-    font-size: 36;
-    --px-datetime-entry-font-size: xx-large;
+.relative {
+  position: relative;
 }
-
-.divider {
-  width:100%;
-}
-
-// Component
-$inuit-enable-margins--small      : true;
-$inuit-enable-margins--large      : true;
-$inuit-enable-margins             : true;
-$inuit-enable-margins--none       : true;
-$inuit-enable-paddings--small     : true;
-$inuit-enable-paddings--large     : true;
 
 // Trumps
-@import "px-spacing-responsive-design/_trumps.spacing-responsive.scss";
-@import "px-widths-responsive-design/_trumps.widths-responsive.scss";
+$inuit-enable-margins--small      : true;
+$inuit-enable-margins--large      : true;
+@import "px-spacing-design/_trumps.spacing.scss";
