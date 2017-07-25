@@ -4,8 +4,8 @@ v1.0.0
 * combined -predix and -sketch sass files
 * update dependencies for design refresh
 
-=======
 v0.4.2
+==================
 * part of the timezone time issue fix. px-rangepicker issue #39
 
 v0.4.1
