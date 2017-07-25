@@ -2,7 +2,7 @@
 
 ## Overview
 
-`Px-datetime-picker` is a Predix UI compoenent which allows the user to select a date and time precisely to the second or millisecond. The user may select the date from a calendar.
+`Px-datetime-picker` is a Predix UI component which allows the user to select a date and time precisely to the second or millisecond. The user may select the date from a calendar.
 
 ## Usage
 
