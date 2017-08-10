@@ -1,8 +1,3 @@
-<!--
-    Relative paths assume component is being run from inside an app or another component, where dependencies are flat
-    siblings. When this component is run from its own repo (e.g. ui tests, examples), we assume the server is started with
-    'grunt depserve' (or similar server setup) to enable correct finding of bower dependencies for local runs.
--->
 <link rel="import" href="../px-datetime-field/px-datetime-field.html"/>
 <link rel="import" href="../px-calendar-picker/px-calendar-picker.html"/>
 <link rel="import" href="../px-datetime-common/px-datetime-behavior.html"/>
@@ -10,7 +5,7 @@
 <link rel="import" href="../px-datetime-common/px-datetime-button-behavior.html"/>
 <link rel="import" href="../iron-a11y-keys-behavior/iron-a11y-keys-behavior.html">
 <link rel="import" href="../app-localize-behavior/app-localize-behavior.html" />
-
+<link rel="import" href="css/px-datetime-picker-styles.html"/>
 
 <!--
 The datetime components rely on <a href="https://momentjs.com/" target="_blank">Moment.js</a> and <a href="https://momentjs.com/timezone/" target="_blank">Moment Timezone</a>.
@@ -18,6 +13,7 @@ The datetime components rely on <a href="https://momentjs.com/" target="_blank">
 #### Usage
 
     <px-datetime-picker></px-datetime-picker>
+
 
 #### Styling
 The following custom properties are available for styling. Please also refer to px-forms-design and px-buttons-design for additional style variables used by this component.
@@ -33,11 +29,8 @@ Custom property | Description
 @element px-datetime-picker
 @blurb Element allowing to pick a date using a calendar or by typing it
 @homepage index.html
-@demo demo.html
+@demo index.html
 -->
-
-<link rel="import" href="css/px-datetime-picker-styles.html">
-
 <dom-module id="px-datetime-picker">
   <template>
     <style include="px-datetime-picker-styles"></style>
