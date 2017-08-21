@@ -1,3 +1,7 @@
+v1.0.3
+==================
+* add min and max date support
+
 v1.0.2
 ==================
 * Fix comment for analyzer

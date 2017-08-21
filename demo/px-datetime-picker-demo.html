@@ -50,7 +50,9 @@
               block-past-dates="{{props.blockPastDates.value}}"
               hide-time="{{props.hideTime.value}}"
               show-time-zone="{{props.showTimeZone.value}}"
-              time-zone="{{props.timeZone.value}}">
+              time-zone="{{props.timeZone.value}}"
+              min="{{props.min.value}}"
+              max="{{props.max.value}}">
           </px-datetime-picker>
         </div>
       </px-demo-component>
@@ -220,10 +222,22 @@
 
       dateTime: {
         type: String,
-        defaultValue: '2017-07-05T05:30:00.000Z',
+        defaultValue: Px.moment().toISOString(),
         inputType: 'text',
         inputPlaceholder: 'ISO 8601 String',
         inputDisabled: true
+      },
+
+      min: {
+        type: Object,
+        defaultValue: Px.moment().subtract(7, 'day'),
+        inputType: 'code:JSON'
+      },
+
+      max: {
+        type: Object,
+        defaultValue: Px.moment().add(7, 'day'),
+        inputType: 'code:JSON'
       }
     },
 

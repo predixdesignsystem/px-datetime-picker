@@ -51,7 +51,9 @@ Custom property | Description
       block-past-dates="{{blockPastDates}}"
       resources="[[resources]]"
       language="[[language]]"
-      formats="[[formats]]">
+      formats="[[formats]]"
+      min="[[min]]"
+      max="[[max]]">
     </px-datetime-field>
     <div id="box" class="visuallyhidden">
       <div class="dt-container__box shadow-temporary u-mt+">
@@ -66,7 +68,9 @@ Custom property | Description
           day-week-start-index="[[dayWeekStartIndex]]"
           resources="[[resources]]"
           language="[[language]]"
-          formats="[[formats]]">
+          formats="[[formats]]"
+          min="[[min]]"
+          max="[[max]]">
         </px-calendar-picker>
         <div class="actionable caps dt-today u-mt-" on-tap="_todayClicked">[[localize('Today')]]</div>
         <template is="dom-if" if="{{showButtons}}">
