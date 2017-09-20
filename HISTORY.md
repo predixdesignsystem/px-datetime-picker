@@ -1,3 +1,7 @@
+v1.0.4
+==================
+* updated css variables documentation
+
 v1.0.3
 ==================
 * add min and max date support
