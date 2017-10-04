@@ -30,7 +30,8 @@
     "px-datetime-field": "^1.0.0",
     "px-calendar-picker": "^1.0.0",
     "px-datetime-common": "^1.0.0",
-    "iron-a11y-keys-behavior": "^2.0.0"
+    "iron-a11y-keys-behavior": "^2.0.0",
+    "iron-dropdown": "^2.0.0"
   },
   "devDependencies": {
     "px-theme": "^3.0.0",

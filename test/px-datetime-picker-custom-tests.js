@@ -8,28 +8,24 @@ function runCustomTests() {
 
     var picker = document.getElementById('px_date_picker_1'),
         field = Polymer.dom(picker.root).querySelector('px-datetime-field'),
-        overlay = Polymer.dom(picker.root).querySelector('.overlay'),
+        heading = document.querySelector('h3'),
         box = Polymer.dom(picker.root).querySelector('#box');
 
     setup(function() {
       picker._close();
     });
 
-    test('calendar and overlay hidden by default', function() {
+    test('calendar hidden by default', function() {
       assert.isFalse(picker._opened);
-      assert.isTrue(overlay.classList.contains('visuallyhidden'));
-      assert.isTrue(overlay.classList.contains('visuallyhidden'));
     });
 
-    test('calendar opens on event and close with close function', function() {
+    test('calendar opens on event and closes with close function', function() {
 
       assert.isFalse(picker._opened);
 
       field.fire('px-datetime-entry-icon-clicked', {dateOrTime: 'Date'});
 
       assert.isTrue(picker._opened);
-      assert.isFalse(overlay.classList.contains('visuallyhidden'));
-      assert.isFalse(overlay.classList.contains('visuallyhidden'));
 
       picker._close();
 
@@ -45,7 +41,7 @@ function runCustomTests() {
       assert.isTrue(picker._opened);
     });
 
-    test('focusing field doesnt close calendar when opened', function() {
+    test('focusing field doesn\'t close calendar when opened', function() {
 
       picker._open();
       field.click();
@@ -53,12 +49,13 @@ function runCustomTests() {
       assert.isTrue(picker._opened);
     });
 
-    test('click on overlay closes it', function() {
+    test('click outside component closes it', function() {
 
       picker._open();
-      overlay.click();
-
-      assert.isFalse(picker._opened);
+      heading.click();
+      window.setTimeout(function() {
+        assert.isFalse(picker._opened);
+      }, 5);
     });
 
     test('pressing esc cancels selection', function() {

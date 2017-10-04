@@ -36,6 +36,10 @@ $inuit-enable-box--tiny : true;
 @import "px-shadows-design/_objects.shadows.scss";
 
 //Component
+px-datetime-field {
+  display: inline-block;
+}
+
 .dt-today {
   height: $inuit-base-spacing-unit--huge;
   display: flex;
@@ -44,31 +48,14 @@ $inuit-enable-box--tiny : true;
 }
 
 .dt-container__box {
-  position: absolute;
   background-color: var(--px-datetime-picker-background-color, white);
   border: 1px solid var(--px-datetime-picker-border-color, lightgray);
   z-index: var(--px-datetime-picker-z-index, 300);
   padding: $inuit-base-spacing-unit--small $inuit-base-spacing-unit--large $inuit-base-spacing-unit--large;
 }
 
-.overlay {
-  z-index: auto;
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.aboveOverlay {
-  z-index: 2;
-}
-
-.relative {
-  position: relative;
-}
-
 // Trumps
 $inuit-enable-margins--small      : true;
 $inuit-enable-margins--large      : true;
+$inuit-enable-margins--huge       : true;
 @import "px-spacing-design/_trumps.spacing.scss";
