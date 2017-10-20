@@ -1,3 +1,7 @@
+v1.1.0
+==================
+* migrate to iron-dropdown
+
 v1.0.4
 ==================
 * updated css variables documentation
