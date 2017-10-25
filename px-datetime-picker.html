@@ -1,10 +1,11 @@
+<link rel="import" href="css/px-datetime-picker-styles.html"/>
 <link rel="import" href="../px-datetime-field/px-datetime-field.html"/>
 <link rel="import" href="../px-calendar-picker/px-calendar-picker.html"/>
 <link rel="import" href="../px-datetime-common/px-datetime-behavior.html"/>
 <link rel="import" href="../px-datetime-common/px-datetime-buttons.html"/>
 <link rel="import" href="../px-datetime-common/px-datetime-button-behavior.html"/>
 <link rel="import" href="../iron-dropdown/iron-dropdown.html">
-<link rel="import" href="css/px-datetime-picker-styles.html"/>
+<link rel="import" href="../iron-media-query/iron-media-query.html"/>
 
 <!--
 The datetime components rely on <a href="https://momentjs.com/" target="_blank">Moment.js</a> and <a href="https://momentjs.com/timezone/" target="_blank">Moment Timezone</a>.
@@ -32,6 +33,11 @@ Custom property | Description
   <template>
     <style include="px-datetime-picker-styles"></style>
 
+    <!-- Media query to determine if context browser should collapse -->
+    <template is="dom-if" if="[[_collapseQueryIsValid(collapseAt)]]">
+      <iron-media-query query$="(max-width: {{_getCollapseQuery(collapseAt)}})" query-matches="{{_belowCollapseSize}}"></iron-media-query>
+    </template>
+
     <px-datetime-field
       id="field"
       slot="dropdown-trigger"
@@ -51,12 +57,18 @@ Custom property | Description
       min="[[min]]"
       max="[[max]]">
     </px-datetime-field>
+    <div id="fit" style="width: 200px; height: 200px; background-color:aliceblue"></div>
     <iron-dropdown
       id="dropdown"
+      no-overlap
       opened="{{_opened}}"
       vertical-offset="20"
       dynamic-align
-      no-overlap>
+      fit-into="[[getElement('#fit')]]"
+      vertical-align="[[_getDropdownVerticalAlign(collapsed)]]"
+      horizontal-align="[[_getDropdownHorizontalAlign(collapsed)]]"
+      position-target="[[_getPositionTarget(_positionTarget, collapsed)]]"
+      >
       <div slot="dropdown-content" class="dt-container__box shadow-temporary">
         <px-calendar-picker
           id="calendar"
@@ -148,6 +160,31 @@ Custom property | Description
        timeFormat: {
         type: String,
         value: 'HH:mm A'
+      },
+      /**
+       * The width below which the datetime picker will collapse into a mobile
+       * friendly menu that slides up from the bottom of the page. Use a number
+       * (e.g. `450`) which will be converted to a pixel value (e.g. '450px').
+       *
+       * If no value is provided, the datetime picker will not collapse
+       * automatically. The collapsed attribute can also be used to manually
+       * collapse and un-collapse the datetime picker.
+       */
+       collapseAt: {
+        type: Number
+      },
+      /**
+       * Watch for changes to determine if the context browser is collapsed.
+       */
+       collapsed: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
+      },
+
+      _belowCollapseSize: {
+        type: Boolean,
+        observer: '_handleBelowCollapseSizeChanged'
       },
       /**
        * List of key/values to be included for translating this component
@@ -276,6 +313,57 @@ Custom property | Description
       if(evt.detail.dateOrTime === "Date") {
         this.$.dropdown.toggle();
       }
+    },
+    /**
+     */
+    _collapseQueryIsValid(query) {
+      if (typeof query === 'number') {
+        return true;
+      }
+      if (typeof query === 'string' && query.slice(-2) === 'px' && !isNaN(parseInt(query))) {
+        return true;
+      }
+      return false;
+    },
+    _getCollapseQuery(collapseAt) {
+      if (typeof collapseAt === 'number') {
+        return collapseAt + 'px';
+      }
+      if (typeof collapseAt === 'string' && collapseAt.slice(-2) === 'px' || !isNaN(parseInt(collapseAt))) {
+        return collapseAt;
+      }
+    },
+
+    // ********************************************************************** //
+    // Calculate iron-dropdown properties
+    // ********************************************************************** //
+
+    _getDropdownVerticalAlign(collapsed) {
+      return collapsed ? 'bottom' : 'top';
+    },
+
+    _getDropdownHorizontalAlign(collapsed) {
+      return collapsed ? 'right' : 'left';
+    },
+
+    _getPositionTarget(openTarget, collapsed) {
+      if (collapsed || !(openTarget instanceof HTMLElement)) {
+        return window;
+      }
+      return openTarget;
+    },
+    _handleBelowCollapseSizeChanged(newVal, oldVal) {
+      if (newVal && !this.collapsed) {
+        this.collapsed = true;
+      }
+      if (!newVal && this.collapsed) {
+        this.collapsed = false;
+      }
+    },
+    getElement: function(elStr) {
+      return this.shadowRoot.querySelector(elStr)
     }
+
+
   });
 </script>

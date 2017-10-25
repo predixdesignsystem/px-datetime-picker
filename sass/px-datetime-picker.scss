@@ -47,11 +47,17 @@ px-datetime-field {
   justify-content: center;
 }
 
+
 .dt-container__box {
   background-color: var(--px-datetime-picker-background-color, white);
   border: 1px solid var(--px-datetime-picker-border-color, lightgray);
   z-index: var(--px-datetime-picker-z-index, 300);
   padding: $inuit-base-spacing-unit--small $inuit-base-spacing-unit--large $inuit-base-spacing-unit--large;
+}
+
+:host([collapsed]) .dt-container__box {
+  // height: 500px;
+  // width: 500px;
 }
 
 // Trumps
