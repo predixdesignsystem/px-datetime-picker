@@ -37,6 +37,8 @@ Custom property | Description
     <template is="dom-if" if="[[_collapseQueryIsValid(collapseAt)]]">
       <iron-media-query query$="(max-width: {{_getCollapseQuery(collapseAt)}})" query-matches="{{_belowCollapseSize}}"></iron-media-query>
     </template>
+    <!-- <div id="fit" style="width: 200px; height: 20px; background-color:aliceblue"></div> -->
+    <div id="fit" style="width: 200px; height: 200px;"></div>
 
     <px-datetime-field
       id="field"
@@ -57,18 +59,18 @@ Custom property | Description
       min="[[min]]"
       max="[[max]]">
     </px-datetime-field>
-    <div id="fit" style="width: 200px; height: 200px; background-color:aliceblue"></div>
     <iron-dropdown
       id="dropdown"
       no-overlap
       opened="{{_opened}}"
-      vertical-offset="20"
       dynamic-align
-      fit-into="[[getElement('#fit')]]"
-      vertical-align="[[_getDropdownVerticalAlign(collapsed)]]"
-      horizontal-align="[[_getDropdownHorizontalAlign(collapsed)]]"
-      position-target="[[_getPositionTarget(_positionTarget, collapsed)]]"
       >
+      <!--
+        position-target="[[getElement('#fit')]]"
+        vertical-offset="0"
+        vertical-align="[[_getDropdownVerticalAlign(collapsed)]]"
+        horizontal-align="[[_getDropdownHorizontalAlign(collapsed)]]"
+      position-target="[[_getPositionTarget(_positionTarget, collapsed)]]" -->
       <div slot="dropdown-content" class="dt-container__box shadow-temporary">
         <px-calendar-picker
           id="calendar"
