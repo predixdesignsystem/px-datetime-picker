@@ -19,13 +19,17 @@ function runCustomTests() {
       assert.isFalse(picker._opened);
     });
 
-    test('calendar opens on event and closes with close function', function() {
-
+    test('calendar opens on event and closes with close function', function(done) {
       assert.isFalse(picker._opened);
+
 
       field.fire('px-datetime-entry-icon-clicked', {dateOrTime: 'Date'});
 
-      assert.isTrue(picker._opened);
+      flush (function(done){
+        // debugger;
+        assert.isTrue(picker._opened);
+        done;
+      });
 
       picker._close();
 
@@ -46,7 +50,10 @@ function runCustomTests() {
       picker._open();
       field.click();
 
-      assert.isTrue(picker._opened);
+      window.setTimeout(function() {
+        // debugger
+        assert.isTrue(picker._opened);
+      }, 5);
     });
 
     test('click outside component closes it', function() {

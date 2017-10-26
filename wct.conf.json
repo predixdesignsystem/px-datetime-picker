@@ -37,6 +37,6 @@
     }
   },
   "suites": [
-    "test/px-datetime-picker-test-fixture.html"
+    "test/px-datetime-picker-fixture.html"
   ]
 }
