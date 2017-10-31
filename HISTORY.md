@@ -1,3 +1,7 @@
+v1.1.1
+==================
+* add device flags
+
 v1.1.0
 ==================
 * migrate to iron-dropdown
