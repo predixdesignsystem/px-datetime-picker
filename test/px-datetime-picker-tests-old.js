@@ -15,35 +15,35 @@ function runCustomTests() {
       picker._close();
     });
 
-    test('calendar hidden by default', function() {
-      assert.isFalse(picker._opened);
-    });
+    // test('calendar hidden by default', function() {
+    //   assert.isFalse(picker._opened);
+    // });
 
-    test('calendar opens on event and closes with close function', function(done) {
-      assert.isFalse(picker._opened);
+    // test('calendar opens on event and closes with close function', function(done) {
+    //   assert.isFalse(picker._opened);
 
 
-      field.fire('px-datetime-entry-icon-clicked', {dateOrTime: 'Date'});
+    //   field.fire('px-datetime-entry-icon-clicked', {dateOrTime: 'Date'});
 
-      flush (function(done){
-        // debugger;
-        assert.isTrue(picker._opened);
-        done;
-      });
+    //   flush (function(done){
+    //     // debugger;
+    //     assert.isTrue(picker._opened);
+    //     done;
+    //   });
 
-      picker._close();
+    //   picker._close();
 
-      assert.isFalse(picker._opened);
-    });
+    //   assert.isFalse(picker._opened);
+    // });
 
-    test('calendar opens on function', function() {
+    // test('calendar opens on function', function() {
 
-      assert.isFalse(picker._opened);
+    //   assert.isFalse(picker._opened);
 
-      picker._open();
+    //   picker._open();
 
-      assert.isTrue(picker._opened);
-    });
+    //   assert.isTrue(picker._opened);
+    // });
 
     test('focusing field doesn\'t close calendar when opened', function() {
 

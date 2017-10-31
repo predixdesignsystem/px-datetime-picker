@@ -243,7 +243,7 @@ Custom property | Description
     _momentChanged: function(momentObj) {
       if(this._isAttached) {
 
-        if(this.opened) {
+        if(this._opened) {
           if(this.$.calendar.fromMoment.toISOString() === this.momentObj.toISOString()) {
             //changes comes from calendar (not from field). If it comes from field
             //do nothing as we're open (the calendar moment will be updated through binding)
