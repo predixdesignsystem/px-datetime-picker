@@ -44,7 +44,8 @@
     "px-actionable-design": "^2.0.0",
     "px-shadows-design": "^1.0.0",
     "px-spacing-design": "^1.0.0",
-    "web-component-tester": "^6.3.0"
+    "web-component-tester": "^6.3.0",
+    "iron-test-helpers": "^2.0.0"
   },
   "resolutions": {
     "webcomponentsjs": "^0.7.24"
