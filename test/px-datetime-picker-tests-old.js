@@ -45,25 +45,25 @@ function runCustomTests() {
     //   assert.isTrue(picker._opened);
     // });
 
-    test('focusing field doesn\'t close calendar when opened', function() {
+    // test('focusing field doesn\'t close calendar when opened', function() {
 
-      picker._open();
-      field.click();
+    //   picker._open();
+    //   field.click();
 
-      window.setTimeout(function() {
-        // debugger
-        assert.isTrue(picker._opened);
-      }, 5);
-    });
+    //   window.setTimeout(function() {
+    //     // debugger
+    //     assert.isTrue(picker._opened);
+    //   }, 5);
+    // });
 
-    test('click outside component closes it', function() {
+    // test('click outside component closes it', function() {
 
-      picker._open();
-      heading.click();
-      window.setTimeout(function() {
-        assert.isFalse(picker._opened);
-      }, 5);
-    });
+    //   picker._open();
+    //   heading.click();
+    //   window.setTimeout(function() {
+    //     assert.isFalse(picker._opened);
+    //   }, 5);
+    // });
 
     test('pressing esc cancels selection', function() {
 

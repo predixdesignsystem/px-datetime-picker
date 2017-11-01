@@ -27,11 +27,21 @@
 <body>
   <style include="px-theme-styles" is="custom-style"></style>
 
-  <test-fixture id="DatetimePicker">
+  <test-fixture id="datetime-picker">
     <template>
       <px-datetime-picker
         id="datetime-picker"
         date-time="2018-01-05T00:30:00.000Z">
+      </px-datetime-picker>
+    </template>
+  </test-fixture>
+
+  <test-fixture id="datetime-picker-buttons">
+    <template>
+      <px-datetime-picker
+        id="datetime-picker"
+        date-time="2018-01-05T00:30:00.000Z"
+        show-buttons>
       </px-datetime-picker>
     </template>
   </test-fixture>
