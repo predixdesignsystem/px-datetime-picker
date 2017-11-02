@@ -1,0 +1,92 @@
+<!doctype html>
+<!--
+@license
+Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
+This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
+The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
+The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
+Code distributed by Google as part of the polymer project is also
+subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+-->
+<html>
+
+<head>
+
+  <title>iron-fit-behavior demo</title>
+
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <link rel="import" href="simple-fit.html">
+  <link rel="import" href="../../polymer/polymer.html" />
+  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
+  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+
+</head>
+
+<body>
+  <!-- <demo-snippet> -->
+    <style>
+      .target {
+        cursor: pointer;
+        text-align: center;
+        display: inline-block;
+        box-sizing: border-box;
+        border: 1px solid;
+        width: 120px;
+        padding: 26px 0;
+        margin: 8px;
+      }
+
+      #myFit {
+        z-index: 10;
+        padding: 20px;
+        overflow: auto;
+        min-width: 100px;
+        min-height: 100px;
+      }
+    </style>
+      <template is="dom-bind">
+        <template is="dom-repeat" items="[[containers]]">
+          <div class="target" on-tap="updatePositionTarget">Target</div>
+        </template>
+        <simple-fit id="myFit" auto-fit-on-attach>
+        </simple-fit>
+        <script>
+
+          var template = document.querySelector('template[is="dom-bind"]');
+
+          template.containers = new Array(30);
+
+          // Support hybrid mode
+          var templatev1 = document.querySelector('dom-bind');
+          templatev1.containers = template.containers;
+          templatev1.updatePositionTarget = template.updatePositionTarget;
+          templatev1.updateAlign = template.updateAlign;
+          templatev1.toggleNoOverlap = template.toggleNoOverlap;
+          templatev1.toggleDynamicAlign = template.toggleDynamicAlign;
+
+          // Listen for resize and scroll on window.
+          window.addEventListener('resize', refit);
+          window.addEventListener('scroll', refit);
+
+          var _raf = null;
+          function refit() {
+            _raf && window.cancelAnimationFrame(_raf);
+            _raf = window.requestAnimationFrame(function () {
+              _raf = null;
+              myFit.refit();
+            });
+          }
+
+          function toggleClass(element, cssClass, condition) {
+            element.classList[condition ? 'add' : 'remove'](cssClass);
+          }
+        </script>
+      </template>
+
+</body>
+
+</html>
