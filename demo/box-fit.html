@@ -52,7 +52,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <template is="dom-bind">
         <div class="box1"></div>
         <div class="box2"></div>
-        <simple-fit id="myFit" vertical-align="top" auto-fit-on-attach>
+        <simple-fit id="myFit" vertical-align="top" auto-fit-on-attach >
         </simple-fit>
         <script>
 
@@ -70,7 +70,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           // Listen for resize and scroll on window.
           window.addEventListener('resize', refit);
-          window.addEventListener('scroll', refit);
+          // window.addEventListener('scroll', refit);
 
           var _raf = null;
           function refit() {

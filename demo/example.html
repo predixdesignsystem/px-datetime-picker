@@ -98,7 +98,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           var template = document.querySelector('template[is="dom-bind"]');
 
-          template.containers = new Array(30);
+          template.containers = new Array(60);
 
           template.updatePositionTarget = function(e) {
             var target = Polymer.dom(e).rootTarget;
@@ -150,7 +150,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
           // Listen for resize and scroll on window.
           window.addEventListener('resize', refit);
-          window.addEventListener('scroll', refit);
+          // window.addEventListener('scroll', refit);
 
           var _raf = null;
           function refit() {
