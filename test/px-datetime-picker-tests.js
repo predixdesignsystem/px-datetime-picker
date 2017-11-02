@@ -14,7 +14,8 @@ describe('px-datetime-picker no buttons', function () {
     var allCells = calendarEl.querySelectorAll('px-calendar-cell'),
       i = 0;
 
-    [].forEach.call(allCells, function (cell, index) {
+
+      Array.prototype.forEach.call(allCells, function (cell, index) {
       var btn = cell.querySelector('button');
       if (!btn.hidden) {
         i++;
