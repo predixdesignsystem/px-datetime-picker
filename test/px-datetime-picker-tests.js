@@ -388,7 +388,7 @@ describe('px-datetime-picker with buttons', function () {
 
         var allButtons = pickerButtons.querySelectorAll('button'),
             i = 0;
-            allButtons.forEach(function (btn, index) {
+        Array.prototype.forEach.call(allButtons, function (btn, index) {
           if (btn.id === "submitButton") {
             btn.click();
           }
