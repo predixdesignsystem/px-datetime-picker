@@ -13,7 +13,8 @@ describe('px-datetime-picker no buttons', function () {
   var selectTenthDay = function () {
     var allCells = calendarEl.querySelectorAll('px-calendar-cell'),
       i = 0;
-    allCells.forEach(function (cell, index) {
+
+    [].forEach.call(allCells, function (cell, index) {
       var btn = cell.querySelector('button');
       if (!btn.hidden) {
         i++;
