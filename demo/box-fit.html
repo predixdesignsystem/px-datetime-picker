@@ -24,13 +24,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
     <style>
-      .target {
+      .box1, .box2 {
         cursor: pointer;
         text-align: center;
         display: inline-block;
         box-sizing: border-box;
         border: 1px solid;
-        width: 120px;
+        width: 200px;
+        height: 200px;
         padding: 26px 0;
         margin: 8px;
       }
@@ -49,9 +50,8 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body>
   <!-- <demo-snippet> -->
       <template is="dom-bind">
-        <template is="dom-repeat" items="[[containers]]">
-          <div class="target" on-tap="updatePositionTarget">Target</div>
-        </template>
+        <div class="box1"></div>
+        <div class="box2"></div>
         <simple-fit id="myFit" vertical-align="top" auto-fit-on-attach>
         </simple-fit>
         <script>
