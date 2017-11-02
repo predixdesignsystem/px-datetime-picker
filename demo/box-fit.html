@@ -23,11 +23,6 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <link rel="import" href="../../polymer/polymer.html" />
   <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
   <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
-
-</head>
-
-<body>
-  <!-- <demo-snippet> -->
     <style>
       .target {
         cursor: pointer;
@@ -48,11 +43,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         min-height: 100px;
       }
     </style>
+
+</head>
+
+<body>
+  <!-- <demo-snippet> -->
       <template is="dom-bind">
         <template is="dom-repeat" items="[[containers]]">
           <div class="target" on-tap="updatePositionTarget">Target</div>
         </template>
-        <simple-fit id="myFit" auto-fit-on-attach>
+        <simple-fit id="myFit" vertical-align="top" auto-fit-on-attach>
         </simple-fit>
         <script>
 
