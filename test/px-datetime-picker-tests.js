@@ -158,7 +158,7 @@ describe('px-datetime-picker no buttons', function () {
       },
       function (callback) {
         expect(pickerEl._opened, 'panel is visible after selection').to.be.false;
-        expect(pickerEl.dateTime, 'dateTime value after selection').to.equal('2018-01-11T00:30:00.000Z');
+        expect(pickerEl.dateTime, 'dateTime value after selection').to.equal('2018-01-10T00:30:00.000Z');
         done();
 
         callback(null, 'three');
@@ -251,7 +251,7 @@ describe('px-datetime-picker with buttons', function () {
       },
       function (callback) {
         expect(pickerEl._opened, 'pickerEl is open').to.be.true;
-        expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-11T00:30:00.000Z', 'momentObj value');
+        expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-10T00:30:00.000Z', 'momentObj value');
         expect(pickerEl.dateTime).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
         done();
 
@@ -396,8 +396,8 @@ describe('px-datetime-picker with buttons', function () {
         callback(null, 'three');
       },
       function (callback) {
-        expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-11T00:30:00.000Z', 'momentObj value');
-        expect(pickerEl.dateTime).to.equal('2018-01-11T00:30:00.000Z', 'dateTime value');
+        expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-10T00:30:00.000Z', 'momentObj value');
+        expect(pickerEl.dateTime).to.equal('2018-01-10T00:30:00.000Z', 'dateTime value');
         done();
 
         callback(null, 'four');
@@ -427,8 +427,8 @@ describe('px-datetime-picker with buttons', function () {
         callback(null, 'three');
       },
       function (callback) {
-        expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-11T00:30:00.000Z', 'momentObj value');
-        expect(pickerEl.dateTime).to.equal('2018-01-11T00:30:00.000Z', 'dateTime value');
+        expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-10T00:30:00.000Z', 'momentObj value');
+        expect(pickerEl.dateTime).to.equal('2018-01-10T00:30:00.000Z', 'dateTime value');
         done();
 
         callback(null, 'four');
