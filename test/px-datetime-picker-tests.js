@@ -1,10 +1,29 @@
+/*******************************************************************************
+ * Without Buttons
+ ******************************************************************************/
 
 describe('px-datetime-picker no buttons', function () {
   var pickerEl;
 
   beforeEach(function () {
     pickerEl = fixture('datetime-picker');
+    calendarEl = pickerEl.querySelector('px-calendar-picker');
   });
+
+  var selectTenthDay = function () {
+    var allCells = calendarEl.querySelectorAll('px-calendar-cell'),
+      i = 0;
+    allCells.forEach(function (cell, index) {
+      var btn = cell.querySelector('button');
+      if (!btn.hidden) {
+        i++;
+      }
+      if (i === 10) {
+        btn.click();
+        return;
+      }
+    });
+  };
 
   it('the calendar is hidden by default', function () {
     expect(pickerEl._opened).to.be.false;
@@ -13,12 +32,12 @@ describe('px-datetime-picker no buttons', function () {
 
   it('check that _opened draws the panel for tests validity', function (done) {
     flush(function () {
-      dropdownEl = pickerEl.querySelector('#dropdown');
-      expect(dropdownEl.offsetWidth).to.equal(0);
+      panelEl = pickerEl.querySelector('#dropdown');
+      expect(panelEl.offsetWidth, 'panel width before open').to.equal(0);
     });
 
     flush(() => {
-      expect(pickerEl._opened).to.be.false;
+      expect(pickerEl._opened, 'panel is open').to.be.false;
       async.until(
         function () {
           return pickerEl._opened;
@@ -28,8 +47,8 @@ describe('px-datetime-picker no buttons', function () {
           setTimeout(callback, 1000);
         },
         function (err, n) {
-          dropdownEl = pickerEl.querySelector('#dropdown');
-          expect(dropdownEl.offsetWidth).to.be.within(230, 270);
+          panelEl = pickerEl.querySelector('#dropdown');
+          expect(panelEl.offsetWidth, 'panel width after open').to.be.within(230, 270);
           done();
         }
       );
@@ -39,7 +58,7 @@ describe('px-datetime-picker no buttons', function () {
 
   it('the calendar opens on _open function', function (done) {
     flush(() => {
-      expect(pickerEl._opened).to.be.false;
+      expect(pickerEl._opened, 'panel is visible before open').to.be.false;
       async.until(
         function () {
           return pickerEl._opened;
@@ -49,7 +68,7 @@ describe('px-datetime-picker no buttons', function () {
           setTimeout(callback, 1000);
         },
         function (err, n) {
-          expect(pickerEl._opened).to.be.true;
+          expect(pickerEl._opened, 'panel is visible after open').to.be.true;
           done();
         }
       );
@@ -66,7 +85,7 @@ describe('px-datetime-picker no buttons', function () {
     });
 
     flush(function () {
-      expect(pickerEl._opened).to.be.true;
+      expect(pickerEl._opened, 'panel is visible').to.be.true;
       done();
     });
   });
@@ -82,7 +101,7 @@ describe('px-datetime-picker no buttons', function () {
 
     // while the panel is open click on the body to see if the panel closes
     flush(() => {
-      expect(pickerEl._opened).to.be.true;
+      expect(pickerEl._opened, 'panel is visible after open').to.be.true;
       async.whilst(
         function () {
           return pickerEl._opened;
@@ -92,7 +111,7 @@ describe('px-datetime-picker no buttons', function () {
           setTimeout(callback, 1000);
         },
         function (err, n) {
-          expect(pickerEl._opened).to.be.false;
+          expect(pickerEl._opened, 'panel is visible after click').to.be.false;
           done();
         }
       );
@@ -108,14 +127,14 @@ describe('px-datetime-picker no buttons', function () {
   //       callback(null, 'one');
   //     },
   //     function (callback) {
-  //       expect(pickerEl._opened).to.be.true;
+  //       expect(pickerEl._opened, 'panel is visible after open').to.be.true;
   //       var fieldEl = pickerEl.querySelector('px-datetime-field');
   //       fieldEl.click();
 
   //       callback(null, 'two');
   //     },
   //     function (callback) {
-  //       expect(pickerEl._opened).to.be.true;
+  //       expect(pickerEl._opened, 'panel is visible after clicking on fieldEl').to.be.true;
 
   //       callback(null, 'three');
   //     }
@@ -123,8 +142,6 @@ describe('px-datetime-picker no buttons', function () {
   // });
 
   it('Selecting a day will close panel and apply the value', function (done) {
-    var calendarEl = pickerEl.querySelector('px-calendar-picker');
-
     async.series([
       function (callback) {
         pickerEl._opened = true;
@@ -132,27 +149,54 @@ describe('px-datetime-picker no buttons', function () {
         callback(null, 'one');
       },
       function (callback) {
-        expect(pickerEl._opened).to.be.true;
-        expect(pickerEl.dateTime).to.equal('2018-01-05T00:30:00.000Z');
+        expect(pickerEl._opened, 'panel is visible after open').to.be.true;
+        expect(pickerEl.dateTime, 'dateTime value before selection').to.equal('2018-01-05T00:30:00.000Z');
 
-        var allCells = calendarEl.querySelectorAll('px-calendar-cell'),
-          i = 0;
-        allCells.forEach(function (cell, index) {
-          var btn = cell.querySelector('button');
-          if (!btn.hidden) {
-            i++;
-          }
-          if (i === 10) {
-            btn.click();
-            return;
-          }
-        });
+        selectTenthDay();
 
         callback(null, 'two');
       },
       function (callback) {
-        expect(pickerEl._opened).to.be.false;
-        expect(pickerEl.dateTime).to.equal('2018-01-11T00:30:00.000Z');
+        expect(pickerEl._opened, 'panel is visible after selection').to.be.false;
+        expect(pickerEl.dateTime, 'dateTime value after selection').to.equal('2018-01-11T00:30:00.000Z');
+        done();
+
+        callback(null, 'three');
+      }
+    ]);
+  });
+
+
+  it('Selecting today will close panel and apply the value', function (done) {
+    async.series([
+      function (callback) {
+        pickerEl._opened = true;
+
+        callback(null, 'one');
+      },
+      function (callback) {
+        expect(pickerEl._opened, 'panel is visible after open').to.be.true;
+        expect(pickerEl.dateTime, 'dateTime value before selection').to.equal('2018-01-05T00:30:00.000Z');
+
+        todayEl = pickerEl.querySelector('.dt-today');
+        todayEl.click();
+
+        callback(null, 'two');
+      },
+      function (callback) {
+        expect(pickerEl._opened, 'panel is visible after selection').to.be.false;
+
+        momentNow = moment();
+        momentNowISO = momentNow.toISOString();
+        pickerMomentISO = pickerEl.momentObj.toISOString();
+
+        momentNowISOSlice = momentNowISO.slice(0,10);
+        pickerMomentISOSlice = pickerMomentISO.slice(0,10);
+        dateTimeSlice = pickerEl.dateTime.slice(0,10);
+
+        expect(pickerMomentISOSlice, 'compare momentObj to now').to.equal(momentNowISOSlice);
+        expect(dateTimeSlice, 'compare dateTime to now').to.equal(momentNowISOSlice);
+
         done();
 
         callback(null, 'three');
@@ -164,6 +208,9 @@ describe('px-datetime-picker no buttons', function () {
 
 
 
+/*******************************************************************************
+ * With Buttons
+ ******************************************************************************/
 
 describe('px-datetime-picker with buttons', function () {
   var pickerEl;
@@ -206,6 +253,45 @@ describe('px-datetime-picker with buttons', function () {
         expect(pickerEl._opened, 'pickerEl is open').to.be.true;
         expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-11T00:30:00.000Z', 'momentObj value');
         expect(pickerEl.dateTime).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
+        done();
+
+        callback(null, 'three');
+      }
+    ]);
+  });
+
+
+  it('Selecting today will not close panel nor apply the value', function (done) {
+
+    async.series([
+      function (callback) {
+        pickerEl._opened = true;
+
+        callback(null, 'one');
+      },
+      function (callback) {
+        expect(pickerEl._opened, 'panel is open before selection').to.be.true;
+        expect(pickerEl.dateTime, 'check datetime has not changed').to.equal('2018-01-05T00:30:00.000Z');
+
+        todayEl = pickerEl.querySelector('.dt-today');
+        todayEl.click();
+
+        callback(null, 'two');
+      },
+      function (callback) {
+        expect(pickerEl._opened, 'panel is open after selection').to.be.true;
+
+        momentNow = moment();
+        momentNowISO = momentNow.toISOString();
+        pickerMomentISO = pickerEl.momentObj.toISOString();
+
+        momentNowISOSlice = momentNowISO.slice(0,10);
+        pickerMomentISOSlice = pickerMomentISO.slice(0,10);
+
+        expect(pickerMomentISOSlice, 'compare momentObj to now').to.equal(momentNowISOSlice);
+        expect(pickerEl.dateTime, 'check datetime has not changed').to.equal('2018-01-05T00:30:00.000Z');
+
+
         done();
 
         callback(null, 'three');
@@ -351,3 +437,49 @@ describe('px-datetime-picker with buttons', function () {
   });
 
 });//end of describe 'px-datetime-picker with buttons'
+
+
+
+/*******************************************************************************
+ * Time zones
+ ******************************************************************************/
+
+describe('synchronized date/time zones', function () {
+  var pickerEl;
+  var calendarEl;
+
+  beforeEach(function () {
+    pickerEl = fixture('datetime-picker');
+    fieldEl = pickerEl.querySelector('px-datetime-field');
+    calendarEl = pickerEl.querySelector('px-calendar-picker');
+  });
+
+
+  it('calendar, field and datepicker have synchronized moment objects', function (done) {
+    expect(pickerEl.momentObj.toISOString(), 'picker and field momentObj 1').to.equal(fieldEl.momentObj.toISOString());
+    expect(pickerEl.momentObj.toISOString(), 'picker and calendar momentObj 1').to.equal(calendarEl.fromMoment.toISOString());
+
+    fieldEl.momentObj = fieldEl.momentObj.clone().subtract(1, 'day');
+
+    expect(pickerEl.momentObj.toISOString(), 'picker and field momentObj 2').to.equal(fieldEl.momentObj.toISOString());
+    expect(pickerEl.momentObj.toISOString(), 'picker and calendar momentObj 2').to.equal(calendarEl.fromMoment.toISOString());
+
+    done();
+  });
+
+
+  it('calendar, field and datepicker have synchronized time zones', function (done) {
+    expect(pickerEl.timeZone, 'picker and field momentObj 1').to.equal(fieldEl.timeZone);
+    expect(pickerEl.timeZone, 'picker and calendar momentObj 1').to.equal(calendarEl.timeZone);
+
+    fieldEl.timeZone = 'America/Los_Angeles';
+
+    expect(pickerEl.timeZone, 'picker and field momentObj 2').to.equal(fieldEl.timeZone);
+    expect(pickerEl.timeZone, 'picker and calendar momentObj 2').to.equal(calendarEl.timeZone);
+
+    done();
+  });
+
+
+});//end of describe 'synchronized date/time zones'
+
