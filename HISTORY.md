@@ -1,9 +1,6 @@
-v1.1.3
-==================
-* fixed/refactored tests
-
 v1.1.2
 ==================
+* fixed/refactored tests
 * fixed typo that caused button to always apply the change
 
 v1.1.1
