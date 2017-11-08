@@ -31,7 +31,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       display: inline-block;
       box-sizing: border-box;
       border: 1px solid;
-      width: 200px;
+      /* width: 200px; */
       height: 200px;
       padding: 26px 0;
       margin: 15px;
@@ -46,21 +46,32 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       width: 100%;
       height: 100%;
     }
+
+    .wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px,1fr));
+    }
   </style>
 
 </head>
 
 <body>
   <template is="dom-bind">
-    <div class="box1">
+    <div class="wrapper">
+      <div class="box1"></div>
+      <div class="box2"></div>
     </div>
-    <div class="box2"></div>
     <button on-tap="updatePositionTarget1" style="display: block">fit box 1</button>
     <button on-tap="updatePositionTarget2" style="display: block">fit box 2</button>
-    <simple-fit id="myFit" class="fitBox" vertical-align="top">
+    <button on-tap="updatePositionTarget3" style="display: block">fit window</button>
+    <simple-fit id="myFit" class="fitBox" vertical-align="top" horizontal-align="right">
     </simple-fit>
     <script>
       var template = document.querySelector('template[is="dom-bind"]');
+
+      // Listen for resize and scroll on window.
+      window.addEventListener('resize', refit);
+      window.addEventListener('scroll', refit);
 
       function refit() {
         myFit.refit();
@@ -78,6 +89,13 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         box2 = document.querySelector('.box2');
 
         myFit.fitInto = box2;
+
+        refit();
+      };
+      template.updatePositionTarget3 = function (e) {
+
+
+        myFit.fitInto = window;
 
         refit();
       };

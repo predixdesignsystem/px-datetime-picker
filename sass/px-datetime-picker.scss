@@ -53,6 +53,7 @@ px-datetime-field {
   border: 1px solid var(--px-datetime-picker-border-color, lightgray);
   z-index: var(--px-datetime-picker-z-index, 300);
   padding: $inuit-base-spacing-unit--small $inuit-base-spacing-unit--large $inuit-base-spacing-unit--large;
+  height: 100%;
 }
 
 :host([collapsed]) .dt-container__box {

@@ -1,0 +1,71 @@
+<link rel="import" href="../../iron-dropdown/iron-dropdown.html">
+
+<dom-module id="iron-dropdown-element">
+  <template>
+    <style>
+      .box1,
+      .box2 {
+        cursor: pointer;
+        text-align: center;
+        display: inline-block;
+        box-sizing: border-box;
+        border: 1px solid;
+        height: 200px;
+        padding: 26px 0;
+        margin: 15px;
+      }
+
+      .box2 {
+        height: 300px;
+      }
+
+      .wrapper {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      }
+
+      .fitBox {
+        width: 100%;
+        height: 100%;
+        background-color: slateblue;
+      }
+    </style>
+    <div class="wrapper">
+      <div class="box1" slot="dropdown-fit-into"></div>
+      <div id="fit" class="box2"></div>
+    </div>
+
+    <button slot="dropdown-trigger" on-tap="open">click here</button>
+
+    <!-- <iron-dropdown id="dropdown" fit-into="[[getElement('#fit')]]"> -->
+    <iron-dropdown id="dropdown" style="width:100%; height:100%;">
+      <div slot="dropdown-content" class="fitBox"> <div style="height: 400px;">content here</div></div>
+    </iron-dropdown>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'iron-dropdown-element',
+
+      properties: {
+        fitInto: {
+          type: Object,
+          value: window
+        }
+      },
+
+      open: function () {
+        box2 = this.$$('#fit')
+        this.$.dropdown.fitInto = box2;
+
+        this.$.dropdown.open();
+        this.$.dropdown.refit();
+      },
+
+      getElement: function (elStr) {
+        return this.shadowRoot.querySelector(elStr)
+      }
+
+    });
+  </script>
+</dom-module>

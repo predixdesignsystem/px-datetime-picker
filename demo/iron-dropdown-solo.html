@@ -1,0 +1,22 @@
+
+<link rel="import" href="../../iron-dropdown/iron-dropdown.html">
+
+<dom-module id="iron-dropdown-example">
+  <template>
+    <div on-tap="open">
+      <slot name="dropdown-trigger"></slot>
+    </div>
+    <iron-dropdown id="dropdown">
+      <slot name="dropdown-content" slot="dropdown-content"></slot>
+    </iron-dropdown>
+  </template>
+  <script>
+    Polymer({
+      is: 'iron-dropdown-example',
+
+      open: function() {
+        this.$.dropdown.open();
+      }
+    });
+  </script>
+</dom-module>
