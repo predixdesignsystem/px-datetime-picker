@@ -1,0 +1,45 @@
+<link rel="import" href="../../iron-dropdown/iron-dropdown.html">
+
+<dom-module id="iron-dropdown-element">
+  <template>
+    <style>
+      .fitBox {
+        width: 100%;
+        height: 100vh;
+        background-color: slateblue;
+      }
+    </style>
+    <button slot="dropdown-trigger" on-tap="open">click here</button>
+
+    <iron-dropdown id="dropdown" style="width:100%; height:100%;" fit-into="[[fitInto]]" position-target="[[positionTarget]]">
+      <div slot="dropdown-content" class="fitBox">
+        <div style="height: 400px; background-color:cornflowerblue">content here</div>
+      </div>
+    </iron-dropdown>
+
+  </template>
+  <script>
+    Polymer({
+      is: 'iron-dropdown-element',
+
+      properties: {
+        fitInto: {
+          type: Object,
+          value: window
+        },
+        positionTarget: {
+          type: Object
+        }
+      },
+
+      open: function () {
+        this.$.dropdown.open();
+      },
+
+      getElement: function (elStr) {
+        return this.$$(elStr);
+      }
+
+    });
+  </script>
+</dom-module>

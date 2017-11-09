@@ -19,10 +19,10 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-  <link rel="import" href="simple-fit.html">
+  <link rel="import" href="iron-dropdown-element.html">
   <link rel="import" href="../../polymer/polymer.html" />
-  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
+  <link rel="import" href="../../iron-dropdown/iron-dropdown.html">
+
   <style>
     .box1,
     .box2 {
@@ -31,60 +31,51 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       display: inline-block;
       box-sizing: border-box;
       border: 1px solid;
-      width: 200px;
       height: 200px;
       padding: 26px 0;
       margin: 15px;
     }
+
     .box2 {
       height: 300px;
     }
 
-    .fitBox {
-      z-index: 10;
-      padding: 5px;
-      width: 100%;
-      height: 100%;
+    .wrapper {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     }
   </style>
 
 </head>
 
 <body>
-  <template is="dom-bind">
-    <div class="box1">
-    </div>
-    <div class="box2"></div>
-    <button on-tap="updatePositionTarget1" style="display: block">fit box 1</button>
-    <button on-tap="updatePositionTarget2" style="display: block">fit box 2</button>
-    <simple-fit id="myFit" class="fitBox" vertical-align="top">
-    </simple-fit>
-    <script>
-      var template = document.querySelector('template[is="dom-bind"]');
+  <dom-bind>
+    <template is="dom-bind">
+      <div class="wrapper">
+        <div id="fit2" class="box1" slot="dropdown-fit-into"></div>
+        <div id="fit1" class="box2"></div>
+      </div>
+      <iron-dropdown-element fit-into="[[getElement('#fit1')]]" position-target="[[getElement('#fit1')]]">
+      </iron-dropdown-element>
 
-      function refit() {
-        myFit.refit();
-      }
 
-      template.updatePositionTarget1 = function (e) {
-        box1 = document.querySelector('.box1');
 
-        myFit.fitInto = box1;
 
-        refit();
-      };
+    </template>
+  </dom-bind>
+  <script>
 
-      template.updatePositionTarget2 = function (e) {
-        box2 = document.querySelector('.box2');
+    var template = document.querySelector('template[is=dom-bind]');
 
-        myFit.fitInto = box2;
+    template.getElement = function (elStr) {
+      return this.$$('#fit1');
+    }
 
-        refit();
-      };
+    // Support hybrid mode
+    var templatev1 = document.querySelector('dom-bind');
+    templatev1.getElement = template.getElement;
 
-    </script>
-  </template>
-
+  </script>
 </body>
 
 </html>
