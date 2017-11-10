@@ -9,21 +9,46 @@
     <link rel="import" href="../../polymer/polymer.html" />
     <link rel="import" href="../../px-theme/px-theme-styles.html">
     <style include="px-theme-styles" is="custom-style"></style>
+<link rel="import" href="../px-datetime-picker.html" />
 
-    <link rel="import" href="../px-datetime-picker.html" />
+</head>
 
-  </head>
+<body>
+  <dom-bind>
+    <template is="dom-bind">
+      <h2>px-datetime-picker</h2>
+      <div id="fit" style="margin-left: 50px; width: 500px; height: 500px; background-color:aliceblue">
+      <px-datetime-picker
+        date-format="YYYY/MM/DD"
+        time-format="HH:mm:ss"
+        show-time-zone="dropdown"
+        date-time="2016-02-05T05:30:00.000Z"
+        show-buttons
+        fill-container
+        fit-into-element="[[getElement('#fit')]]"
+        collapse-at="600">
+      </px-datetime-picker>
+      <px-datetime-picker
+        date-format="YYYY/MM/DD"
+        time-format="HH:mm:ss"
+        show-time-zone="dropdown"
+        date-time="2016-02-05T05:30:00.000Z"
+        show-buttons
+        collapse-at="600">
+      </px-datetime-picker>
+    </div>
+    </template>
+  </dom-bind>
+  <script>
+    var template = document.querySelector('template[is=dom-bind]');
+    template.getElement = function (elStr) {
+      return this.$$(elStr);
+    }
 
-  <body>
-    <h2>px-datetime-picker</h2>
-    <px-datetime-picker
-      date-format="YYYY/MM/DD"
-      time-format="HH:mm:ss"
-      show-time-zone="dropdown"
-      date-time="2016-02-05T05:30:00.000Z"
-      show-buttons
-      collapse-at="600">
-    </px-datetime-picker>
-  </body>
+    // Support hybrid mode
+    var templatev1 = document.querySelector('dom-bind');
+    templatev1.getElement = template.getElement;
+  </script>
+</body>
+
 </html>
-

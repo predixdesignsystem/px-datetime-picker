@@ -37,7 +37,7 @@ Custom property | Description
     <template is="dom-if" if="[[_collapseQueryIsValid(collapseAt)]]">
       <iron-media-query query$="(max-width: {{_getCollapseQuery(collapseAt)}})" query-matches="{{_belowCollapseSize}}"></iron-media-query>
     </template>
-    <div id="fit" style="margin-left: 50px; width: 500px; height: 500px; background-color:aliceblue"></div>
+
 
     <px-datetime-field
       id="field"
@@ -58,22 +58,17 @@ Custom property | Description
       min="[[min]]"
       max="[[max]]">
     </px-datetime-field>
-    <!--
-      no-overlap
-      dynamic-align
-      vertical-offset="0"
-      vertical-align="[[_getDropdownVerticalAlign(collapsed)]]"
-      horizontal-align="[[_getDropdownHorizontalAlign(collapsed)]]"
-    position-target="[[_getPositionTarget(_positionTarget, collapsed)]]" -->
     <iron-dropdown
       id="dropdown"
-      opened="{{_opened}}"
+      class="dt-iron-dropdown"
+      opened="{{opened}}"
       vertical-align="top"
-      position-target="[[getElement('#fit')]]"
-      fit-into="[[getElement('#fit')]]"
-      style="width:100%; height: 100%;"
-      >
-      <!-- <div slot="dropdown-content" class="dt-container__box shadow-temporary"></div> -->
+      horizontal-align="left"
+      position-target="[[_getPositionTarget(fillContainer, fitIntoElement)]]"
+      fit-into="[[fitIntoElement]]"
+      no-overlap="[[!fillContainer]]"
+      dynamic-align="[[!fillContainer]]"
+      vertical-offset="[[_getVerticalOffset(fillContainer)]]">
       <div slot="dropdown-content" class="dt-container__box shadow-temporary">
         <px-calendar-picker
           id="calendar"
@@ -122,13 +117,6 @@ Custom property | Description
      */
     properties: {
       /**
-       * Whether the Calendar box is _
-       */
-      _opened: {
-        type: Boolean,
-        value: false
-      },
-      /**
        *
        * Can be set to show the timezone in the field. Can have 2 values:
        *  'dropdown': shows the time zone as a dropdown which the user can use to
@@ -172,16 +160,16 @@ Custom property | Description
        * (e.g. `450`) which will be converted to a pixel value (e.g. '450px').
        *
        * If no value is provided, the datetime picker will not collapse
-       * automatically. The collapsed attribute can also be used to manually
+       * automatically. The opened attribute can also be used to manually
        * collapse and un-collapse the datetime picker.
        */
        collapseAt: {
         type: Number
       },
       /**
-       * Watch for changes to determine if the context browser is collapsed.
+       * Reflects if datetime-picker container is open/visable.
        */
-       collapsed: {
+       opened: {
         type: Boolean,
         value: false,
         reflectToAttribute: true
@@ -190,6 +178,24 @@ Custom property | Description
       _belowCollapseSize: {
         type: Boolean,
         observer: '_handleBelowCollapseSizeChanged'
+      },
+      /**
+       * false : the dt-picker contents will open in a panel.
+       * true : the dt-picker contents will fill the window
+       * or an element defined by the `fitIntoElement`.
+       */
+       fillContainer: {
+        type: Boolean,
+        value: false,
+        reflectToAttribute: true
+      },
+      /**
+       * The element that the dt-picker contents will fully exand into
+       * when the dt-picker is open.
+       */
+      fitIntoElement: {
+        type: Object,
+        value: window
       },
       /**
        * List of key/values to be included for translating this component
@@ -321,7 +327,7 @@ Custom property | Description
     },
     /**
      */
-    _collapseQueryIsValid(query) {
+    _collapseQueryIsValid: function(query) {
       if (typeof query === 'number') {
         return true;
       }
@@ -330,7 +336,7 @@ Custom property | Description
       }
       return false;
     },
-    _getCollapseQuery(collapseAt) {
+    _getCollapseQuery: function(collapseAt) {
       if (typeof collapseAt === 'number') {
         return collapseAt + 'px';
       }
@@ -343,26 +349,25 @@ Custom property | Description
     // Calculate iron-dropdown properties
     // ********************************************************************** //
 
-    _getDropdownVerticalAlign(collapsed) {
-      return collapsed ? 'bottom' : 'top';
-    },
-
-    _getDropdownHorizontalAlign(collapsed) {
-      return collapsed ? 'right' : 'left';
-    },
-
-    _getPositionTarget(openTarget, collapsed) {
-      if (collapsed || !(openTarget instanceof HTMLElement)) {
-        return window;
+    _getVerticalOffset: function(fillContainer) {
+      if(!fillContainer){
+        return 20;
       }
-      return openTarget;
+      return 0;
     },
-    _handleBelowCollapseSizeChanged(newVal, oldVal) {
-      if (newVal && !this.collapsed) {
-        this.collapsed = true;
+    _getPositionTarget: function(fillContainer, fitIntoElement) {
+      if (fillContainer){
+        return fitIntoElement;
+      } else {
+        return this.$.field;
       }
-      if (!newVal && this.collapsed) {
-        this.collapsed = false;
+    },
+    _handleBelowCollapseSizeChanged: function(newVal, oldVal) {
+      if (newVal && !this.opened) {
+        this.opened = true;
+      }
+      if (!newVal && this.opened) {
+        this.opened = false;
       }
     },
     getElement: function(elStr) {

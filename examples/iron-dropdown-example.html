@@ -1,12 +1,8 @@
 <!doctype html>
 <!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+  sandbox example of iron-dropdown
+  this demo shows how iron-dropdown content can be opened
+  into an external container and expand fully.
 -->
 <html>
 
@@ -19,23 +15,19 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-  <link rel="import" href="iron-dropdown-element.html">
   <link rel="import" href="../../polymer/polymer.html" />
   <link rel="import" href="../../iron-dropdown/iron-dropdown.html">
+  <link rel="import" href="iron-dropdown-element.html">
 
   <style>
     .box1,
     .box2 {
-      cursor: pointer;
-      text-align: center;
-      display: inline-block;
-      box-sizing: border-box;
       border: 1px solid;
-      height: 200px;
-      padding: 26px 0;
       margin: 15px;
     }
-
+    .box1 {
+      height: 200px;
+    }
     .box2 {
       height: 300px;
     }
@@ -51,15 +43,14 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 <body>
   <dom-bind>
     <template is="dom-bind">
+
       <div class="wrapper">
-        <div id="fit2" class="box1" slot="dropdown-fit-into"></div>
-        <div id="fit1" class="box2"></div>
+        <div id="fit1" class="box1"></div>
+        <div id="fit2" class="box2"></div>
       </div>
-      <iron-dropdown-element fit-into="[[getElement('#fit1')]]" position-target="[[getElement('#fit1')]]">
+
+      <iron-dropdown-element position-target="[[getElement('#fit1')]]" fit-into="[[getElement('#fit1')]]">
       </iron-dropdown-element>
-
-
-
 
     </template>
   </dom-bind>
@@ -68,7 +59,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     var template = document.querySelector('template[is=dom-bind]');
 
     template.getElement = function (elStr) {
-      return this.$$('#fit1');
+      return this.$$(elStr);
     }
 
     // Support hybrid mode

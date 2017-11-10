@@ -49,16 +49,17 @@ px-datetime-field {
 
 
 .dt-container__box {
-  background-color: var(--px-datetime-picker-background-color, white);
+  background-color: var(--px-datetime-picker-background-color,slateblue);
   border: 1px solid var(--px-datetime-picker-border-color, lightgray);
   z-index: var(--px-datetime-picker-z-index, 300);
   padding: $inuit-base-spacing-unit--small $inuit-base-spacing-unit--large $inuit-base-spacing-unit--large;
-  height: 100%;
+}
+:host([fill-container]) .dt-container__box {
+  height: 100vh;
 }
 
-:host([collapsed]) .dt-container__box {
-  // height: 500px;
-  // width: 500px;
+:host([fill-container]) .dt-iron-dropdown {
+  width:100%; height: 100%;
 }
 
 // Trumps

@@ -1,12 +1,8 @@
 <!doctype html>
 <!--
-@license
-Copyright (c) 2015 The Polymer Project Authors. All rights reserved.
-This code may only be used under the BSD style license found at http://polymer.github.io/LICENSE.txt
-The complete set of authors may be found at http://polymer.github.io/AUTHORS.txt
-The complete set of contributors may be found at http://polymer.github.io/CONTRIBUTORS.txt
-Code distributed by Google as part of the polymer project is also
-subject to an additional IP rights grant found at http://polymer.github.io/PATENTS.txt
+  Sanboxed code to show how iron-fit behave.
+  This example focuses on fiting a component inside other one and
+  having it exand to fill the container.
 -->
 <html>
 
@@ -19,22 +15,16 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
   <meta name="viewport" content="width=device-width, minimum-scale=1.0, initial-scale=1, user-scalable=yes">
   <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-  <link rel="import" href="simple-fit.html">
+  <link rel="import" href="iron-fit-element.html">
   <link rel="import" href="../../polymer/polymer.html" />
-  <link rel="import" href="../../iron-demo-helpers/demo-snippet.html">
-  <link rel="import" href="../../iron-demo-helpers/demo-pages-shared-styles.html">
   <style>
     .box1,
     .box2 {
-      cursor: pointer;
-      text-align: center;
-      display: inline-block;
-      box-sizing: border-box;
       border: 1px solid;
-      /* width: 200px; */
-      height: 200px;
-      padding: 26px 0;
       margin: 15px;
+    }
+    .box1 {
+      height: 200px;
     }
     .box2 {
       height: 300px;
@@ -61,11 +51,17 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       <div class="box1"></div>
       <div class="box2"></div>
     </div>
+
     <button on-tap="updatePositionTarget1" style="display: block">fit box 1</button>
     <button on-tap="updatePositionTarget2" style="display: block">fit box 2</button>
     <button on-tap="updatePositionTarget3" style="display: block">fit window</button>
-    <simple-fit id="myFit" class="fitBox" vertical-align="top" horizontal-align="right">
+
+    <!-- Element that imports Polymer.IronFitBehavior -->
+    <simple-fit
+      id="myFit"
+      class="fitBox">
     </simple-fit>
+
     <script>
       var template = document.querySelector('template[is="dom-bind"]');
 
@@ -77,26 +73,23 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
         myFit.refit();
       }
 
+      //fitInto can behave unexpectly if the positionTarget isn't set
       template.updatePositionTarget1 = function (e) {
         box1 = document.querySelector('.box1');
-
         myFit.fitInto = box1;
-
+        myFit.positionTarget = box1;
         refit();
       };
 
       template.updatePositionTarget2 = function (e) {
         box2 = document.querySelector('.box2');
-
         myFit.fitInto = box2;
-
+        myFit.positionTarget = box2;
         refit();
       };
       template.updatePositionTarget3 = function (e) {
-
-
         myFit.fitInto = window;
-
+        myFit.positionTarget = window;
         refit();
       };
 

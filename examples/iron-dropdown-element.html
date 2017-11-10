@@ -4,16 +4,23 @@
   <template>
     <style>
       .fitBox {
+        background-color: cornflowerblue;
         width: 100%;
         height: 100vh;
-        background-color: slateblue;
+      }
+      .content {
+        padding: 10px;
+      }
+      .dropdown {
+        width:100%;
+        height:100%;
       }
     </style>
     <button slot="dropdown-trigger" on-tap="open">click here</button>
 
-    <iron-dropdown id="dropdown" style="width:100%; height:100%;" fit-into="[[fitInto]]" position-target="[[positionTarget]]">
+    <iron-dropdown id="dropdown" class="dropdown" fit-into="[[fitInto]]" position-target="[[positionTarget]]">
       <div slot="dropdown-content" class="fitBox">
-        <div style="height: 400px; background-color:cornflowerblue">content here</div>
+        Tbh subway tile mustache, kickstarter everyday carry austin pork belly taxidermy viral ramps post-ironic four dollar toast sustainable normcore. Truffaut salvia thundercats gentrify, whatever unicorn PBR&B banjo beard iceland. Poutine selvage etsy put a bird on it food truck flexitarian, tumeric authentic gastropub YOLO cloud bread. Whatever chia salvia godard. 8-bit neutra four dollar toast actually. Mixtape microdosing trust fund iceland. Yuccie mustache iceland church-key tousled tilde, butcher cloud bread ramps godard viral.
       </div>
     </iron-dropdown>
 
@@ -34,10 +41,6 @@
 
       open: function () {
         this.$.dropdown.open();
-      },
-
-      getElement: function (elStr) {
-        return this.$$(elStr);
       }
 
     });
