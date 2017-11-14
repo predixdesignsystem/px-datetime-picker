@@ -17,7 +17,9 @@
 <!-- Demo DOM module -->
 <dom-module id="px-datetime-picker-demo">
   <template>
-    <style include="px-demo-styles" is="custom-style"></style>
+    <custom-style>
+      <style include="px-demo-styles" is="custom-style"></style>
+    </custom-style>
 
     <!-- Header -->
     <px-demo-header
@@ -29,37 +31,38 @@
     <!-- Interactive -->
     <px-demo-interactive>
       <!-- Configs -->
-      <px-demo-configs configs="[[configs]]" props="{{props}}" chosen-config="{{chosenConfig}}"></px-demo-configs>
+      <px-demo-configs slot="px-demo-configs" configs="[[configs]]" props="{{props}}" chosen-config="{{chosenConfig}}"></px-demo-configs>
 
       <!-- Props -->
-      <px-demo-props props="{{props}}" config="[[chosenConfig]]" class="flex__item flex__item--msfix"></px-demo-props>
+      <px-demo-props slot="px-demo-props" props="{{props}}" config="[[chosenConfig]]" class="flex__item flex__item--msfix"></px-demo-props>
 
       <!-- Component ---------------------------------------------------------->
-      <px-demo-component>
+      <px-demo-component slot="px-demo-component">
 
         <p class=u-mb0>Event fired: <strong>px-datetime-submitted</strong></p>
         <p class="zeta u-mt0">See API Reference below for more details</p>
         <p class="u-mb++">Current dateTime object: <strong>{{props.dateTime.value}}</strong></p>
         <px-datetime-picker
-            date-time="{{props.dateTime.value}}"
-            date-format="{{props.dateFormat.value}}"
-            time-format="{{props.timeFormat.value}}"
-            show-buttons="{{props.showButtons.value}}"
-            block-future-dates="{{props.blockFutureDates.value}}"
-            block-past-dates="{{props.blockPastDates.value}}"
-            hide-time="{{props.hideTime.value}}"
-            show-time-zone="{{props.showTimeZone.value}}"
-            time-zone="{{props.timeZone.value}}"
-            min="{{props.min.value}}"
-            max="{{props.max.value}}">
+          date-time="{{props.dateTime.value}}"
+          date-format="{{props.dateFormat.value}}"
+          time-format="{{props.timeFormat.value}}"
+          show-buttons="{{props.showButtons.value}}"
+          block-future-dates="{{props.blockFutureDates.value}}"
+          block-past-dates="{{props.blockPastDates.value}}"
+          hide-time="{{props.hideTime.value}}"
+          show-time-zone="{{props.showTimeZone.value}}"
+          time-zone="{{props.timeZone.value}}"
+          min="{{props.min.value}}"
+          max="{{props.max.value}}">
         </px-datetime-picker>
       </px-demo-component>
       <!-- END Component ------------------------------------------------------>
 
       <px-demo-component-snippet
-          element-properties="{{props}}"
-          element-name="px-datetime-picker"
-          links-includes="[[linksIncludes]]">
+        slot="px-demo-component-snippet"
+        element-properties="{{props}}"
+        element-name="px-datetime-picker"
+        links-includes="[[linksIncludes]]">
       </px-demo-component-snippet>
     </px-demo-interactive>
 

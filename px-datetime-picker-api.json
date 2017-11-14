@@ -1,0 +1,477 @@
+{
+  "schema_version": "1.0.0",
+  "elements": [
+    {
+      "description": "The datetime components rely on <a href=\"https://momentjs.com/\" target=\"_blank\">Moment.js</a> and <a href=\"https://momentjs.com/timezone/\" target=\"_blank\">Moment Timezone</a>.\n\n#### Usage\n\n    <px-datetime-picker></px-datetime-picker>\n\n\n#### Styling\nThe following custom properties are available for styling. Please also refer to px-forms-design and px-buttons-design for additional style variables used by this component.\n\nCustom property | Description\n:----------------|:-------------\n`--px-datetime-picker-background-color` | Background color for the panel\n`--px-datetime-picker-border-color` | Border color for the panel\n`--px-datetime-picker-z-index` | The z-index of the container",
+      "summary": "",
+      "path": "px-datetime-picker.html",
+      "properties": [
+        {
+          "name": "_opened",
+          "type": "boolean",
+          "description": "Whether the Calendar box is _",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 109,
+              "column": 6
+            },
+            "end": {
+              "line": 112,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "showTimeZone",
+          "type": "string",
+          "description": "Can be set to show the timezone in the field. Can have 2 values:\n 'dropdown': shows the time zone as a dropdown which the user can use to\nselect a different time zone. Only contains a subset of all timezones\n 'extendedDropdown': shows the time zone as a dropdown which the user can use to\nselect a different time zone. Contains all existing timezones (588)\n 'text': shows the time zone as text, non editable\n 'abbreviatedText': shows the time zone as an abbreviated text, non editable (such as PST, EST...)",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 123,
+              "column": 6
+            },
+            "end": {
+              "line": 126,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"\""
+        },
+        {
+          "name": "hideTime",
+          "type": "boolean",
+          "description": "Whether this date picker should allow to pick time as well.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 131,
+              "column": 6
+            },
+            "end": {
+              "line": 134,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "dateFormat",
+          "type": "string",
+          "description": "Moment format used for the date",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 139,
+              "column": 6
+            },
+            "end": {
+              "line": 142,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"MM/DD/YYYY\""
+        },
+        {
+          "name": "timeFormat",
+          "type": "string",
+          "description": "Moment format used for the time",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 147,
+              "column": 7
+            },
+            "end": {
+              "line": 150,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"HH:mm A\""
+        },
+        {
+          "name": "resources",
+          "type": "Object",
+          "description": "List of key/values to be included for translating this component",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 154,
+              "column": 6
+            },
+            "end": {
+              "line": 163,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "{\"en\":{\"Today\":\"Today\"}}"
+        },
+        {
+          "name": "keyBindings",
+          "type": "Object",
+          "description": "Key bindings for iron-a11y-keys-behavior",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 176,
+              "column": 4
+            },
+            "end": {
+              "line": 179,
+              "column": 5
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        }
+      ],
+      "methods": [
+        {
+          "name": "attached",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 180,
+              "column": 4
+            },
+            "end": {
+              "line": 182,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_todayClicked",
+          "description": "'Today' button/text has been clicked",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 186,
+              "column": 4
+            },
+            "end": {
+              "line": 191,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "evt"
+            }
+          ]
+        },
+        {
+          "name": "_onEsc",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 194,
+              "column": 4
+            },
+            "end": {
+              "line": 197,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "evt"
+            }
+          ]
+        },
+        {
+          "name": "_onEnter",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 200,
+              "column": 4
+            },
+            "end": {
+              "line": 203,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "evt"
+            }
+          ]
+        },
+        {
+          "name": "_open",
+          "description": "Opens the calendar",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 207,
+              "column": 4
+            },
+            "end": {
+              "line": 209,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_close",
+          "description": "Closes the calendar",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 213,
+              "column": 4
+            },
+            "end": {
+              "line": 215,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_handleTap",
+          "description": "If the calendar is open and the dropdown is selected, close the calendar",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 219,
+              "column": 4
+            },
+            "end": {
+              "line": 232,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "evt"
+            }
+          ]
+        },
+        {
+          "name": "_processClose",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 235,
+              "column": 4
+            },
+            "end": {
+              "line": 239,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_momentChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 242,
+              "column": 4
+            },
+            "end": {
+              "line": 264,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "momentObj"
+            }
+          ]
+        },
+        {
+          "name": "_buttonClicked",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 267,
+              "column": 4
+            },
+            "end": {
+              "line": 271,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "evt"
+            }
+          ]
+        },
+        {
+          "name": "_iconClicked",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 274,
+              "column": 4
+            },
+            "end": {
+              "line": 278,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "evt"
+            }
+          ]
+        }
+      ],
+      "staticMethods": [],
+      "demos": [
+        {
+          "url": "index.html",
+          "description": ""
+        }
+      ],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 91,
+          "column": 10
+        },
+        "end": {
+          "line": 279,
+          "column": 3
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "attributes": [
+        {
+          "name": "show-time-zone",
+          "description": "Can be set to show the timezone in the field. Can have 2 values:\n 'dropdown': shows the time zone as a dropdown which the user can use to\nselect a different time zone. Only contains a subset of all timezones\n 'extendedDropdown': shows the time zone as a dropdown which the user can use to\nselect a different time zone. Contains all existing timezones (588)\n 'text': shows the time zone as text, non editable\n 'abbreviatedText': shows the time zone as an abbreviated text, non editable (such as PST, EST...)",
+          "sourceRange": {
+            "start": {
+              "line": 123,
+              "column": 6
+            },
+            "end": {
+              "line": 126,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "hide-time",
+          "description": "Whether this date picker should allow to pick time as well.",
+          "sourceRange": {
+            "start": {
+              "line": 131,
+              "column": 6
+            },
+            "end": {
+              "line": 134,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "date-format",
+          "description": "Moment format used for the date",
+          "sourceRange": {
+            "start": {
+              "line": 139,
+              "column": 6
+            },
+            "end": {
+              "line": 142,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "time-format",
+          "description": "Moment format used for the time",
+          "sourceRange": {
+            "start": {
+              "line": 147,
+              "column": 7
+            },
+            "end": {
+              "line": 150,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "resources",
+          "description": "List of key/values to be included for translating this component",
+          "sourceRange": {
+            "start": {
+              "line": 154,
+              "column": 6
+            },
+            "end": {
+              "line": 163,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        }
+      ],
+      "events": [],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [],
+      "tagname": "px-datetime-picker"
+    }
+  ]
+}
