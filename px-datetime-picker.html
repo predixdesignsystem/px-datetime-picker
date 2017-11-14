@@ -86,6 +86,25 @@ Custom property | Description
           max="[[max]]">
         </px-calendar-picker>
         <div class="actionable caps dt-today u-mt-" on-tap="_todayClicked">[[localize('Today')]]</div>
+        <template is="dom-if" if="{{_handleField(hideTime, fillContainer)}}">
+          <div>
+            <px-datetime-field
+              id="time"
+              class="box__time"
+              moment-obj="{{momentObj}}"
+              hide-icon
+              hide-date
+              is-valid="{{_toTimeIsValid}}"
+              time-format="{{timeFormat}}"
+              time-zone="[[timeZone]]"
+              resources="[[resources]]"
+              language="[[language]]"
+              formats="[[formats]]"
+              min="[[min]]"
+              max="[[max]]">
+            </px-datetime-field>
+          </div>
+        </template>
         <template is="dom-if" if="{{showButtons}}">
           <px-datetime-buttons
             class="flex flex--row--rev u-mt+"
@@ -343,6 +362,16 @@ Custom property | Description
       if (typeof collapseAt === 'string' && collapseAt.slice(-2) === 'px' || !isNaN(parseInt(collapseAt))) {
         return collapseAt;
       }
+    },
+    /**
+     * Determine if should field be displayed in container
+     * The dt-field will only appear in the container if fillContainer is true
+     */
+    _handleField: function(hideTime, fillContainer){
+      if(!hideTime && fillContainer){
+        return true;
+      }
+      return false;
     },
 
     // ********************************************************************** //
