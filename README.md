@@ -31,7 +31,13 @@ Second, import the component to your application with the following tag in your 
 Finally, use the component in your application:
 
 ```
-Insert Your demo code here.
+<px-datetime-picker
+  date-format="YYYY/MM/DD"
+  time-format="HH:mm:ss"
+  show-time-zone="dropdown"
+  date-time="2016-02-05T05:30:00.000Z"
+  show-buttons>
+</px-datetime-picker>
 ```
 
 <br />

@@ -22,7 +22,8 @@
     <!-- Header -->
     <px-demo-header
         module-name="px-datetime-picker"
-        description="The px-datetime-picker component includes various elements used for structuring responsive layouts. This component allows the user to select a date or date range. The main use of this component is to be used in the px-range-panel.">
+        description="The px-datetime-picker component includes various elements used for structuring responsive layouts. This component allows the user to select a date or date range. The main use of this component is to be used in the px-range-panel."
+        desktop>
     </px-demo-header>
 
     <!-- Interactive -->
@@ -224,13 +225,13 @@
 
       min: {
         type: Object,
-        defaultValue: Px.moment().subtract(7, 'day'),
+        defaultValue: Px.moment().subtract(2, 'years'),
         inputType: 'code:JSON'
       },
 
       max: {
         type: Object,
-        defaultValue: Px.moment().add(7, 'day'),
+        defaultValue: Px.moment().add(2, 'years'),
         inputType: 'code:JSON'
       }
     },
