@@ -33,11 +33,6 @@ Custom property | Description
   <template>
     <style include="px-datetime-picker-styles"></style>
 
-    <!-- Media query to determine if context browser should collapse -->
-    <template is="dom-if" if="[[_collapseQueryIsValid(collapseAt)]]">
-      <iron-media-query query$="(max-width: {{_getCollapseQuery(collapseAt)}})" query-matches="{{_belowCollapseSize}}"></iron-media-query>
-    </template>
-
     <px-datetime-field
       id="field"
       slot="dropdown-trigger"
@@ -177,29 +172,12 @@ Custom property | Description
         value: 'HH:mm A'
       },
       /**
-       * The width below which the datetime picker will collapse into a mobile
-       * friendly menu that slides up from the bottom of the page. Use a number
-       * (e.g. `450`) which will be converted to a pixel value (e.g. '450px').
-       *
-       * If no value is provided, the datetime picker will not collapse
-       * automatically. The opened attribute can also be used to manually
-       * collapse and un-collapse the datetime picker.
-       */
-       collapseAt: {
-        type: Number
-      },
-      /**
-       * Reflects if datetime-picker container is open/visable.
+       * Reflects if datetime-picker container is open/visible.
        */
        opened: {
         type: Boolean,
         value: false,
         reflectToAttribute: true
-      },
-
-      _belowCollapseSize: {
-        type: Boolean,
-        observer: '_handleBelowCollapseSizeChanged'
       },
       /**
        * false : the dt-picker contents will open in a panel.
@@ -348,25 +326,6 @@ Custom property | Description
       }
     },
     /**
-     */
-    _collapseQueryIsValid: function(query) {
-      if (typeof query === 'number') {
-        return true;
-      }
-      if (typeof query === 'string' && query.slice(-2) === 'px' && !isNaN(parseInt(query))) {
-        return true;
-      }
-      return false;
-    },
-    _getCollapseQuery: function(collapseAt) {
-      if (typeof collapseAt === 'number') {
-        return collapseAt + 'px';
-      }
-      if (typeof collapseAt === 'string' && collapseAt.slice(-2) === 'px' || !isNaN(parseInt(collapseAt))) {
-        return collapseAt;
-      }
-    },
-    /**
      * Determine if should field be displayed in container
      * The dt-field will only appear in the container if fillContainer is true
      */
@@ -377,34 +336,15 @@ Custom property | Description
       return false;
     },
 
-    mobileKeyboard(e){
-      console.log("ran")
-    },
-
     // ********************************************************************** //
     // Calculate iron-dropdown properties
     // ********************************************************************** //
 
     _getVerticalOffset: function(fillContainer) {
-      if(!fillContainer){
-        return 20;
-      }
-      return 0;
+      return !fillContainer ? 20 : 0;
     },
     _getPositionTarget: function(fillContainer, fitIntoElement) {
-      if (fillContainer){
-        return fitIntoElement;
-      } else {
-        return this.$.field;
-      }
-    },
-    _handleBelowCollapseSizeChanged: function(newVal, oldVal) {
-      if (newVal && !this.opened) {
-        this.opened = true;
-      }
-      if (!newVal && this.opened) {
-        this.opened = false;
-      }
+      return fillContainer ? fitIntoElement : this.$.field;
     },
     getElement: function(elStr) {
       return this.shadowRoot.querySelector(elStr)

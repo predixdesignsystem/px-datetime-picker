@@ -17,42 +17,16 @@
   <dom-bind>
     <template is="dom-bind">
       <h2>px-datetime-picker</h2>
-      <div id="fit" style="margin-left: 50px; width: 500px; height: 600px; background-color:aliceblue">
-      <px-datetime-picker
-      date-format="YYYY/MM/DD"
-      time-format="HH:mm:ss"
-      date-time="2016-02-05T05:30:00.000Z"
-      show-buttons
-      fill-container
-      fit-into-element="[[getElement('#fit')]]"
-      collapse-at="60">
-    </px-datetime-picker>
-
-    <h4>panel</h4>
       <px-datetime-picker
         date-format="YYYY/MM/DD"
         time-format="HH:mm:ss"
         date-time="2016-02-05T05:30:00.000Z"
-        show-buttons
-        collapse-at="60">
+        show-buttons>
       </px-datetime-picker>
-
-    <h4>full screen</h4>
-      <px-datetime-picker
-        date-format="YYYY/MM/DD"
-        time-format="HH:mm:ss"
-        date-time="2016-02-05T05:30:00.000Z"
-        show-buttons
-        fill-container>
-      </px-datetime-picker>
-    </div>
     </template>
   </dom-bind>
   <script>
     var template = document.querySelector('template[is=dom-bind]');
-    template.getElement = function (elStr) {
-      return this.$$(elStr);
-    }
 
     // Support hybrid mode
     var templatev1 = document.querySelector('dom-bind');
