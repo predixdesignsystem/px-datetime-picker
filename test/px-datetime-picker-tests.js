@@ -485,3 +485,20 @@ describe('synchronized date/time zones', function () {
 
 });//end of describe 'synchronized date/time zones'
 
+
+/*******************************************************************************
+ * Time zones
+ ******************************************************************************/
+describe('Full Container', function () {
+  var pickerEl;
+  var calendarEl;
+
+  beforeEach(function () {
+    pickerEl = fixture('datetime-picker');
+    fieldEl = pickerEl.querySelector('px-datetime-field');
+    calendarEl = pickerEl.querySelector('px-calendar-picker');
+  });
+
+
+
+});//end o
