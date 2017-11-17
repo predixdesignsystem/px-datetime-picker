@@ -38,7 +38,6 @@ Custom property | Description
       <iron-media-query query$="(max-width: {{_getCollapseQuery(collapseAt)}})" query-matches="{{_belowCollapseSize}}"></iron-media-query>
     </template>
 
-
     <px-datetime-field
       id="field"
       slot="dropdown-trigger"
@@ -70,50 +69,54 @@ Custom property | Description
       dynamic-align="[[!fillContainer]]"
       vertical-offset="[[_getVerticalOffset(fillContainer)]]">
       <div slot="dropdown-content" class="dt-container__box shadow-temporary">
-        <px-calendar-picker
-          id="calendar"
-          block-future-dates="{{blockFutureDates}}"
-          block-past-dates="{{blockPastDates}}"
-          prevent-range-selection
-          from-moment="{{momentObj}}"
-          base-date="[[momentObj]]"
-          time-zone="[[timeZone]]"
-          day-week-start-index="[[dayWeekStartIndex]]"
-          resources="[[resources]]"
-          language="[[language]]"
-          formats="[[formats]]"
-          min="[[min]]"
-          max="[[max]]">
-        </px-calendar-picker>
-        <div class="actionable caps dt-today u-mt-" on-tap="_todayClicked">[[localize('Today')]]</div>
-        <template is="dom-if" if="{{_handleField(hideTime, fillContainer)}}">
-          <div>
-            <px-datetime-field
-              id="time"
-              class="box__time"
-              moment-obj="{{momentObj}}"
-              hide-icon
-              hide-date
-              is-valid="{{_toTimeIsValid}}"
-              time-format="{{timeFormat}}"
-              time-zone="[[timeZone]]"
-              resources="[[resources]]"
-              language="[[language]]"
-              formats="[[formats]]"
-              min="[[min]]"
-              max="[[max]]">
-            </px-datetime-field>
-          </div>
-        </template>
-        <template is="dom-if" if="{{showButtons}}">
-          <px-datetime-buttons
-            class="flex flex--row--rev u-mt+"
-            is-submit-button-valid
+        <div class="dt-p-calendar">
+          <px-calendar-picker
+            id="calendar"
+            block-future-dates="{{blockFutureDates}}"
+            block-past-dates="{{blockPastDates}}"
+            prevent-range-selection
+            from-moment="{{momentObj}}"
+            base-date="[[momentObj]]"
+            time-zone="[[timeZone]]"
+            day-week-start-index="[[dayWeekStartIndex]]"
             resources="[[resources]]"
             language="[[language]]"
-            formats="[[formats]]">
-          </px-datetime-buttons>
-        </template>
+            formats="[[formats]]"
+            min="[[min]]"
+            max="[[max]]">
+          </px-calendar-picker>
+          <button class="actionable caps dt-p-today" on-tap="_todayClicked">[[localize('Today')]]</button>
+        </div>
+        <div class="dt-p-time-buttons--wrapper">
+          <template is="dom-if" if="{{_handleField(hideTime, fillContainer)}}">
+            <div>
+              <px-datetime-field
+                id="time"
+                class="dt-p-time"
+                moment-obj="{{momentObj}}"
+                hide-icon
+                hide-date
+                is-valid="{{_toTimeIsValid}}"
+                time-format="{{timeFormat}}"
+                time-zone="[[timeZone]]"
+                resources="[[resources]]"
+                language="[[language]]"
+                formats="[[formats]]"
+                min="[[min]]"
+                max="[[max]]">
+              </px-datetime-field>
+            </div>
+          </template>
+          <template is="dom-if" if="{{showButtons}}">
+            <px-datetime-buttons
+              class="dt-p-buttons"
+              is-submit-button-valid
+              resources="[[resources]]"
+              language="[[language]]"
+              formats="[[formats]]">
+            </px-datetime-buttons>
+          </template>
+        </div>
       </div>
     </iron-dropdown>
   </template>
@@ -372,6 +375,10 @@ Custom property | Description
         return true;
       }
       return false;
+    },
+
+    mobileKeyboard(e){
+      console.log("ran")
     },
 
     // ********************************************************************** //
