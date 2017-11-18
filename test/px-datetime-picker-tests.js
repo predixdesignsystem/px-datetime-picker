@@ -7,16 +7,16 @@ describe('px-datetime-picker no buttons', function () {
 
   beforeEach(function () {
     pickerEl = fixture('datetime-picker');
-    calendarEl = pickerEl.querySelector('px-calendar-picker');
+    calendarEl = Polymer.dom(pickerEl.root).querySelector('px-calendar-picker');
   });
 
   var selectTenthDay = function () {
-    var allCells = calendarEl.querySelectorAll('px-calendar-cell'),
+    var allCells = Polymer.dom(calendarEl.root).querySelectorAll('px-calendar-cell'),
       i = 0;
 
 
       Array.prototype.forEach.call(allCells, function (cell, index) {
-      var btn = cell.querySelector('button');
+      var btn = Polymer.dom(cell.root).querySelector('button');
       if (!btn.hidden) {
         i++;
       }
@@ -28,28 +28,28 @@ describe('px-datetime-picker no buttons', function () {
   };
 
   it('the calendar is hidden by default', function () {
-    expect(pickerEl._opened).to.be.false;
+    expect(pickerEl.opened).to.be.false;
   });
 
 
-  it('check that _opened draws the panel for tests validity', function (done) {
+  it('check that opened draws the panel for tests validity', function (done) {
     flush(function () {
-      panelEl = pickerEl.querySelector('#dropdown');
+      panelEl = Polymer.dom(pickerEl.root).querySelector('#dropdown');
       expect(panelEl.offsetWidth, 'panel width before open').to.equal(0);
     });
 
     flush(() => {
-      expect(pickerEl._opened, 'panel is open').to.be.false;
+      expect(pickerEl.opened, 'panel is open').to.be.false;
       async.until(
         function () {
-          return pickerEl._opened;
+          return pickerEl.opened;
         },
         function (callback) {
-          pickerEl._opened = true;
+          pickerEl.opened = true;
           setTimeout(callback, 1000);
         },
         function (err, n) {
-          panelEl = pickerEl.querySelector('#dropdown');
+          panelEl = Polymer.dom(pickerEl.root).querySelector('#dropdown');
           expect(panelEl.offsetWidth, 'panel width after open').to.be.within(230, 270);
           done();
         }
@@ -60,17 +60,17 @@ describe('px-datetime-picker no buttons', function () {
 
   it('the calendar opens on _open function', function (done) {
     flush(() => {
-      expect(pickerEl._opened, 'panel is visible before open').to.be.false;
+      expect(pickerEl.opened, 'panel is visible before open').to.be.false;
       async.until(
         function () {
-          return pickerEl._opened;
+          return pickerEl.opened;
         },
         function (callback) {
           pickerEl._open();
           setTimeout(callback, 1000);
         },
         function (err, n) {
-          expect(pickerEl._opened, 'panel is visible after open').to.be.true;
+          expect(pickerEl.opened, 'panel is visible after open').to.be.true;
           done();
         }
       );
@@ -81,13 +81,14 @@ describe('px-datetime-picker no buttons', function () {
   it('the calendar opens when date icon is clicked', function (done) {
     //click on the date icon
     flush(function () {
-      dateEl = pickerEl.querySelector('#date');
-      dateIconEl = pickerEl.querySelector('px-icon');
+      var fieldEl = Polymer.dom(pickerEl.root).querySelector('#field');
+      var dateEl = Polymer.dom(fieldEl.root).querySelector('#date');
+      var dateIconEl = Polymer.dom(dateEl.root).querySelector('px-icon');
       dateIconEl.click();
     });
 
     flush(function () {
-      expect(pickerEl._opened, 'panel is visible').to.be.true;
+      expect(pickerEl.opened, 'panel is visible').to.be.true;
       done();
     });
   });
@@ -96,24 +97,25 @@ describe('px-datetime-picker no buttons', function () {
   it('the calendar closes when clicking outside of panel', function (done) {
     //click on the date icon
     flush(function () {
-      dateEl = pickerEl.querySelector('#date');
-      dateIconEl = pickerEl.querySelector('px-icon');
+      var fieldEl = Polymer.dom(pickerEl.root).querySelector('#field');
+      var dateEl = Polymer.dom(fieldEl.root).querySelector('#date');
+      var dateIconEl = Polymer.dom(dateEl.root).querySelector('px-icon');
       dateIconEl.click();
     });
 
     // while the panel is open click on the body to see if the panel closes
     flush(() => {
-      expect(pickerEl._opened, 'panel is visible after open').to.be.true;
+      expect(pickerEl.opened, 'panel is visible after open').to.be.true;
       async.whilst(
         function () {
-          return pickerEl._opened;
+          return pickerEl.opened;
         },
         function (callback) {
           document.body.click();
           setTimeout(callback, 1000);
         },
         function (err, n) {
-          expect(pickerEl._opened, 'panel is visible after click').to.be.false;
+          expect(pickerEl.opened, 'panel is visible after click').to.be.false;
           done();
         }
       );
@@ -125,18 +127,18 @@ describe('px-datetime-picker no buttons', function () {
   // it('focusing on the field doesn\'t close calendar when opened', function (done) {
   //   async.series([
   //     function (callback) {
-  //       pickerEl._opened = true;
+  //       pickerEl.opened = true;
   //       callback(null, 'one');
   //     },
   //     function (callback) {
-  //       expect(pickerEl._opened, 'panel is visible after open').to.be.true;
-  //       var fieldEl = pickerEl.querySelector('px-datetime-field');
+  //       expect(pickerEl.opened, 'panel is visible after open').to.be.true;
+  //       var fieldEl = Polymer.dom(pickerEl.root).querySelector('px-datetime-field');
   //       fieldEl.click();
 
   //       callback(null, 'two');
   //     },
   //     function (callback) {
-  //       expect(pickerEl._opened, 'panel is visible after clicking on fieldEl').to.be.true;
+  //       expect(pickerEl.opened, 'panel is visible after clicking on fieldEl').to.be.true;
 
   //       callback(null, 'three');
   //     }
@@ -146,12 +148,12 @@ describe('px-datetime-picker no buttons', function () {
   it('Selecting a day will close panel and apply the value', function (done) {
     async.series([
       function (callback) {
-        pickerEl._opened = true;
+        pickerEl.opened = true;
 
         callback(null, 'one');
       },
       function (callback) {
-        expect(pickerEl._opened, 'panel is visible after open').to.be.true;
+        expect(pickerEl.opened, 'panel is visible after open').to.be.true;
         expect(pickerEl.dateTime, 'dateTime value before selection').to.equal('2018-01-05T00:30:00.000Z');
 
         selectTenthDay();
@@ -159,7 +161,7 @@ describe('px-datetime-picker no buttons', function () {
         callback(null, 'two');
       },
       function (callback) {
-        expect(pickerEl._opened, 'panel is visible after selection').to.be.false;
+        expect(pickerEl.opened, 'panel is visible after selection').to.be.false;
         expect(pickerEl.dateTime, 'dateTime value after selection').to.equal('2018-01-10T00:30:00.000Z');
         done();
 
@@ -172,21 +174,21 @@ describe('px-datetime-picker no buttons', function () {
   it('Selecting today will close panel and apply the value', function (done) {
     async.series([
       function (callback) {
-        pickerEl._opened = true;
+        pickerEl.opened = true;
 
         callback(null, 'one');
       },
       function (callback) {
-        expect(pickerEl._opened, 'panel is visible after open').to.be.true;
+        expect(pickerEl.opened, 'panel is visible after open').to.be.true;
         expect(pickerEl.dateTime, 'dateTime value before selection').to.equal('2018-01-05T00:30:00.000Z');
 
-        todayEl = pickerEl.querySelector('.dt-today');
+        todayEl = Polymer.dom(pickerEl.root).querySelector('.dt-p-today');
         todayEl.click();
 
         callback(null, 'two');
       },
       function (callback) {
-        expect(pickerEl._opened, 'panel is visible after selection').to.be.false;
+        expect(pickerEl.opened, 'panel is visible after selection').to.be.false;
 
         momentNow = moment();
         momentNowISO = momentNow.toISOString();
@@ -241,7 +243,7 @@ describe('px-datetime-picker with buttons', function () {
   it('Selecting a day will not close panel nor apply the value', function (done) {
     async.series([
       function (callback) {
-        pickerEl._opened = true;
+        pickerEl.opened = true;
 
         callback(null, 'one');
       },
@@ -252,7 +254,7 @@ describe('px-datetime-picker with buttons', function () {
         callback(null, 'two');
       },
       function (callback) {
-        expect(pickerEl._opened, 'pickerEl is open').to.be.true;
+        expect(pickerEl.opened, 'pickerEl is open').to.be.true;
         expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-10T00:30:00.000Z', 'momentObj value');
         expect(pickerEl.dateTime).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
         done();
@@ -267,21 +269,21 @@ describe('px-datetime-picker with buttons', function () {
 
     async.series([
       function (callback) {
-        pickerEl._opened = true;
+        pickerEl.opened = true;
 
         callback(null, 'one');
       },
       function (callback) {
-        expect(pickerEl._opened, 'panel is open before selection').to.be.true;
+        expect(pickerEl.opened, 'panel is open before selection').to.be.true;
         expect(pickerEl.dateTime, 'check datetime has not changed').to.equal('2018-01-05T00:30:00.000Z');
 
-        todayEl = pickerEl.querySelector('.dt-today');
+        todayEl = Polymer.dom(pickerEl.root).querySelector('.dt-p-today');
         todayEl.click();
 
         callback(null, 'two');
       },
       function (callback) {
-        expect(pickerEl._opened, 'panel is open after selection').to.be.true;
+        expect(pickerEl.opened, 'panel is open after selection').to.be.true;
 
         momentNow = moment();
         momentNowISO = momentNow.toISOString();
@@ -307,7 +309,7 @@ describe('px-datetime-picker with buttons', function () {
 
     async.series([
       function (callback) {
-        pickerEl._opened = true;
+        pickerEl.opened = true;
 
         callback(null, 'one');
       },
@@ -342,7 +344,7 @@ describe('px-datetime-picker with buttons', function () {
 
     async.series([
       function (callback) {
-        pickerEl._opened = true;
+        pickerEl.opened = true;
 
         callback(null, 'one');
       },
@@ -373,7 +375,7 @@ describe('px-datetime-picker with buttons', function () {
 
     async.series([
       function (callback) {
-        pickerEl._opened = true;
+        pickerEl.opened = true;
 
         callback(null, 'one');
       },
@@ -413,7 +415,7 @@ describe('px-datetime-picker with buttons', function () {
 
     async.series([
       function (callback) {
-        pickerEl._opened = true;
+        pickerEl.opened = true;
 
         callback(null, 'one');
       },
