@@ -1,3 +1,7 @@
+v1.2.0
+==================
+* added properties fullContainer and fitIntoElement
+
 v1.1.2
 ==================
 * fixed/refactored tests
