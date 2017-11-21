@@ -9,35 +9,16 @@
     <link rel="import" href="../../polymer/polymer.html" />
     <link rel="import" href="../../px-theme/px-theme-styles.html">
     <style include="px-theme-styles" is="custom-style"></style>
-<link rel="import" href="../px-datetime-picker.html" />
+    <link rel="import" href="../px-datetime-picker.html" />
 
 </head>
 
 <body>
-  <dom-bind>
-    <template is="dom-bind">
-      <h2>px-datetime-picker</h2>
-      <div id="fit" style="width: 500px; height: 600px; background-color:aliceblue"></div>
-        <px-datetime-picker
-          id="datetime-picker"
-          date-time="2018-01-05T00:30:00.000Z"
-          time-zone="UTC"
-          show-buttons
-          fill-container
-          fit-into-element="[[getElement('#fit')]]">
-        </px-datetime-picker>
-    </template>
-  </dom-bind>
-  <script>
-    var template = document.querySelector('template[is=dom-bind]');
-    template.getElement = function (elStr) {
-      return this.$$(elStr);
-    }
-
-    // Support hybrid mode
-    var templatev1 = document.querySelector('dom-bind');
-    templatev1.getElement = template.getElement;
-  </script>
+  <h2>px-datetime-picker</h2>
+  <px-datetime-picker
+    time-zone="UTC"
+    show-buttons>
+  </px-datetime-picker>
 </body>
 
 </html>

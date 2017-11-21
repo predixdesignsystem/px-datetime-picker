@@ -5,7 +5,6 @@
 <link rel="import" href="../px-datetime-common/px-datetime-buttons.html"/>
 <link rel="import" href="../px-datetime-common/px-datetime-button-behavior.html"/>
 <link rel="import" href="../iron-dropdown/iron-dropdown.html">
-<link rel="import" href="../iron-media-query/iron-media-query.html"/>
 
 <!--
 The datetime components rely on <a href="https://momentjs.com/" target="_blank">Moment.js</a> and <a href="https://momentjs.com/timezone/" target="_blank">Moment Timezone</a>.
@@ -58,11 +57,11 @@ Custom property | Description
       opened="{{opened}}"
       vertical-align="top"
       horizontal-align="left"
-      position-target="[[_getPositionTarget(fillContainer, fitIntoElement)]]"
-      fit-into="[[fitIntoElement]]"
       no-overlap="[[!fillContainer]]"
       dynamic-align="[[!fillContainer]]"
-      vertical-offset="[[_getVerticalOffset(fillContainer)]]">
+      vertical-offset="[[_getVerticalOffset(fillContainer)]]"
+      position-target="[[_getPositionTarget(fillContainer, fitIntoElement)]]"
+      fit-into="[[fitIntoElement]]">
       <div slot="dropdown-content" class="dt-container__box shadow-temporary">
         <div class="dt-p-calendar">
           <px-calendar-picker
@@ -192,6 +191,7 @@ Custom property | Description
       /**
        * The element that the dt-picker contents will fully exand into
        * when the dt-picker is open.
+       * `fillContainer` must be true inorder for this property to work
        */
       fitIntoElement: {
         type: Object,
@@ -330,10 +330,7 @@ Custom property | Description
      * The dt-field will only appear in the container if fillContainer is true
      */
     _handleField: function(hideTime, fillContainer){
-      if(!hideTime && fillContainer){
-        return true;
-      }
-      return false;
+      return (!hideTime && fillContainer);
     },
 
     // ********************************************************************** //
