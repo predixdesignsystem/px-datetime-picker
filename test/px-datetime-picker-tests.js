@@ -491,44 +491,47 @@ describe('synchronized date/time zones', function () {
 /*******************************************************************************
  * Full Container
  ******************************************************************************/
-// describe('Full Container', function () {
-//   var pickerEl;
-//   var calendarEl;
+describe('Full Container', function () {
+  var pickerEl;
+  var calendarEl;
+  var fitEl;
 
-//   beforeEach(function () {
-//     templateEl = fixture('datetime-picker-full-container');
-//     pickerEl = Polymer.dom(templateEl.root).querySelector('px-datetime-picker');
-//     dropdownContentEl = Polymer.dom(pickerEl.root).querySelector('.dt-container__box');
-//   });
+  beforeEach(function () {
+    templateEl = fixture('datetime-picker-full-container');
+    pickerEl = Polymer.dom(templateEl.root).querySelector('px-datetime-picker');
+    dropdownContentEl = Polymer.dom(pickerEl.root).querySelector('.dt-container__box');
+    fitEl = Polymer.dom(templateEl.root).querySelector('#fit');
+    pickerEl.fitIntoElement = fitEl;
+  });
 
-//   it('the calendar is hidden by default', function () {
-//     expect(pickerEl.opened).to.be.false;
-//   });
+  it('the calendar is hidden by default', function () {
+    expect(pickerEl.opened).to.be.false;
+  });
 
-//   it('check that the calendar fills the container when open', function (done) {
-//     flush(function () {
-//       expect(dropdownContentEl.offsetWidth, 'panel width before open').to.equal(0);
-//       expect(dropdownContentEl.offsetWidth, 'panel width before open').to.equal(0);
-//     });
-//     flush(() => {
-//       expect(pickerEl.opened, 'panel is open').to.be.false;
-//       async.until(
-//         function () {
-//           return pickerEl.opened;
-//         },
-//         function (callback) {
-//           pickerEl.opened = true;
-//           setTimeout(callback, 1000);
-//         },
-//         function (err, n) {
-//           expect(dropdownContentEl.offsetWidth, 'panel width after open').to.be.within(330, 370);
-//           expect(dropdownContentEl.offsetHeight, 'panel height after open').to.be.within(480, 520);
-//           done();
-//         }
-//       );
-//     });
-//   });
-// });//end of full container
+  it('check that the calendar fills the container when open', function (done) {
+    flush(function () {
+      expect(dropdownContentEl.offsetWidth, 'panel width before open').to.equal(0);
+      expect(dropdownContentEl.offsetWidth, 'panel width before open').to.equal(0);
+    });
+    flush(() => {
+      expect(pickerEl.opened, 'panel is open').to.be.false;
+      async.until(
+        function () {
+          return pickerEl.opened;
+        },
+        function (callback) {
+          pickerEl.opened = true;
+          setTimeout(callback, 1000);
+        },
+        function (err, n) {
+          expect(dropdownContentEl.offsetWidth, 'panel width after open').to.be.within(330, 370);
+          expect(dropdownContentEl.offsetHeight, 'panel height after open').to.be.within(480, 520);
+          done();
+        }
+      );
+    });
+  });
+});//end of full container
 
 
 /*******************************************************************************
