@@ -524,8 +524,8 @@ describe('Full Container', function () {
           setTimeout(callback, 1000);
         },
         function (err, n) {
-          expect(dropdownContentEl.offsetWidth, 'panel width after open').to.be.within(330, 370);
-          expect(dropdownContentEl.offsetHeight, 'panel height after open').to.be.within(480, 520);
+          expect(dropdownContentEl.offsetWidth, 'panel width after open').to.be.within(330, 355);
+          expect(dropdownContentEl.offsetHeight, 'panel height after open').to.be.within(230, 255);
           done();
         }
       );
