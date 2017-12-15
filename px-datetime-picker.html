@@ -37,7 +37,7 @@ Custom property | Description
       id="field"
       slot="dropdown-trigger"
       time-zone="{{timeZone}}"
-      moment-obj="[[_tempMomentObj]]"
+      moment-obj="{{_tempMomentObj}}"
       hide-time="{{hideTime}}"
       show-time-zone="{{showTimeZone}}"
       date-format="{{dateFormat}}"
@@ -70,7 +70,7 @@ Custom property | Description
             block-future-dates="{{blockFutureDates}}"
             block-past-dates="{{blockPastDates}}"
             prevent-range-selection
-            from-moment="[[_tempMomentObj]]"
+            from-moment="{{_tempMomentObj}}"
             base-date="[[_tempMomentObj]]"
             time-zone="[[timeZone]]"
             day-week-start-index="[[dayWeekStartIndex]]"
@@ -83,12 +83,12 @@ Custom property | Description
           <button class="actionable caps dt-p-today" on-tap="_todayClicked">[[localize('Today')]]</button>
         </div>
         <div class="dt-p-time-buttons--wrapper">
-          <template is="dom-if" if="{{_handleField(hideTime, fillContainer)}}" on-dom-change="_timeDomChange">
+          <template id="timeTemplate" is="dom-if" if="{{_handleField(hideTime, fillContainer)}}">
             <div>
               <px-datetime-field
                 id="time"
                 class="dt-p-time"
-                moment-obj="[[_tempMomentObj]]"
+                moment-obj="{{_tempMomentObj}}"
                 hide-icon
                 hide-date
                 is-valid="{{_toTimeIsValid}}"
@@ -227,22 +227,18 @@ Custom property | Description
        type: Boolean,
        value: true
      },
-     _firstAttached: {
-       type: Boolean,
-       value: true
-     },
-     _internalChange: {
-       type: Boolean,
-       value: false
+     _tempMomentChangeOrigin: {
+       type: String,
+       value: ''
      }
     },
     listeners: {
       'px-datetime-entry-icon-clicked':'_iconClicked',
       'px-datetime-button-clicked': '_buttonClicked'
     },
-    // observers: [
-    //   '_tempMomentChanged(_tempMomentObj)'
-    // ],
+    observers: [
+      '_tempMomentChanged(_tempMomentObj)'
+    ],
     /**
      * Key bindings for iron-a11y-keys-behavior
      */
@@ -252,42 +248,20 @@ Custom property | Description
     },
 
     attached: function() {
-      if(this._firstAttached) {
-        this._calendarMomentChanged = this._calendarMomentChanged.bind(this);
-        this._calendarTimeMomentChanged = this._calendarTimeMomentChanged.bind(this);
-        this._fieldMomentChanged = this._fieldMomentChanged.bind(this);
-        this._firstAttached = false;
-      }
 
       this._isAttached = true;
-      this.$.calendar.addEventListener('from-moment-changed', this._calendarMomentChanged);
-      this.$.field.addEventListener('moment-obj-changed', this._fieldMomentChanged);
+      this.$.calendar.addEventListener('from-moment-changed', this._calendarMomentChanged.bind(this));
+      this.$.timeTemplate.addEventListener('moment-obj-changed', this._calendarTimeMomentChanged.bind(this));
+      this.$.field.addEventListener('moment-obj-changed', this._fieldMomentChanged.bind(this));
     },
 
-    detached: function() {
-      this.$.calendar.removeEventListener('from-moment-changed', this._calendarMomentChanged);
-      if(this.$.time) {
-        this.$.time.removeEventListener('moment-obj-changed', this._calendarTimeMomentChanged);
-      }
-      this.$.field.removeEventListener('moment-obj-changed', this._fieldMomentChanged);
-    },
-
-    _timeDomChange: function() {
-      this.$.time = this.$$('#time');
-
-      //time field created, register moment changes
-      if(this.$.time) {
-        this.$.time.addEventListener('moment-obj-changed', this._calendarTimeMomentChanged);
-      }
-    },
     /*
      * 'Today' button/text has been clicked
      */
     _todayClicked: function(evt) {
       var today = this._preserveTime(this.momentObj, Px.moment.tz(Px.moment(), this.timeZone));
-      this.$.calendar.set('momentObj', today);
-
-      this._validateMomentChange(today, 'calendar');
+      this._tempMomentChangeOrigin = 'calendar'
+      this.set('_tempMomentObj', newMoment);
     },
     /**
      */
@@ -312,61 +286,50 @@ Custom property | Description
       this.$.dropdown.close();
     },
 
+    _tempMomentChanged: function(evt, test, t) {
+
+      if(this._tempMomentChangeOrigin === 'field') {
+
+        //field only changes moment when it has been validated, we can trust that change
+        this._applyTempMoment();
+      } else if (this._tempMomentChangeOrigin === 'calendarTime') {
+
+      } else if(this._tempMomentChangeOrigin === 'calendar') {
+
+        //time changed in calendar. Only process if no button,
+        if(!this.showButtons) {
+
+          this._validateCalendarMoment();
+        }
+      }
+
+      this._tempMomentChangeOrigin = '';
+    },
+
     _calendarMomentChanged : function(evt) {
-      this._validateMomentChange(evt.detail.value, 'calendar');
+      this._tempMomentChangeOrigin = 'calendar';
     },
 
     _calendarTimeMomentChanged : function(evt) {
-      this._validateMomentChange(evt.detail.value, 'calendarTime');
+      this._tempMomentChangeOrigin = 'calendarTime';
     },
 
     _fieldMomentChanged : function(evt) {
-      this._validateMomentChange(evt.detail.value, 'field');
-    },
-
-    _validateMomentChange: function(newMoment, origin) {
-
-      if(!this._internalChange) {
-
-        if(origin === 'field') {
-
-          //field only changes moment when it has been validated, we can trust that change
-          this.set('momentObj', newMoment);
-        } else if(origin === 'calendarTime') {
-
-          //time has changed in the panel. reflects that in the field
-          this._internalChangeFieldMoment(newMoment);
-        } else {
-
-          //time changed in calendar. Only process if no button,
-          if(!this.showButtons) {
-            //make sure this is valid by having field perform a validation on it
-            this._validateCalendarMoment();
-          } else {
-            //set field moment so it displays new value
-            //and possible error
-            this._internalChangeFieldMoment(newMoment);
-          }
-        }
-      }
+      this._tempMomentChangeOrigin = 'field';
     },
 
     /**
      */
      _validateCalendarMoment: function(newMoment) {
 
-      if(this._isAttached) {
-        if(this.opened) {
+      if(this.opened) {
 
-          //make sure this is valid by having field perform a validation on it
-          this._internalChangeFieldMoment(newMoment);
-          //apply: accept if valid
-          if(this.$.field.isValid) {
-            this._applyTempMoment();
-            this._close();
-          } else {
-            //don't close, can't apply if not valid
-          }
+        //apply: accept if valid
+        if(this.$.field.isValid) {
+          this._applyTempMoment();
+          this._close();
+        } else {
+          //don't close, can't apply if not valid
         }
       }
     },
