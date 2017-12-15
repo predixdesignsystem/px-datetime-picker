@@ -4,6 +4,7 @@
 <link rel="import" href="../px-datetime-common/px-datetime-behavior.html"/>
 <link rel="import" href="../px-datetime-common/px-datetime-buttons.html"/>
 <link rel="import" href="../px-datetime-common/px-datetime-button-behavior.html"/>
+<link rel="import" href="../app-localize-behavior/app-localize-behavior.html" />
 <link rel="import" href="../iron-dropdown/iron-dropdown.html">
 
 <!--
@@ -36,20 +37,20 @@ Custom property | Description
       id="field"
       slot="dropdown-trigger"
       time-zone="{{timeZone}}"
-      moment-obj="{{momentObj}}"
-      hide-time={{hideTime}}
+      moment-obj="[[_tempMomentObj]]"
+      hide-time="{{hideTime}}"
       show-time-zone="{{showTimeZone}}"
       date-format="{{dateFormat}}"
       time-format="{{timeFormat}}"
-      is-selected=[[opened]]
+      is-selected="[[opened]]"
       prevent-notification-on-change
       block-future-dates="{{blockFutureDates}}"
       block-past-dates="{{blockPastDates}}"
       resources="[[resources]]"
       language="[[language]]"
       formats="[[formats]]"
-      min="[[min]]"
-      max="[[max]]">
+      date-min="[[minDate]]"
+      date-max="[[maxDate]]">
     </px-datetime-field>
     <iron-dropdown
       id="dropdown"
@@ -69,25 +70,25 @@ Custom property | Description
             block-future-dates="{{blockFutureDates}}"
             block-past-dates="{{blockPastDates}}"
             prevent-range-selection
-            from-moment="{{momentObj}}"
-            base-date="[[momentObj]]"
+            from-moment="[[_tempMomentObj]]"
+            base-date="[[_tempMomentObj]]"
             time-zone="[[timeZone]]"
             day-week-start-index="[[dayWeekStartIndex]]"
             resources="[[resources]]"
             language="[[language]]"
             formats="[[formats]]"
-            min="[[min]]"
-            max="[[max]]">
+            min-date="[[minDate]]"
+            max-date="[[maxDate]]">
           </px-calendar-picker>
           <button class="actionable caps dt-p-today" on-tap="_todayClicked">[[localize('Today')]]</button>
         </div>
         <div class="dt-p-time-buttons--wrapper">
-          <template is="dom-if" if="{{_handleField(hideTime, fillContainer)}}">
+          <template is="dom-if" if="{{_handleField(hideTime, fillContainer)}}" on-dom-change="_timeDomChange">
             <div>
               <px-datetime-field
                 id="time"
                 class="dt-p-time"
-                moment-obj="{{momentObj}}"
+                moment-obj="[[_tempMomentObj]]"
                 hide-icon
                 hide-date
                 is-valid="{{_toTimeIsValid}}"
@@ -96,8 +97,8 @@ Custom property | Description
                 resources="[[resources]]"
                 language="[[language]]"
                 formats="[[formats]]"
-                min="[[min]]"
-                max="[[max]]">
+                min-date="[[minDate]]"
+                max-date="[[maxDate]]">
               </px-datetime-field>
             </div>
           </template>
@@ -121,8 +122,9 @@ Custom property | Description
 
     is: 'px-datetime-picker',
     behaviors:[
-      pxDatetimeBehavior,
-      pxDatetimeButtonBehavior
+      pxDatetimeTempMomentBehavior,
+      pxDatetimeButtonBehavior,
+      Polymer.AppLocalizeBehavior
     ],
 
     /**
@@ -209,16 +211,38 @@ Custom property | Description
             }
           };
         }
-      }
+      },
+      /**
+      * set a default for localizing
+      */
+     language: {
+       type: String,
+       value: 'en'
+     },
+     /**
+      * Use the key for localization if value for  language is missing. Should
+      * always be true for  our components
+      */
+     useKeyIfMissing: {
+       type: Boolean,
+       value: true
+     },
+     _firstAttached: {
+       type: Boolean,
+       value: true
+     },
+     _internalChange: {
+       type: Boolean,
+       value: false
+     }
     },
     listeners: {
       'px-datetime-entry-icon-clicked':'_iconClicked',
-      'px-datetime-button-clicked': '_buttonClicked',
-      'tap' : '_handleTap'
+      'px-datetime-button-clicked': '_buttonClicked'
     },
-    observers: [
-      '_momentChanged(momentObj)'
-    ],
+    // observers: [
+    //   '_tempMomentChanged(_tempMomentObj)'
+    // ],
     /**
      * Key bindings for iron-a11y-keys-behavior
      */
@@ -226,29 +250,54 @@ Custom property | Description
       'esc' : '_onEsc',
       'enter': '_onEnter'
     },
+
     attached: function() {
+      if(this._firstAttached) {
+        this._calendarMomentChanged = this._calendarMomentChanged.bind(this);
+        this._calendarTimeMomentChanged = this._calendarTimeMomentChanged.bind(this);
+        this._fieldMomentChanged = this._fieldMomentChanged.bind(this);
+        this._firstAttached = false;
+      }
+
       this._isAttached = true;
+      this.$.calendar.addEventListener('from-moment-changed', this._calendarMomentChanged);
+      this.$.field.addEventListener('moment-obj-changed', this._fieldMomentChanged);
+    },
+
+    detached: function() {
+      this.$.calendar.removeEventListener('from-moment-changed', this._calendarMomentChanged);
+      if(this.$.time) {
+        this.$.time.removeEventListener('moment-obj-changed', this._calendarTimeMomentChanged);
+      }
+      this.$.field.removeEventListener('moment-obj-changed', this._fieldMomentChanged);
+    },
+
+    _timeDomChange: function() {
+      this.$.time = this.$$('#time');
+
+      //time field created, register moment changes
+      if(this.$.time) {
+        this.$.time.addEventListener('moment-obj-changed', this._calendarTimeMomentChanged);
+      }
     },
     /*
      * 'Today' button/text has been clicked
      */
     _todayClicked: function(evt) {
-      this.set('momentObj', this._preserveTime(this.momentObj, Px.moment.tz(Px.moment(), this.timeZone)));
-      if(!this.showButtons) {
-        this._close();
-      }
+      var today = this._preserveTime(this.momentObj, Px.moment.tz(Px.moment(), this.timeZone));
+      this.$.calendar.set('momentObj', today);
+
+      this._validateMomentChange(today, 'calendar');
     },
     /**
      */
     _onEsc: function(evt) {
-      this._applyCurrentValues(false);
       this._close();
     },
     /**
      */
     _onEnter: function(evt) {
-      this._applyCurrentValues(this.$.field.isValid);
-      this._close();
+      this._validateCalendarMoment();
     },
     /**
      * Opens the calendar
@@ -262,61 +311,81 @@ Custom property | Description
     _close: function() {
       this.$.dropdown.close();
     },
-    /**
-     * If the calendar is open and the dropdown is selected, close the calendar
-     */
-    _handleTap: function(evt) {
-      if(this.opened === true){
 
-        var path = Polymer.dom(evt).path;
+    _calendarMomentChanged : function(evt) {
+      this._validateMomentChange(evt.detail.value, 'calendar');
+    },
 
-        for (var i=0; i<path.length; i++) {
-          if (path[i].nodeName === 'PX-DROPDOWN') {
-            this._close();
-            return;
+    _calendarTimeMomentChanged : function(evt) {
+      this._validateMomentChange(evt.detail.value, 'calendarTime');
+    },
+
+    _fieldMomentChanged : function(evt) {
+      this._validateMomentChange(evt.detail.value, 'field');
+    },
+
+    _validateMomentChange: function(newMoment, origin) {
+
+      if(!this._internalChange) {
+
+        if(origin === 'field') {
+
+          //field only changes moment when it has been validated, we can trust that change
+          this.set('momentObj', newMoment);
+        } else if(origin === 'calendarTime') {
+
+          //time has changed in the panel. reflects that in the field
+          this._internalChangeFieldMoment(newMoment);
+        } else {
+
+          //time changed in calendar. Only process if no button,
+          if(!this.showButtons) {
+            //make sure this is valid by having field perform a validation on it
+            this._validateCalendarMoment();
+          } else {
+            //set field moment so it displays new value
+            //and possible error
+            this._internalChangeFieldMoment(newMoment);
           }
         }
-
       }
     },
+
     /**
      */
-    _processClose: function() {
-      //If we show buttons don't validate
-      this._applyCurrentValues(!this.showButtons);
-      this._close();
-    },
-    /**
-     */
-    _momentChanged: function(momentObj) {
+     _validateCalendarMoment: function(newMoment) {
+
       if(this._isAttached) {
-
         if(this.opened) {
-          if(this.$.calendar.fromMoment.toISOString() === this.momentObj.toISOString()) {
-            //changes comes from calendar (not from field). If it comes from field
-            //do nothing as we're open (the calendar moment will be updated through binding)
-            //if we don't show buttons close on selection
-            if(!this.showButtons) {
-              this._applyCurrentValues(this.$.field.isValid);
-              this._close();
-            }
-          }
-        }
-        //we're closed, moment has changed by user changing the input fields.
-        else {
-          if(this.$.field.isValid) {
-            this._applyCurrentValues(true);
-          }
-        }
 
+          //make sure this is valid by having field perform a validation on it
+          this._internalChangeFieldMoment(newMoment);
+          //apply: accept if valid
+          if(this.$.field.isValid) {
+            this._applyTempMoment();
+            this._close();
+          } else {
+            //don't close, can't apply if not valid
+          }
+        }
       }
     },
     /**
      */
     _buttonClicked: function(evt) {
-      var canApplyValue = evt.detail.action && this.$.field.isValid;
-      this._applyCurrentValues(canApplyValue);
-      this._close();
+      if(evt.detail.action) {
+
+       this._validateCalendarMoment();
+      } else {
+        this._rollbackTempMoment();
+        this._close();
+      }
+    },
+
+    _internalChangeFieldMoment: function(newMoment) {
+      this._internalChange = true;
+      this.$.field.set('momentObj', newMoment);
+      this._internalChange = false;
     },
     /**
      */
@@ -326,7 +395,7 @@ Custom property | Description
       }
     },
     /**
-     * Determine if should field be displayed in container
+     * Determine if field should be displayed in container
      * The dt-field will only appear in the container if fillContainer is true
      */
     _handleField: function(hideTime, fillContainer){
