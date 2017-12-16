@@ -226,15 +226,12 @@ Custom property | Description
      useKeyIfMissing: {
        type: Boolean,
        value: true
-     },
-     _tempMomentChangeOrigin: {
-       type: String,
-       value: ''
      }
     },
     listeners: {
       'px-datetime-entry-icon-clicked':'_iconClicked',
-      'px-datetime-button-clicked': '_buttonClicked'
+      'px-datetime-button-clicked': '_buttonClicked',
+      'tap' : '_handleTap'
     },
     /**
      * Key bindings for iron-a11y-keys-behavior
@@ -281,6 +278,20 @@ Custom property | Description
      */
     _close: function() {
       this.$.dropdown.close();
+    },
+    /**
+     * If the calendar is open and the dropdown is selected, close the calendar
+     */
+     _handleTap: function(evt) {
+      if(this.opened === true){
+        var path = Polymer.dom(evt).path;
+        for (var i=0; i<path.length; i++) {
+          if (path[i].nodeName === 'PX-DROPDOWN') {
+            this._close();
+            return;
+          }
+        }
+      }
     },
 
     _tempMomentChanged: function(origin) {
@@ -338,11 +349,6 @@ Custom property | Description
       }
     },
 
-    _internalChangeFieldMoment: function(newMoment) {
-      this._internalChange = true;
-      this.$.field.set('momentObj', newMoment);
-      this._internalChange = false;
-    },
     /**
      */
     _iconClicked: function(evt) {
@@ -371,7 +377,5 @@ Custom property | Description
     getElement: function(elStr) {
       return this.shadowRoot.querySelector(elStr)
     }
-
-
   });
 </script>
