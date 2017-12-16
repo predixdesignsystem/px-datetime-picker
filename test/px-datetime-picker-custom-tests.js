@@ -5,202 +5,130 @@
 describe('px-datetime-picker no buttons', function () {
   var pickerEl;
 
-  beforeEach(function () {
+  beforeEach(function (done) {
     pickerEl = fixture('datetime-picker');
+    pickerEl.set('momentObj', moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone));
+
+    flush(()=>{
+      setTimeout(function() {
+        done();
+      }, 200);
+    });
   });
 
   it('the calendar is hidden by default', function () {
-    expect(pickerEl._opened).to.be.false;
+    expect(pickerEl.opened).to.be.false;
   });
 
 
-  it('check that _opened draws the panel for tests validity', function (done) {
-    flush(function () {
-      var panelEl = Polymer.dom(pickerEl.root).querySelector('#dropdown');
-      expect(panelEl.offsetWidth, 'panel width before open').to.equal(0);
-    });
+  it('check that opened draws the panel for tests validity', function (done) {
+    var panelEl = Polymer.dom(pickerEl.root).querySelector('#dropdown');
+    expect(panelEl.offsetWidth, 'panel width before open').to.equal(0);
+    expect(pickerEl.opened, 'panel is open').to.be.false;
+
+    pickerEl.opened = true;
 
     flush(() => {
-      expect(pickerEl._opened, 'panel is open').to.be.false;
-      async.until(
-        function () {
-          return pickerEl._opened;
-        },
-        function (callback) {
-          pickerEl._opened = true;
-          setTimeout(callback, 1000);
-        },
-        function (err, n) {
-          panelEl = Polymer.dom(pickerEl.root).querySelector('#dropdown');
-          expect(panelEl.offsetWidth, 'panel width after open').to.be.within(230, 270);
-          done();
-        }
-      );
-    });
-  });
 
-
-  it('the calendar opens on _open function', function (done) {
-    flush(() => {
-      expect(pickerEl._opened, 'panel is visible before open').to.be.false;
-      async.until(
-        function () {
-          return pickerEl._opened;
-        },
-        function (callback) {
-          pickerEl._open();
-          setTimeout(callback, 1000);
-        },
-        function (err, n) {
-          expect(pickerEl._opened, 'panel is visible after open').to.be.true;
-          done();
-        }
-      );
-    });
-  });
-
-
-  it('the calendar opens when date icon is clicked', function (done) {
-    //click on the date icon
-    flush(function () {
-      var fieldEl = Polymer.dom(pickerEl.root).querySelector('px-datetime-field');
-      var entryEl = Polymer.dom(fieldEl.root).querySelector('px-datetime-entry');
-      var dateIconEl = Polymer.dom(entryEl.root).querySelector('px-icon');
-      dateIconEl.click();
-    });
-
-    flush(function () {
-      expect(pickerEl._opened, 'panel is visible').to.be.true;
+      panelEl = Polymer.dom(pickerEl.root).querySelector('#dropdown');
+      expect(panelEl.offsetWidth, 'panel width after open').to.be.within(230, 270);
       done();
     });
   });
 
 
-  it('the calendar closes when clicking outside of panel', function (done) {
-    //click on the date icon
-    flush(function () {
-      var fieldEl = Polymer.dom(pickerEl.root).querySelector('px-datetime-field');
-      var entryEl = Polymer.dom(fieldEl.root).querySelector('px-datetime-entry');
-      var dateIconEl = Polymer.dom(entryEl.root).querySelector('px-icon');
-      dateIconEl.click();
-    });
+  it('the calendar opens on _open function', function (done) {
 
-    // while the panel is open click on the body to see if the panel closes
+    expect(pickerEl.opened, 'panel is not visible before open').to.be.false;
+    pickerEl._open();
     flush(() => {
-      expect(pickerEl._opened, 'panel is visible after open').to.be.true;
-      async.whilst(
-        function () {
-          return pickerEl._opened;
-        },
-        function (callback) {
-          document.body.click();
-          setTimeout(callback, 1000);
-        },
-        function (err, n) {
-          expect(pickerEl._opened, 'panel is visible after click').to.be.false;
-          done();
-        }
-      );
+      expect(pickerEl.opened, 'panel is visible after open').to.be.true;
+      done();
     });
   });
 
 
-  // This should pass but there is a bug that needs to be fixed.
-  // it('focusing on the field doesn\'t close calendar when opened', function (done) {
-  //   async.series([
-  //     function (callback) {
-  //       pickerEl._opened = true;
-  //       callback(null, 'one');
-  //     },
-  //     function (callback) {
-  //       expect(pickerEl._opened, 'panel is visible after open').to.be.true;
-  //       var fieldEl = pickerEl.querySelector('px-datetime-field');
-  //       fieldEl.click();
-
-  //       callback(null, 'two');
-  //     },
-  //     function (callback) {
-  //       expect(pickerEl._opened, 'panel is visible after clicking on fieldEl').to.be.true;
-
-  //       callback(null, 'three');
-  //     }
-  //   ]);
-  // });
-
-  // it('Selecting a day will close panel and apply the value', function (done) {
-  //   async.series([
-  //     function (callback) {
-  //       pickerEl._opened = true;
-
-  //       callback(null, 'one');
-  //     },
-  //     function (callback) {
-  //       expect(pickerEl._opened, 'panel is visible after open').to.be.true;
-  //       expect(pickerEl.dateTime, 'dateTime value before selection').to.equal('2018-01-05T00:30:00.000Z');
-  //       var dropdownEl = Polymer.dom(pickerEl.root).querySelector('iron-dropdown'),
-  //           calendarEl = Polymer.dom(dropdownEl).querySelector('px-calendar-picker'),
-  //           allCells = Polymer.dom(calendarEl.root).querySelectorAll('px-calendar-cell'),
-  //           i = 0;
-  //       Array.prototype.forEach.call(allCells, function (cell, index) {
-  //         var btn = Polymer.dom(cell.root).querySelector('button');
-  //         if (!btn.hidden) {
-  //           i++;
-  //         }
-  //         if (i === 10) {
-  //           btn.click();
-  //         }
-  //       });
-
-  //       callback(null, 'two');
-  //     },
-  //     function (callback) {
-  //       expect(pickerEl._opened, 'panel is visible after selection').to.be.false;
-  //       expect(pickerEl.dateTime, 'dateTime value after selection').to.equal('2018-01-10T00:30:00.000Z');
-  //       done();
-
-  //       callback(null, 'three');
-  //     }
-  //   ]);
-  // });
+  it('the calendar opens when date icon is clicked', function () {
+    //click on the date icon
+    flush(() => {
+      var fieldEl = Polymer.dom(pickerEl.root).querySelector('px-datetime-field');
+      var entryEl = Polymer.dom(fieldEl.root).querySelector('px-datetime-entry');
+      var dateIconEl = Polymer.dom(entryEl.root).querySelector('px-icon');
+      dateIconEl.click();
+      expect(pickerEl.opened, 'panel is visible').to.be.true;
+    });
+  });
 
 
-  // it('Selecting today will close panel and apply the value', function (done) {
-  //   async.series([
-  //     function (callback) {
-  //       pickerEl._opened = true;
+  //This should pass but there is a bug that needs to be fixed.
+  it('focusing on the field doesn\'t close calendar when opened', function () {
+    pickerEl.opened = true;
 
-  //       callback(null, 'one');
-  //     },
-  //     function (callback) {
-  //       expect(pickerEl._opened, 'panel is visible after open').to.be.true;
-  //       expect(pickerEl.dateTime, 'dateTime value before selection').to.equal('2018-01-05T00:30:00.000Z');
+    expect(pickerEl.opened, 'panel is visible after open').to.be.true;
+    var fieldEl = Polymer.dom(pickerEl.root).querySelector('px-datetime-field');
+    fieldEl.click();
 
-  //       var dropdownEl = Polymer.dom(pickerEl.root).querySelector('iron-dropdown'),
-  //           todayEl = Polymer.dom(dropdownEl).querySelector('.dt-today');
-  //       todayEl.click();
+    flush( () => {
+      expect(pickerEl.opened, 'panel is visible after clicking on fieldEl').to.be.true;
+    });
+  });
 
-  //       callback(null, 'two');
-  //     },
-  //     function (callback) {
-  //       expect(pickerEl._opened, 'panel is visible after selection').to.be.false;
+  it('Selecting a day will close panel and apply the value', function (done) {
 
-  //       momentNow = moment();
-  //       momentNowISO = momentNow.toISOString();
-  //       pickerMomentISO = pickerEl.momentObj.toISOString();
+    pickerEl.opened = true;
 
-  //       momentNowISOSlice = momentNowISO.slice(0,10);
-  //       pickerMomentISOSlice = pickerMomentISO.slice(0,10);
-  //       dateTimeSlice = pickerEl.dateTime.slice(0,10);
+    flush( () => {
 
-  //       expect(pickerMomentISOSlice, 'compare momentObj to now').to.equal(momentNowISOSlice);
-  //       expect(dateTimeSlice, 'compare dateTime to now').to.equal(momentNowISOSlice);
+      expect(pickerEl.opened, 'panel is visible after open').to.be.true;
+      expect(pickerEl.momentObj.toISOString(), 'dateTime value before selection').to.equal("2018-01-05T00:30:00.000Z");
 
-  //       done();
+      var dropdownEl = Polymer.dom(pickerEl.root).querySelector('iron-dropdown'),
+      calendarEl = Polymer.dom(dropdownEl).querySelector('px-calendar-picker'),
+      allCells = Polymer.dom(calendarEl.root).querySelectorAll('px-calendar-cell'),
+      i = 0;
 
-  //       callback(null, 'three');
-  //     }
-  //   ]);
-  // });
+      Array.prototype.forEach.call(allCells, function (cell, index) {
+        var btn = Polymer.dom(cell.root).querySelector('button');
+        if (!btn.hidden) {
+          i++;
+        }
+        if (i === 10) {
+          btn.click();
+        }
+      });
+
+      flush(() => {
+        expect(pickerEl.opened, 'panel is visible after selection').to.be.false;
+        expect(pickerEl.momentObj.toISOString(), 'dateTime value after selection').to.equal('2018-01-10T00:30:00.000Z');
+        done();
+      });
+    });
+  });
+
+
+  it('Selecting today will close panel and apply the value', function (done) {
+
+    pickerEl.opened = true;
+
+    flush( () => {
+      expect(pickerEl.opened, 'panel is visible after open').to.be.true;
+      expect(pickerEl.momentObj.toISOString(), 'dateTime value before selection').to.equal('2018-01-05T00:30:00.000Z');
+
+      var dropdownEl = Polymer.dom(pickerEl.root).querySelector('iron-dropdown'),
+      todayEl = Polymer.dom(dropdownEl).querySelector('.dt-p-today');
+
+      todayEl.click();
+
+      flush(function() {
+        expect(pickerEl.opened, 'panel is visible after selection').to.be.false;
+
+        //compare down to the day only cause clicking today will preserve previous time (00:30)
+        expect(moment.tz().isSame(pickerEl.momentObj, 'day'), 'compare momentObj to now').to.true;
+
+        done();
+      });
+    });
+  });
 
 });//end of describe 'px-datetime-picker no button'
 
@@ -210,230 +138,228 @@ describe('px-datetime-picker no buttons', function () {
  * With Buttons
  ******************************************************************************/
 
-// describe('px-datetime-picker with buttons', function () {
-//   var pickerEl, calendarEl, selectTenthDay;
+describe('px-datetime-picker with buttons', function () {
+  var pickerEl, calendarEl, selectTenthDay;
 
-//   beforeEach(function () {
-//     pickerEl = fixture('datetime-picker-buttons');
-//     calendarEl = pickerEl.querySelector('px-calendar-picker');
-//     selectTenthDay = function () {
-//       var allCells = calendarEl.querySelectorAll('px-calendar-cell'),
-//         i = 0;
-//         Array.prototype.forEach.call(allCells, function (cell, index) {
-//         var btn = cell.querySelector('button');
-//         if (!btn.hidden) {
-//           i++;
-//         }
-//         if (i === 10) {
-//           btn.click();
-//           return;
-//         }
-//       });
-//     };
-//   });
+  var selectTenthDay = function (calendarEl) {
+    var allCells = calendarEl.querySelectorAll('px-calendar-cell'),
+      i = 0;
+      Array.prototype.forEach.call(allCells, function (cell, index) {
+      var btn = cell.querySelector('button');
+      if (!btn.hidden) {
+        i++;
+      }
+      if (i === 10) {
+        btn.click();
+        return;
+      }
+    });
+  };
 
-
-//   it('Selecting a day will not close panel nor apply the value', function (done) {
-//     async.series([
-//       function (callback) {
-//         pickerEl._opened = true;
-
-//         callback(null, 'one');
-//       },
-//       function (callback) {
-//         expect(pickerEl.dateTime).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
-//         selectTenthDay();
-
-//         callback(null, 'two');
-//       },
-//       function (callback) {
-//         expect(pickerEl._opened, 'pickerEl is open').to.be.true;
-//         expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-10T00:30:00.000Z', 'momentObj value');
-//         expect(pickerEl.dateTime).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
-//         done();
-
-//         callback(null, 'three');
-//       }
-//     ]);
-//   });
+  beforeEach(function (done) {
+    pickerEl = fixture('datetime-picker-buttons');
+    calendarEl = Polymer.dom(pickerEl.root).querySelector('px-calendar-picker');
+    pickerEl.set('momentObj', moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone));
+    flush(()=>{
+      setTimeout(function() {
+        done();
+      }, 200);
+    });
+  });
 
 
-//   it('Selecting today will not close panel nor apply the value', function (done) {
+  it('Selecting a day will not close panel nor apply the value', function (done) {
 
-//     async.series([
-//       function (callback) {
-//         pickerEl._opened = true;
+    pickerEl.opened = true;
 
-//         callback(null, 'one');
-//       },
-//       function (callback) {
-//         expect(pickerEl._opened, 'panel is open before selection').to.be.true;
-//         expect(pickerEl.dateTime, 'check datetime has not changed').to.equal('2018-01-05T00:30:00.000Z');
+    flush(() => {
+      expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
 
-//         todayEl = pickerEl.querySelector('.dt-today');
-//         todayEl.click();
+      selectTenthDay(calendarEl);
 
-//         callback(null, 'two');
-//       },
-//       function (callback) {
-//         expect(pickerEl._opened, 'panel is open after selection').to.be.true;
-
-//         momentNow = moment();
-//         momentNowISO = momentNow.toISOString();
-//         pickerMomentISO = pickerEl.momentObj.toISOString();
-
-//         momentNowISOSlice = momentNowISO.slice(0,10);
-//         pickerMomentISOSlice = pickerMomentISO.slice(0,10);
-
-//         expect(pickerMomentISOSlice, 'compare momentObj to now').to.equal(momentNowISOSlice);
-//         expect(pickerEl.dateTime, 'check datetime has not changed').to.equal('2018-01-05T00:30:00.000Z');
+      expect(pickerEl.opened, 'pickerEl is open').to.be.true;
+      expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-10T00:30:00.000Z', 'momentObj value');
+      done();
+    });
+  });
 
 
-//         done();
+  it('Selecting today will not close panel nor apply the value', function (done) {
 
-//         callback(null, 'three');
-//       }
-//     ]);
-//   });
+    async.series([
+      function (callback) {
+        pickerEl.opened = true;
 
+        callback(null, 'one');
+      },
+      function (callback) {
+        expect(pickerEl.opened, 'panel is open before selection').to.be.true;
+        expect(pickerEl.dateTime, 'check datetime has not changed').to.equal('2018-01-05T00:30:00.000Z');
 
-//   it('pressing cancel cancels selection', function (done) {
-//     var calendarEl = pickerEl.querySelector('px-calendar-picker');
+        todayEl =Polymer.dom(pickerEl.root).querySelector('.dt-today');
+        todayEl.click();
 
-//     async.series([
-//       function (callback) {
-//         pickerEl._opened = true;
+        callback(null, 'two');
+      },
+      function (callback) {
+        expect(pickerEl.opened, 'panel is open after selection').to.be.true;
 
-//         callback(null, 'one');
-//       },
-//       function (callback) {
-//         expect(pickerEl.dateTime).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
-//         selectTenthDay();
+        momentNow = moment();
+        momentNowISO = momentNow.toISOString();
+        pickerMomentISO = pickerEl.momentObj.toISOString();
 
-//         callback(null, 'two');
-//       },
-//       function (callback) {
-//         var pickerButtons = pickerEl.querySelector('px-datetime-buttons');
-//         cancelButton = pickerButtons.querySelector('button');
+        momentNowISOSlice = momentNowISO.slice(0,10);
+        pickerMomentISOSlice = pickerMomentISO.slice(0,10);
 
-//         expect(cancelButton.id).to.equal('', 'make sure button is not the submit button');
-//         cancelButton.click();
-
-//         callback(null, 'three');
-//       },
-//       function (callback) {
-//         expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-05T00:30:00.000Z', 'momentObj value');
-//         expect(pickerEl.dateTime).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
-//         done();
-
-//         callback(null, 'four');
-//       }
-//     ]);
-//   });
+        expect(pickerMomentISOSlice, 'compare momentObj to now').to.equal(momentNowISOSlice);
+        expect(pickerEl.dateTime, 'check datetime has not changed').to.equal('2018-01-05T00:30:00.000Z');
 
 
-//   it('pressing Escape cancels selection', function (done) {
-//     var calendarEl = pickerEl.querySelector('px-calendar-picker');
+        done();
 
-//     async.series([
-//       function (callback) {
-//         pickerEl._opened = true;
-
-//         callback(null, 'one');
-//       },
-//       function (callback) {
-//         expect(pickerEl.dateTime).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
-//         selectTenthDay();
-
-//         callback(null, 'two');
-//       },
-//       function (callback) {
-//         MockInteractions.pressAndReleaseKeyOn(pickerEl, undefined, [], 'Esc');
-
-//         callback(null, 'three');
-//       },
-//       function (callback) {
-//         expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-05T00:30:00.000Z', 'momentObj value');
-//         expect(pickerEl.dateTime).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
-//         done();
-
-//         callback(null, 'four');
-//       }
-//     ]);
-//   });
+        callback(null, 'three');
+      }
+    ]);
+  });
 
 
-//   it('pressing the submit button applies selection', function (done) {
-//     var calendarEl = pickerEl.querySelector('px-calendar-picker');
+  it('pressing cancel cancels selection', function (done) {
+    var calendarEl = Polymer.dom(pickerEl.root).querySelector('px-calendar-picker');
 
-//     async.series([
-//       function (callback) {
-//         pickerEl._opened = true;
+    async.series([
+      function (callback) {
+        pickerEl.opened = true;
 
-//         callback(null, 'one');
-//       },
-//       function (callback) {
-//         expect(pickerEl.dateTime).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
-//         selectTenthDay();
+        callback(null, 'one');
+      },
+      function (callback) {
+        expect(pickerEl.dateTime).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
+        selectTenthDay();
 
-//         callback(null, 'two');
-//       },
-//       function (callback) {
-//         var pickerButtons = pickerEl.querySelector('px-datetime-buttons');
+        callback(null, 'two');
+      },
+      function (callback) {
+        var pickerButtons = Polymer.dom(pickerEl).querySelector('px-datetime-buttons');
+        cancelButton = Polymer.dom(pickerButtons).querySelector('button');
 
-//         var allButtons = pickerButtons.querySelectorAll('button'),
-//             i = 0;
-//         Array.prototype.forEach.call(allButtons, function (btn, index) {
-//           if (btn.id === "submitButton") {
-//             btn.click();
-//           }
-//           i++;
-//         });
+        expect(cancelButton.id).to.equal('', 'make sure button is not the submit button');
+        cancelButton.click();
 
-//         callback(null, 'three');
-//       },
-//       function (callback) {
-//         expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-10T00:30:00.000Z', 'momentObj value');
-//         expect(pickerEl.dateTime).to.equal('2018-01-10T00:30:00.000Z', 'dateTime value');
-//         done();
+        callback(null, 'three');
+      },
+      function (callback) {
+        expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-05T00:30:00.000Z', 'momentObj value');
+        expect(pickerEl.dateTime).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
+        done();
 
-//         callback(null, 'four');
-//       }
-//     ]);
-//   });
+        callback(null, 'four');
+      }
+    ]);
+  });
 
 
-//   it('pressing enter applies selection', function (done) {
-//     var calendarEl = pickerEl.querySelector('px-calendar-picker');
+  it('pressing Escape cancels selection', function (done) {
+    var calendarEl = Polymer.dom(pickerEl).querySelector('px-calendar-picker');
 
-//     async.series([
-//       function (callback) {
-//         pickerEl._opened = true;
+    async.series([
+      function (callback) {
+        pickerEl.opened = true;
 
-//         callback(null, 'one');
-//       },
-//       function (callback) {
-//         expect(pickerEl.dateTime).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
-//         selectTenthDay();
+        callback(null, 'one');
+      },
+      function (callback) {
+        expect(pickerEl.dateTime).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
+        selectTenthDay();
 
-//         callback(null, 'two');
-//       },
-//       function (callback) {
-//         MockInteractions.pressAndReleaseKeyOn(pickerEl, undefined, [], 'Enter');
+        callback(null, 'two');
+      },
+      function (callback) {
+        MockInteractions.pressAndReleaseKeyOn(pickerEl, undefined, [], 'Esc');
 
-//         callback(null, 'three');
-//       },
-//       function (callback) {
-//         expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-10T00:30:00.000Z', 'momentObj value');
-//         expect(pickerEl.dateTime).to.equal('2018-01-10T00:30:00.000Z', 'dateTime value');
-//         done();
+        callback(null, 'three');
+      },
+      function (callback) {
+        expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-05T00:30:00.000Z', 'momentObj value');
+        expect(pickerEl.dateTime).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
+        done();
 
-//         callback(null, 'four');
-//       }
-//     ]);
-//   });
+        callback(null, 'four');
+      }
+    ]);
+  });
 
-// });//end of describe 'px-datetime-picker with buttons'
+
+  it('pressing the submit button applies selection', function (done) {
+    var calendarEl = Polymer.dom(pickerEl).querySelector('px-calendar-picker');
+
+    async.series([
+      function (callback) {
+        pickerEl.opened = true;
+
+        callback(null, 'one');
+      },
+      function (callback) {
+        expect(pickerEl.dateTime).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
+        selectTenthDay();
+
+        callback(null, 'two');
+      },
+      function (callback) {
+        var pickerButtons = Polymer.dom(pickerEl).querySelector('px-datetime-buttons');
+
+        var allButtons = Polymer.dom(pickerButtons).querySelectorAll('button'),
+            i = 0;
+        Array.prototype.forEach.call(allButtons, function (btn, index) {
+          if (btn.id === "submitButton") {
+            btn.click();
+          }
+          i++;
+        });
+
+        callback(null, 'three');
+      },
+      function (callback) {
+        expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-10T00:30:00.000Z', 'momentObj value');
+        expect(pickerEl.dateTime).to.equal('2018-01-10T00:30:00.000Z', 'dateTime value');
+        done();
+
+        callback(null, 'four');
+      }
+    ]);
+  });
+
+
+  it('pressing enter applies selection', function (done) {
+    var calendarEl = Polymer.dom(pickerEl).querySelector('px-calendar-picker');
+
+    async.series([
+      function (callback) {
+        pickerEl.opened = true;
+
+        callback(null, 'one');
+      },
+      function (callback) {
+        expect(pickerEl.dateTime).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
+        selectTenthDay();
+
+        callback(null, 'two');
+      },
+      function (callback) {
+        MockInteractions.pressAndReleaseKeyOn(pickerEl, undefined, [], 'Enter');
+
+        callback(null, 'three');
+      },
+      function (callback) {
+        expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-10T00:30:00.000Z', 'momentObj value');
+        expect(pickerEl.dateTime).to.equal('2018-01-10T00:30:00.000Z', 'dateTime value');
+        done();
+
+        callback(null, 'four');
+      }
+    ]);
+  });
+
+});//end of describe 'px-datetime-picker with buttons'
 
 
 

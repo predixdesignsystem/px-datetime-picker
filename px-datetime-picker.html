@@ -236,9 +236,6 @@ Custom property | Description
       'px-datetime-entry-icon-clicked':'_iconClicked',
       'px-datetime-button-clicked': '_buttonClicked'
     },
-    observers: [
-      '_tempMomentChanged(_tempMomentObj)'
-    ],
     /**
      * Key bindings for iron-a11y-keys-behavior
      */
@@ -259,9 +256,9 @@ Custom property | Description
      * 'Today' button/text has been clicked
      */
     _todayClicked: function(evt) {
-      var today = this._preserveTime(this.momentObj, Px.moment.tz(Px.moment(), this.timeZone));
-      this._tempMomentChangeOrigin = 'calendar'
-      this.set('_tempMomentObj', newMoment);
+      var today = this._preserveTime(this._tempMomentObj, Px.moment.tz(Px.moment(), this.timeZone));
+      this.set('_tempMomentObj', today);
+      this._tempMomentChanged('calendar');
     },
     /**
      */
@@ -286,15 +283,13 @@ Custom property | Description
       this.$.dropdown.close();
     },
 
-    _tempMomentChanged: function(evt, test, t) {
+    _tempMomentChanged: function(origin) {
 
-      if(this._tempMomentChangeOrigin === 'field') {
+      if(origin === 'field') {
 
         //field only changes moment when it has been validated, we can trust that change
         this._applyTempMoment();
-      } else if (this._tempMomentChangeOrigin === 'calendarTime') {
-
-      } else if(this._tempMomentChangeOrigin === 'calendar') {
+      } else if(origin === 'calendar') {
 
         //time changed in calendar. Only process if no button,
         if(!this.showButtons) {
@@ -302,20 +297,18 @@ Custom property | Description
           this._validateCalendarMoment();
         }
       }
-
-      this._tempMomentChangeOrigin = '';
     },
 
     _calendarMomentChanged : function(evt) {
-      this._tempMomentChangeOrigin = 'calendar';
+      this._tempMomentChanged('calendar');
     },
 
     _calendarTimeMomentChanged : function(evt) {
-      this._tempMomentChangeOrigin = 'calendarTime';
+      this._tempMomentChanged('calendarTime');
     },
 
     _fieldMomentChanged : function(evt) {
-      this._tempMomentChangeOrigin = 'field';
+      this._tempMomentChanged('field');
     },
 
     /**
