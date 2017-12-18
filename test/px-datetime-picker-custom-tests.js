@@ -20,6 +20,11 @@ describe('px-datetime-picker no buttons', function () {
     expect(pickerEl.opened).to.be.false;
   });
 
+  it('does not have time field', function () {
+
+    var time = Polymer.dom(pickerEl.root).querySelector('#time');
+    expect(time === null).to.be.true;
+  });
 
   it('check that opened draws the panel for tests validity', function (done) {
     var panelEl = Polymer.dom(pickerEl.root).querySelector('#dropdown');
@@ -28,14 +33,19 @@ describe('px-datetime-picker no buttons', function () {
 
     pickerEl.opened = true;
 
-    flush(() => {
-
-      setTimeout(function() {
-        panelEl = Polymer.dom(pickerEl.root).querySelector('#dropdown');
+    panelEl = Polymer.dom(pickerEl.root).querySelector('#dropdown');
+    async.until(
+      ()=> {
+        return panelEl.offsetWidth > 0;
+      },
+      (callback)=> {
+        setTimeout(callback, 50);
+      },
+      ()=> {
         expect(panelEl.offsetWidth, 'panel width after open').to.be.within(230, 270);
         done();
-      }, 200);
-    });
+      }
+    );
   });
 
 
@@ -347,3 +357,109 @@ describe('synchronized date/time zones', function () {
 
 
 });//end of describe 'synchronized date/time zones'
+
+
+/*******************************************************************************
+ * Full Container
+ ******************************************************************************/
+describe('Full Container', function () {
+  var pickerEl;
+  var calendarEl;
+  var fitEl;
+
+  beforeEach(function (done) {
+    templateEl = fixture('datetime-picker-full-container');
+    pickerEl = Polymer.dom(templateEl.root).querySelector('px-datetime-picker');
+    dropdownContentEl = Polymer.dom(pickerEl.root).querySelector('.dt-container__box');
+    fitEl = Polymer.dom(templateEl.root).querySelector('#fit');
+    pickerEl.fitIntoElement = fitEl;
+    pickerEl.set('momentObj', moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone));
+    setTimeout(function() {
+      done();
+    }, 200);
+  });
+
+  it('the calendar is hidden by default', function () {
+    expect(pickerEl.opened).to.be.false;
+  });
+
+  it('check that the calendar fills the container when open', function (done) {
+
+    expect(pickerEl.opened, 'panel is open').to.be.false;
+    expect(dropdownContentEl.offsetWidth, 'panel width before open').to.equal(0);
+    expect(dropdownContentEl.offsetWidth, 'panel width before open').to.equal(0);
+
+    pickerEl.set('opened', true);
+
+    async.until(
+      ()=> {
+        return dropdownContentEl.offsetWidth > 0;
+      },
+      (callback)=> {
+        setTimeout(callback, 50);
+      },
+      ()=> {
+        expect(dropdownContentEl.offsetWidth, 'panel width after open').to.be.within(330, 355);
+        expect(dropdownContentEl.offsetHeight, 'panel height after open').to.be.within(230, 255);
+        done();
+      }
+    );
+  });
+
+  it('has time field', function () {
+
+    var time = Polymer.dom(pickerEl.root).querySelector('#time');
+    expect(time !== null).to.be.true;
+  });
+});//end of full container
+
+
+/*******************************************************************************
+ * Full Window
+ ******************************************************************************/
+describe('Full window', function () {
+  var pickerEl;
+  var calendarEl;
+
+  beforeEach(function (done) {
+    pickerEl = fixture('datetime-picker-full-window');
+    dropdownContentEl = Polymer.dom(pickerEl.root).querySelector('.dt-container__box');
+    pickerEl.set('momentObj', moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone));
+    setTimeout(function() {
+      done();
+    }, 200);
+  });
+
+  it('the calendar is hidden by default', function () {
+    expect(pickerEl.opened).to.be.false;
+  });
+
+  it('check that the calendar fills the window when open', function (done) {
+    expect(pickerEl.opened, 'panel is open').to.be.false;
+    expect(dropdownContentEl.offsetWidth, 'panel width before open').to.equal(0);
+    expect(dropdownContentEl.offsetWidth, 'panel width before open').to.equal(0);
+
+    pickerEl.opened = true;
+
+    async.until(
+      ()=> {
+        return dropdownContentEl.offsetWidth > 0;
+      },
+      (callback)=> {
+        setTimeout(callback, 50);
+      },
+      ()=> {
+        expect(dropdownContentEl.offsetWidth, 'panel width after open').to.be.within((window.innerWidth - 20), window.innerWidth);
+        expect(dropdownContentEl.offsetHeight, 'panel height after open').to.be.within((window.innerHeight - 20), window.innerHeight);
+        done();
+      }
+    );
+  });
+
+  it('does not have time field', function () {
+
+    var time = Polymer.dom(pickerEl.root).querySelector('#time');
+    expect(time === null).to.be.true;
+  });
+});//end of full window
+
