@@ -244,8 +244,11 @@ Custom property | Description
     attached: function() {
 
       this._isAttached = true;
+
+      //we don't need to listen to the time field from the calendar
+      //since it only updates the temp moment but should never trigger an
+      //actual validation
       this.$.calendar.addEventListener('from-moment-changed', this._calendarMomentChanged.bind(this));
-      this.$.timeTemplate.addEventListener('moment-obj-changed', this._calendarTimeMomentChanged.bind(this));
       this.$.field.addEventListener('moment-obj-changed', this._fieldMomentChanged.bind(this));
     },
 
@@ -260,6 +263,7 @@ Custom property | Description
     /**
      */
     _onEsc: function(evt) {
+      this._rollbackTempMoment();
       this._close();
     },
     /**
@@ -296,26 +300,35 @@ Custom property | Description
 
     _tempMomentChanged: function(origin) {
 
-      if(origin === 'field') {
+      //this debounce is critical for Polymer 1. We are just putting this
+      //call on top of the stack because of how the binding flows:
+      //change in calendar => binding updates field moment => field
+      //moment fires change event => binding done => calendar fires
+      //change event.
+      //we are therefore interested in the latest update, hence the
+      //debounce. no need for an actual timing since this will all be
+      //sequential.
+      //In Polymer 2 in this scenario only calendar will fire a change
+      //event so no problems
+      this.debounce('_tempMomentChanged', function() {
 
-        //field only changes moment when it has been validated, we can trust that change
-        this._applyTempMoment();
-      } else if(origin === 'calendar') {
+        if(origin === 'field') {
 
-        //time changed in calendar. Only process if no button,
-        if(!this.showButtons) {
+          //field only changes moment when it has been validated, we can trust that change
+          this._applyTempMoment();
+        } else if(origin === 'calendar') {
 
-          this._validateCalendarMoment();
+          //time changed in calendar. Only process if no button,
+          if(!this.showButtons) {
+
+            this._validateCalendarMoment();
+          }
         }
-      }
+      }.bind(this));
     },
 
     _calendarMomentChanged : function(evt) {
       this._tempMomentChanged('calendar');
-    },
-
-    _calendarTimeMomentChanged : function(evt) {
-      this._tempMomentChanged('calendarTime');
     },
 
     _fieldMomentChanged : function(evt) {
@@ -324,7 +337,7 @@ Custom property | Description
 
     /**
      */
-     _validateCalendarMoment: function(newMoment) {
+     _validateCalendarMoment: function() {
 
       if(this.opened) {
 
