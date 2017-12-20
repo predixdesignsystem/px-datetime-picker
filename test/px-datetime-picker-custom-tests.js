@@ -7,7 +7,7 @@ describe('px-datetime-picker no buttons', function () {
 
   beforeEach(function (done) {
     pickerEl = fixture('datetime-picker');
-    pickerEl.set('momentObj', moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone));
+    pickerEl.momentObj = moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone);
 
     flush(()=>{
       setTimeout(function() {
@@ -176,7 +176,7 @@ describe('px-datetime-picker with buttons', function () {
   beforeEach(function (done) {
     pickerEl = fixture('datetime-picker-buttons');
     calendarEl = Polymer.dom(pickerEl.root).querySelector('px-calendar-picker');
-    pickerEl.set('momentObj', moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone));
+    pickerEl.momentObj = moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone);
     flush(()=>{
       setTimeout(function() {
         done();
@@ -331,7 +331,7 @@ describe('synchronized date/time zones', function () {
     fieldEl = Polymer.dom(pickerEl.root).querySelector('px-datetime-field');
     dropdownEl = Polymer.dom(pickerEl.root).querySelector('iron-dropdown');
     calendarEl = Polymer.dom(dropdownEl).querySelector('px-calendar-picker');
-    pickerEl.set('momentObj', moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone));
+    pickerEl.momentObj = moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone);
   });
 
 
@@ -373,7 +373,7 @@ describe('Full Container', function () {
     dropdownContentEl = Polymer.dom(pickerEl.root).querySelector('.dt-container__box');
     fitEl = Polymer.dom(templateEl.root).querySelector('#fit');
     pickerEl.fitIntoElement = fitEl;
-    pickerEl.set('momentObj', moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone));
+    pickerEl.momentObj = moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone);
     setTimeout(function() {
       done();
     }, 200);
@@ -389,7 +389,7 @@ describe('Full Container', function () {
     expect(dropdownContentEl.offsetWidth, 'panel width before open').to.equal(0);
     expect(dropdownContentEl.offsetWidth, 'panel width before open').to.equal(0);
 
-    pickerEl.set('opened', true);
+    pickerEl.opened = true;
 
     async.until(
       ()=> {
@@ -424,7 +424,7 @@ describe('Full window', function () {
   beforeEach(function (done) {
     pickerEl = fixture('datetime-picker-full-window');
     dropdownContentEl = Polymer.dom(pickerEl.root).querySelector('.dt-container__box');
-    pickerEl.set('momentObj', moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone));
+    pickerEl.momentObj = moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone);
     setTimeout(function() {
       done();
     }, 200);
