@@ -27,9 +27,9 @@
   ],
   "dependencies": {
     "polymer": "#1.9 - 2",
-    "px-datetime-field": "^1.0.0",
-    "px-calendar-picker": "^1.0.0",
-    "px-datetime-common": "^1.0.0",
+    "px-datetime-field": "allowBlank",
+    "px-calendar-picker": "allowBlank",
+    "px-datetime-common": "allowBlank",
     "iron-a11y-keys-behavior": "^2.0.0",
     "iron-dropdown": "^2.0.0"
   },
