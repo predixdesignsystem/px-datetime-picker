@@ -52,8 +52,8 @@
           hide-time="{{props.hideTime.value}}"
           show-time-zone="{{props.showTimeZone.value}}"
           time-zone="{{props.timeZone.value}}"
-          min="{{props.min.value}}"
-          max="{{props.max.value}}">
+          min-date="{{props.minDate.value}}"
+          max-date="{{props.maxDate.value}}">
         </px-datetime-picker>
       </px-demo-component>
       <!-- END Component ------------------------------------------------------>
@@ -226,15 +226,15 @@
         defaultValue: Px.moment().toISOString()
       },
 
-      min: {
+      minDate: {
         type: Object,
-        defaultValue: Px.moment().subtract(2, 'years'),
+        defaultValue: Px.moment().subtract(1, 'years'),
         inputType: 'code:JSON'
       },
 
-      max: {
+      maxDate: {
         type: Object,
-        defaultValue: Px.moment().add(2, 'years'),
+        defaultValue: Px.moment().add(1, 'years'),
         inputType: 'code:JSON'
       }
     },
