@@ -1,5 +1,6 @@
 <!-- Common imports -->
 <link rel="import" href="../../polymer/polymer.html" />
+<link rel="import" href="../../px-app-helpers/object-assign-polyfill/object-assign-polyfill.html" />
 
 <!-- Common demo imports -->
 <link rel="import" href="../../px-demo/px-demo-header.html" />
@@ -17,9 +18,7 @@
 <!-- Demo DOM module -->
 <dom-module id="px-datetime-picker-demo">
   <template>
-    <custom-style>
-      <style include="px-demo-styles" is="custom-style"></style>
-    </custom-style>
+    <style include="px-demo-styles" is="custom-style"></style>
 
     <!-- Header -->
     <px-demo-header
@@ -39,11 +38,10 @@
       <!-- Component ---------------------------------------------------------->
       <px-demo-component slot="px-demo-component">
 
-        <p class=u-mb0>Event fired: <strong>px-datetime-submitted</strong></p>
+        <p class="u-mb0">Event fired: <strong>px-datetime-submitted</strong></p>
         <p class="zeta u-mt0">See API Reference below for more details</p>
         <p class="u-mb++">Current dateTime object: <strong>{{props.dateTime.value}}</strong></p>
         <px-datetime-picker
-          date-time="{{props.dateTime.value}}"
           date-format="{{props.dateFormat.value}}"
           time-format="{{props.timeFormat.value}}"
           show-buttons="{{props.showButtons.value}}"
@@ -52,8 +50,8 @@
           hide-time="{{props.hideTime.value}}"
           show-time-zone="{{props.showTimeZone.value}}"
           time-zone="{{props.timeZone.value}}"
-          min="{{props.min.value}}"
-          max="{{props.max.value}}">
+          minDate="{{props.minDate.value}}"
+          maxDate="{{props.maxDate.value}}">
         </px-datetime-picker>
       </px-demo-component>
       <!-- END Component ------------------------------------------------------>
@@ -221,18 +219,13 @@
         inputChoices: ['none', 'dropdown', 'extendedDropdown', 'text', 'abbreviatedText']
       },
 
-      dateTime: {
-        type: String,
-        defaultValue: Px.moment().toISOString()
-      },
-
-      min: {
+      minDate: {
         type: Object,
         defaultValue: Px.moment().subtract(2, 'years'),
         inputType: 'code:JSON'
       },
 
-      max: {
+      maxDate: {
         type: Object,
         defaultValue: Px.moment().add(2, 'years'),
         inputType: 'code:JSON'
