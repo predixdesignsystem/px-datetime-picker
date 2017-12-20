@@ -37,10 +37,10 @@
 
       <!-- Component ---------------------------------------------------------->
       <px-demo-component slot="px-demo-component">
-
-        <p class="u-mb0">Event fired: <strong>px-datetime-submitted</strong></p>
+        <p class=u-mb0>Event fired: <strong>moment-obj-changed</strong></p>
         <p class="zeta u-mt0">See API Reference below for more details</p>
-        <p class="u-mb++">Current dateTime object: <strong>{{props.dateTime.value}}</strong></p>
+        <p class="u-mb++">Submitted date: <strong>{{props.momentObj.value}}</strong></p>
+
         <px-datetime-picker
           moment-obj="{{props.momentObj.value}}"
           date-format="{{props.dateFormat.value}}"
