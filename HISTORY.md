@@ -1,3 +1,9 @@
+v2.0.0
+==================
+* Polymer 1.X/2.Xhybrid support
+* `dateTime` property no longer exists. Please use only `momentObj` instead (which is a moment object.)
+* Ability to have `momentObj` null so that the datepicker can be empty
+
 v1.2.0
 ==================
 * added properties fullContainer and fitIntoElement
