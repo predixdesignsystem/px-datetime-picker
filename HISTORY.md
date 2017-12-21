@@ -1,3 +1,7 @@
+v2.0.2
+==================
+* fix links in docs
+
 v2.0.1
 ==================
 * Add editor for momentObj to demo

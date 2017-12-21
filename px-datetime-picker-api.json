@@ -2,7 +2,7 @@
   "schema_version": "1.0.0",
   "elements": [
     {
-      "description": "The datetime components rely on <a href=\"https://momentjs.com/\" target=\"_blank\">Moment.js</a> and <a href=\"https://momentjs.com/timezone/\" target=\"_blank\">Moment Timezone</a>.\n\n#### Usage\n\n    <px-datetime-picker></px-datetime-picker>\n\n\n#### Styling\nThe following custom properties are available for styling. Please also refer to px-forms-design and px-buttons-design for additional style variables used by this component.\n\nCustom property | Description\n:----------------|:-------------\n`--px-datetime-picker-background-color` | Background color for the panel\n`--px-datetime-picker-border-color` | Border color for the panel\n`--px-datetime-picker-z-index` | The z-index of the container",
+      "description": "The datetime components rely on [Moment.js](https://momentjs.com/) and [Moment Timezone](https://momentjs.com/timezone/).\n\n#### Usage\n\n    <px-datetime-picker></px-datetime-picker>\n\n\n#### Styling\nThe following custom properties are available for styling. Please also refer to px-forms-design and px-buttons-design for additional style variables used by this component.\n\nCustom property | Description\n:----------------|:-------------\n`--px-datetime-picker-background-color` | Background color for the panel\n`--px-datetime-picker-border-color` | Border color for the panel\n`--px-datetime-picker-z-index` | The z-index of the container",
       "summary": "",
       "path": "px-datetime-picker.html",
       "properties": [
