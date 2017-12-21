@@ -37,11 +37,12 @@
 
       <!-- Component ---------------------------------------------------------->
       <px-demo-component slot="px-demo-component">
-
-        <p class="u-mb0">Event fired: <strong>px-datetime-submitted</strong></p>
+        <p class=u-mb0>Event fired: <strong>moment-obj-changed</strong></p>
         <p class="zeta u-mt0">See API Reference below for more details</p>
-        <p class="u-mb++">Current dateTime object: <strong>{{props.dateTime.value}}</strong></p>
+        <p class="u-mb++">Submitted date: <strong>{{props.momentObj.value}}</strong></p>
+
         <px-datetime-picker
+          moment-obj="{{props.momentObj.value}}"
           date-format="{{props.dateFormat.value}}"
           time-format="{{props.timeFormat.value}}"
           show-buttons="{{props.showButtons.value}}"
@@ -50,13 +51,8 @@
           hide-time="{{props.hideTime.value}}"
           show-time-zone="{{props.showTimeZone.value}}"
           time-zone="{{props.timeZone.value}}"
-<<<<<<< HEAD
-          minDate="{{props.minDate.value}}"
-          maxDate="{{props.maxDate.value}}">
-=======
           min-date="{{props.minDate.value}}"
           max-date="{{props.maxDate.value}}">
->>>>>>> 8657d53a01d826da783d2dfaf00e1542a209d1eb
         </px-datetime-picker>
       </px-demo-component>
       <!-- END Component ------------------------------------------------------>
@@ -65,7 +61,8 @@
         slot="px-demo-component-snippet"
         element-properties="{{props}}"
         element-name="px-datetime-picker"
-        links-includes="[[linksIncludes]]">
+        links-includes="[[linksIncludes]]"
+        suppress-property-values="[[suppressPropertyValues]]">
       </px-demo-component-snippet>
     </px-demo-interactive>
 
@@ -108,7 +105,10 @@
             return props;
           }
       },
-
+      suppressPropertyValues: {
+        type: Array,
+        value: function() { return ['momentObj']; }
+      },
 
       /**
        * An array of pre-configured `props` that can be used to provide the user
@@ -127,7 +127,6 @@
               configReset: true },
 
             { configName: "Hide time",
-              dateTime: "2017-07-05T05:30:00.000Z",
               dateFormat: "MM/DD/YY",
               timeFormat: "hh:mm A",
               showButtons: false,
@@ -135,11 +134,11 @@
               blockPastDates: false,
               hideTime: true,
               showTimeZone: "abbreviatedText",
-              timeZone: "America/Los_Angeles"
+              timeZone: "America/Los_Angeles",
+              momentObj: Px.moment().startOf('day')
             },
 
             { configName: "Show buttons",
-              dateTime: "2017-07-05T05:30:00.000Z",
               dateFormat: "YYYY/MM/DD",
               timeFormat: "hh:mm A",
               showButtons: true,
@@ -147,11 +146,11 @@
               blockPastDates: false,
               hideTime: false,
               showTimeZone: "text",
-              timeZone: "UTC"
+              timeZone: "UTC",
+              momentObj: null
             },
 
             { configName: "24 hour time",
-              dateTime: "2017-07-05T05:30:00.000Z",
               dateFormat: "DD/MM/YY",
               timeFormat: "HH:mm:ss.SSS",
               showButtons: false,
@@ -159,7 +158,8 @@
               blockPastDates: false,
               hideTime: false,
               showTimeZone: "extendedDropdown",
-              timeZone: "America/New_York"
+              timeZone: "America/New_York",
+              momentObj: Px.moment().startOf('day')
             }
           ]
         }
@@ -225,16 +225,23 @@
       },
 
       minDate: {
-        type: Object,
-        defaultValue: Px.moment().subtract(1, 'years'),
-        inputType: 'code:JSON'
+        type: String,
+        defaultValue: Px.moment().subtract(3, 'month').toISOString(),
+        inputType: 'text',
+        inputPlaceholder: 'ISOString'
       },
 
       maxDate: {
+        type: String,
+        defaultValue: Px.moment().add(3, 'month').toISOString(),
+        inputType: 'text',
+        inputPlaceholder: 'ISOString'
+      },
+
+      momentObj: {
         type: Object,
-        defaultValue: Px.moment().add(1, 'years'),
-        inputType: 'code:JSON'
-      }
+        defaultValue: null
+      },
     },
 
     ready: function () {
