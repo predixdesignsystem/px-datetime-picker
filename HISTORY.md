@@ -1,3 +1,7 @@
+v2.0.1
+==================
+* Add editor for momentObj to demo
+
 v2.0.0
 ==================
 * Polymer 1.X/2.Xhybrid support
