@@ -10,6 +10,7 @@
 <link rel="import" href="../../px-demo/px-demo-props.html" />
 <link rel="import" href="../../px-demo/px-demo-interactive.html" />
 <link rel="import" href="../../px-demo/px-demo-component-snippet.html" />
+<link rel="import" href="../../px-demo/px-demo-code-editor.html" />
 
 <!-- Imports for this component -->
 <link rel="import" href="../../px-demo/css/px-demo-styles.html" />
@@ -34,6 +35,9 @@
 
       <!-- Props -->
       <px-demo-props slot="px-demo-props" props="{{props}}" config="[[chosenConfig]]" class="flex__item flex__item--msfix"></px-demo-props>
+
+      <!-- Code Editor -->
+      <px-demo-code-editor slot="px-demo-code-editor" props="{{props}}"></px-demo-code-editor>
 
       <!-- Component ---------------------------------------------------------->
       <px-demo-component slot="px-demo-component">
@@ -170,6 +174,11 @@
      * A reference for `this.props`. Read the documentation there.
      */
     demoProps: {
+      momentObj: {
+        type: Object,
+        defaultValue: null,
+        inputType: 'code:EvaluatedJavaScript'
+      },
 
       hideTime: {
         type: Boolean,
@@ -236,12 +245,7 @@
         defaultValue: Px.moment().add(3, 'month').toISOString(),
         inputType: 'text',
         inputPlaceholder: 'ISOString'
-      },
-
-      momentObj: {
-        type: Object,
-        defaultValue: null
-      },
+      }
     },
 
     ready: function () {
