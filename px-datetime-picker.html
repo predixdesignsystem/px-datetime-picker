@@ -64,13 +64,13 @@ Custom property | Description
       opened="{{opened}}"
       vertical-align="top"
       horizontal-align="left"
-      no-overlap="[[!fillContainer]]"
-      dynamic-align="[[!fillContainer]]"
-      vertical-offset="[[_getVerticalOffset(fillContainer)]]"
-      position-target="[[_getPositionTarget(fillContainer, fitIntoElement)]]"
+      no-overlap="[[!_fillContainer]]"
+      dynamic-align="[[!_fillContainer]]"
+      vertical-offset="[[_getVerticalOffset(_fillContainer)]]"
+      position-target="[[_getPositionTarget(_fillContainer, fitIntoElement)]]"
       fit-into="[[fitIntoElement]]">
       <div slot="dropdown-content" class="dt-container__box shadow-temporary">
-        <template is="dom-if" if="{{fillContainer}}">
+        <template is="dom-if" if="{{_fillContainer}}">
           <div class="dt-p__header shadow-notification">
             <px-icon class="dt-p__close-btn" icon="px-nav:close"></px-icon>
             <p class="dt-p__selected-date">{{selectedDate}}</p>
@@ -95,7 +95,7 @@ Custom property | Description
           <button class="actionable caps dt-p-today" on-tap="_todayClicked">[[localize('Today')]]</button>
         </div>
         <div class="dt-p-time-buttons--wrapper">
-          <template id="timeTemplate" is="dom-if" if="{{_handleField(hideTime, fillContainer)}}">
+          <template id="timeTemplate" is="dom-if" if="{{_handleField(hideTime, _fillContainer)}}">
             <div>
               <px-datetime-field
                 id="time"
@@ -118,7 +118,7 @@ Custom property | Description
             <px-datetime-buttons
               class="dt-p-buttons"
               is-submit-button-valid
-              space-between="[[fillContainer]]"
+              space-between="[[_fillContainer]]"
               resources="[[resources]]"
               language="[[language]]"
               formats="[[formats]]">
@@ -200,13 +200,24 @@ Custom property | Description
         reflectToAttribute: true
       },
       /**
-       * false : the dt-picker contents will open in a panel.
-       * true : the dt-picker contents will fill the window
-       * or an element defined by the `fitIntoElement`.
+       * false : the datetime-picker contents will open in a panel
+       * if the screen size is greater than the collapseAt value.
+       * true : the datetime-picker contents will fill the window
+       * or an element defined by the `fitIntoElement`. It fills
+       * regardless of the collapseAt value.
        */
        fillContainer: {
         type: Boolean,
         value: false,
+        observer: '_handleFillContainer'
+      },
+      /**
+       * used to toggle fillContainer from iron-media-query
+       * without separate variable fillContainer would never be
+       * true with a screen size larger then the value of collapseAt
+       */
+       _fillContainer: {
+        type: Boolean,
         reflectToAttribute: true
       },
       /**
@@ -453,11 +464,17 @@ Custom property | Description
     },
     _handleBelowCollapseSizeChanged(newVal, oldVal) {
       if (newVal) {
-        this.fillContainer = true;
+        this._fillContainer = true;
       }
-      if (!newVal) {
-        this.fillContainer = false;
+      if (!newVal && !this.fillContainer) {
+        this._fillContainer = false;
       }
+    },
+    /**
+     * Sync external fillConatiner with internal _fillConatiner
+     */
+    _handleFillContainer(newVal, oldVal) {
+      newVal ? this._fillContainer = true : this._fillContainer = false;
     }
   });
 </script>

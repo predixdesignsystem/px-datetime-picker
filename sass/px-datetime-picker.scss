@@ -67,14 +67,14 @@ px-datetime-field {
 /*************************************
 * Fill Container
 *************************************/
-:host([fill-container]) .dt-container__box {
+:host([_fill-container]) .dt-container__box {
   padding: 0;
   height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-:host([fill-container]) .dt-iron-dropdown {
+:host([_fill-container]) .dt-iron-dropdown {
   width:100%;
   height: 100%;
 }
@@ -97,7 +97,7 @@ px-datetime-field {
   text-align: center;
 }
 
-:host([fill-container]) .dt-p-calendar {
+:host([_fill-container]) .dt-p-calendar {
   padding-top: $inuit-base-spacing-unit--large;
   padding-left: $inuit-base-spacing-unit--large;
   padding-right: $inuit-base-spacing-unit--large;
@@ -109,7 +109,7 @@ px-datetime-field {
   --px-btn-height: 41px;
 }
 
-:host([fill-container]) .dt-p-buttons {
+:host([_fill-container]) .dt-p-buttons {
   background-color: $gray1;
   padding: $inuit-base-spacing-unit--small $inuit-base-spacing-unit--large;
 }
