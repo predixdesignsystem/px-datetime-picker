@@ -6,6 +6,7 @@
 <link rel="import" href="../px-datetime-common/px-datetime-button-behavior.html"/>
 <link rel="import" href="../app-localize-behavior/app-localize-behavior.html" />
 <link rel="import" href="../iron-dropdown/iron-dropdown.html">
+<link rel="import" href="../iron-media-query/iron-media-query.html"/>
 
 <!--
 The datetime components rely on [Moment.js](https://momentjs.com/) and [Moment Timezone](https://momentjs.com/timezone/).
@@ -33,6 +34,10 @@ Custom property | Description
   <template>
     <style include="px-datetime-picker-styles"></style>
 
+    <template is="dom-if" if="[[_collapseQueryIsValid(collapseAt)]]">
+      <iron-media-query query$="(max-width: {{_getCollapseQuery(collapseAt)}})" query-matches="{{_belowCollapseSize}}"></iron-media-query>
+    </template>
+
     <px-datetime-field
       id="field"
       slot="dropdown-trigger"
@@ -43,6 +48,7 @@ Custom property | Description
       date-format="{{dateFormat}}"
       time-format="{{timeFormat}}"
       is-selected="[[opened]]"
+      required="[[required]]"
       prevent-notification-on-change
       block-future-dates="{{blockFutureDates}}"
       block-past-dates="{{blockPastDates}}"
@@ -64,6 +70,12 @@ Custom property | Description
       position-target="[[_getPositionTarget(fillContainer, fitIntoElement)]]"
       fit-into="[[fitIntoElement]]">
       <div slot="dropdown-content" class="dt-container__box shadow-temporary">
+        <template is="dom-if" if="{{fillContainer}}">
+          <div class="dt-p__header shadow-notification">
+            <px-icon class="dt-p__close-btn" icon="px-nav:close"></px-icon>
+            <p class="dt-p__selected-date">{{selectedDate}}</p>
+          </div>
+        </template>
         <div class="dt-p-calendar">
           <px-calendar-picker
             id="calendar"
@@ -106,6 +118,7 @@ Custom property | Description
             <px-datetime-buttons
               class="dt-p-buttons"
               is-submit-button-valid
+              space-between="[[fillContainer]]"
               resources="[[resources]]"
               language="[[language]]"
               formats="[[formats]]">
@@ -123,8 +136,7 @@ Custom property | Description
     is: 'px-datetime-picker',
     behaviors:[
       pxDatetimeTempMomentBehavior,
-      pxDatetimeButtonBehavior,
-      Polymer.AppLocalizeBehavior
+      pxDatetimeButtonBehavior
     ],
 
     /**
@@ -173,6 +185,13 @@ Custom property | Description
         value: 'HH:mm A'
       },
       /**
+       * If true, validation will error if the field is empty.
+       */
+       required: {
+        type: Boolean,
+        value: false
+      },
+      /**
        * Reflects if datetime-picker container is open/visible.
        */
        opened: {
@@ -198,6 +217,30 @@ Custom property | Description
       fitIntoElement: {
         type: Object,
         value: window
+      },
+      /**
+       * The width below which the datetime picker will collapse into a mobile
+       * friendly menu that slides up from the bottom of the page. Use a number
+       * (e.g. `450`) which will be converted to a pixel value (e.g. '450px').
+       *
+       * If no value is provided, the datetime picker will not collapse
+       * automatically. The collapsed attribute can also be used to manually
+       * collapse and un-collapse the datetime picker.
+       */
+       collapseAt: {
+        type: Number,
+        value: 500
+      },
+      selectedDate: {
+        type: String,
+        value: "Select Date"
+      },
+      /**
+       * Output of iron-media-query
+       */
+      _belowCollapseSize: {
+        type: Boolean,
+        observer: '_handleBelowCollapseSizeChanged'
       },
       /**
        * List of key/values to be included for translating this component
@@ -320,15 +363,18 @@ Custom property | Description
 
           //time changed in calendar. Only process if no button,
           if(!this.showButtons) {
-
             this._validateCalendarMoment();
           }
         }
       }.bind(this));
     },
+    _updateSelectedDate : function(moment) {
+
+    },
 
     _calendarMomentChanged : function(evt) {
       this._tempMomentChanged('calendar');
+      if(this.fillContainer){ this._updateSelectedDate(evt.detail.value); }
     },
 
     _fieldMomentChanged : function(evt) {
@@ -337,10 +383,9 @@ Custom property | Description
 
     /**
      */
-     _validateCalendarMoment: function() {
+    _validateCalendarMoment: function() {
 
       if(this.opened) {
-
         //apply: accept if valid
         if(this.$.field.isValid) {
           this._applyTempMoment();
@@ -354,14 +399,12 @@ Custom property | Description
      */
     _buttonClicked: function(evt) {
       if(evt.detail.action) {
-
        this._validateCalendarMoment();
       } else {
         this._rollbackTempMoment();
         this._close();
       }
     },
-
     /**
      */
     _iconClicked: function(evt) {
@@ -389,6 +432,32 @@ Custom property | Description
     },
     getElement: function(elStr) {
       return this.shadowRoot.querySelector(elStr)
+    },
+
+    _getCollapseQuery(collapseAt) {
+      if (typeof collapseAt === 'number') {
+        return collapseAt + 'px';
+      }
+      if (typeof collapseAt === 'string' && collapseAt.slice(-2) === 'px' || !isNaN(parseInt(collapseAt))) {
+        return collapseAt;
+      }
+    },
+    _collapseQueryIsValid(query) {
+      if (typeof query === 'number') {
+        return true;
+      }
+      if (typeof query === 'string' && query.slice(-2) === 'px' && !isNaN(parseInt(query))) {
+        return true;
+      }
+      return false;
+    },
+    _handleBelowCollapseSizeChanged(newVal, oldVal) {
+      if (newVal) {
+        this.fillContainer = true;
+      }
+      if (!newVal) {
+        this.fillContainer = false;
+      }
     }
   });
 </script>

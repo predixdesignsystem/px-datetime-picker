@@ -79,6 +79,24 @@ px-datetime-field {
   height: 100%;
 }
 
+.dt-p__header {
+  height: 40px;
+  padding-left: $inuit-base-spacing-unit--large;
+  padding-right: $inuit-base-spacing-unit--large;
+  display: flex;
+  align-items: center;
+}
+
+.dt-p__close-btn {
+  stroke: var(--px-datetime-picker-panel-close-icon-color, gray);
+  position: absolute; //needs to be absolute to correctly position sected date
+}
+
+.dt-p__selected-date {
+  width: 100%;
+  text-align: center;
+}
+
 :host([fill-container]) .dt-p-calendar {
   padding-top: $inuit-base-spacing-unit--large;
   padding-left: $inuit-base-spacing-unit--large;

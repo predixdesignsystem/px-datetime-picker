@@ -50,6 +50,7 @@
           date-format="{{props.dateFormat.value}}"
           time-format="{{props.timeFormat.value}}"
           show-buttons="{{props.showButtons.value}}"
+          required="{{props.required.value}}"
           block-future-dates="{{props.blockFutureDates.value}}"
           block-past-dates="{{props.blockPastDates.value}}"
           hide-time="{{props.hideTime.value}}"
@@ -189,6 +190,12 @@
       showButtons: {
         type: Boolean,
         inputLabel : 'Show Buttons in Panel',
+        defaultValue: false,
+        inputType: 'toggle'
+      },
+
+      required: {
+        type: Boolean,
         defaultValue: false,
         inputType: 'toggle'
       },
