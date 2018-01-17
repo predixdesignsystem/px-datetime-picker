@@ -7,6 +7,8 @@
 <link rel="import" href="../app-localize-behavior/app-localize-behavior.html" />
 <link rel="import" href="../iron-dropdown/iron-dropdown.html">
 <link rel="import" href="../iron-media-query/iron-media-query.html"/>
+<link rel="import" href="../iron-list/iron-list.html"/>
+<link rel="import" href="demo/data.json"/>
 
 <!--
 The datetime components rely on [Moment.js](https://momentjs.com/) and [Moment Timezone](https://momentjs.com/timezone/).
@@ -76,22 +78,39 @@ Custom property | Description
             <p class="dt-p__selected-date">{{selectedDate}}</p>
           </div>
         </template>
-        <div class="dt-p-calendar">
-          <px-calendar-picker
-            id="calendar"
-            block-future-dates="{{blockFutureDates}}"
-            block-past-dates="{{blockPastDates}}"
-            prevent-range-selection
-            from-moment="{{_tempMomentObj}}"
-            base-date="[[_tempMomentObj]]"
-            time-zone="[[timeZone]]"
-            day-week-start-index="[[dayWeekStartIndex]]"
-            resources="[[resources]]"
-            language="[[language]]"
-            formats="[[formats]]"
-            min-date="[[minDate]]"
-            max-date="[[maxDate]]">
-          </px-calendar-picker>
+        <div class="dt-p-calendar iron-list-container">
+          <iron-ajax url="data.json" last-response="{{data}}" auto></iron-ajax>
+          <!--
+            Inorder to implement the multiple calendars when fillContainer is true,
+            we would use `iron-list` and `iron-scroll-threshold`. `iron-scroll-threshold`
+            has a `lowerThreshold` that we would use to add items to the end of the
+            array that `iron-list` uses to display the calendars. We would use
+            `upperThreshold` to add items to the begining of the array. We need to be
+            able to scroll up and down from the displayed date because the user needs
+            to be able to go backwards and fowards in time.
+          -->
+          <iron-list items="[[data]]" as="item" class="iron-list-items">
+            <template>
+
+              <px-calendar-picker
+                id="calendar"
+                block-future-dates="{{blockFutureDates}}"
+                block-past-dates="{{blockPastDates}}"
+                prevent-range-selection
+                from-moment="{{_tempMomentObj}}"
+                base-date="[[_tempMomentObj]]"
+                time-zone="[[timeZone]]"
+                day-week-start-index="[[dayWeekStartIndex]]"
+                resources="[[resources]]"
+                language="[[language]]"
+                formats="[[formats]]"
+                min-date="[[minDate]]"
+                max-date="[[maxDate]]">
+              </px-calendar-picker>
+
+            </template>
+          </iron-list>
+
           <button class="actionable caps dt-p-today" on-tap="_todayClicked">[[localize('Today')]]</button>
         </div>
         <div class="dt-p-time-buttons--wrapper">

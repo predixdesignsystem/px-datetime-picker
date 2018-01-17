@@ -32,7 +32,8 @@
     "px-datetime-common": "^2.0.0",
     "iron-a11y-keys-behavior": "^2.0.0",
     "iron-dropdown": "^2.0.0",
-    "iron-media-query": "^2.0.0"
+    "iron-media-query": "^2.0.0",
+    "iron-list": "^2.0.12"
   },
   "devDependencies": {
     "px-theme": "^3.0.0",

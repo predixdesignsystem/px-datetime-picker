@@ -1,0 +1,7 @@
+[
+  {"baseDate": "Px.moment.tz(this.timeZone).subtract(1, 'month')"},
+  {"baseDate": "Px.moment.tz(this.timeZone).subtract(2, 'month')"},
+  {"baseDate": "Px.moment.tz(this.timeZone).subtract(3, 'month')"},
+  {"baseDate": "Px.moment.tz(this.timeZone).subtract(4, 'month')"},
+  {"baseDate": "Px.moment.tz(this.timeZone).subtract(5, 'month')"}
+]
