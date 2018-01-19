@@ -22,6 +22,7 @@ Predix branding rules go in px-datetime-picker-predix.scss, not in this file.
 
 
 // Generic
+$inuit-base-font-size: 16px;
 @import "px-normalize-design/_generic.normalize.scss";
 @import "px-box-sizing-design/_generic.box-sizing.scss";
 @import "px-helpers-design/_generic.helpers.scss";
@@ -80,11 +81,16 @@ px-datetime-field {
 }
 
 .dt-p__header {
+  position: absolute;
+  width: 100%;
+  display: flex;
+  flex-shrink: 0;
   height: 40px;
+  align-items: center;
+  z-index: 1;
+  background-color: white;
   padding-left: $inuit-base-spacing-unit--large;
   padding-right: $inuit-base-spacing-unit--large;
-  display: flex;
-  align-items: center;
 }
 
 .dt-p__close-btn {
@@ -103,10 +109,21 @@ px-datetime-field {
   padding-right: $inuit-base-spacing-unit--large;
   margin-left: auto;
   margin-right: auto;
+  margin-bottom: 120px;
   max-width: 400px;
+  position: relative;
+  top: 40px;
   width: 100%;
   flex-grow: 1;
   --px-btn-height: 41px;
+}
+
+:host([_fill-container]) .dt-p-time-buttons--wrapper{
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  background-color: white;
+  border-top: solid 1px lightgray;
 }
 
 :host([_fill-container]) .dt-p-buttons {

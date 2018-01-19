@@ -95,9 +95,10 @@ Custom property | Description
           <button class="actionable caps dt-p-today" on-tap="_todayClicked">[[localize('Today')]]</button>
         </div>
         <div class="dt-p-time-buttons--wrapper">
-          <template id="timeTemplate" is="dom-if" if="{{_handleField(hideTime, _fillContainer)}}">
+          <!-- <template id="timeTemplate" is="dom-if" if="{{_handleField(hideTime, _fillContainer)}}"> -->
             <div>
               <px-datetime-field
+                on-tap="_timeFieldTap"
                 id="time"
                 class="dt-p-time"
                 moment-obj="{{_tempMomentObj}}"
@@ -113,7 +114,7 @@ Custom property | Description
                 max-date="[[maxDate]]">
               </px-datetime-field>
             </div>
-          </template>
+          <!-- </template> -->
           <template is="dom-if" if="{{showButtons}}">
             <px-datetime-buttons
               class="dt-p-buttons"
@@ -240,7 +241,7 @@ Custom property | Description
        */
        collapseAt: {
         type: Number,
-        value: 500
+        value: 100
       },
       selectedDate: {
         type: String,
@@ -293,6 +294,10 @@ Custom property | Description
     keyBindings: {
       'esc' : '_onEsc',
       'enter': '_onEnter'
+    },
+    _timeFieldTap: function() {
+      var field = Polymer.dom(this.root).querySelector('#time');
+      // field.scrollIntoView();
     },
 
     attached: function() {
