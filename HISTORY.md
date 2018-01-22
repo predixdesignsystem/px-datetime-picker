@@ -1,3 +1,7 @@
+v2.0.3
+==================
+* added `sudo:required` to travis file
+
 v2.0.2
 ==================
 * fix links in docs

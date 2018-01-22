@@ -301,7 +301,6 @@ Custom property | Description
     },
 
     attached: function() {
-
       this._isAttached = true;
 
       //we don't need to listen to the time field from the calendar
@@ -372,11 +371,9 @@ Custom property | Description
       this.debounce('_tempMomentChanged', function() {
 
         if(origin === 'field') {
-
           //field only changes moment when it has been validated, we can trust that change
           this._applyTempMoment();
         } else if(origin === 'calendar') {
-
           //time changed in calendar. Only process if no button,
           if(!this.showButtons) {
             this._validateCalendarMoment();
@@ -400,7 +397,6 @@ Custom property | Description
     /**
      */
     _validateCalendarMoment: function() {
-
       if(this.opened) {
         //apply: accept if valid
         if(this.$.field.isValid) {
