@@ -95,7 +95,7 @@ Custom property | Description
           <button class="actionable caps dt-p-today" on-tap="_todayClicked">[[localize('Today')]]</button>
         </div>
         <div class="dt-p-time-buttons--wrapper">
-          <!-- <template id="timeTemplate" is="dom-if" if="{{_handleField(hideTime, _fillContainer)}}"> -->
+          <template id="timeTemplate" is="dom-if" if="{{_handleField(hideTime, _fillContainer)}}">
             <div>
               <px-datetime-field
                 on-tap="_timeFieldTap"
@@ -114,7 +114,7 @@ Custom property | Description
                 max-date="[[maxDate]]">
               </px-datetime-field>
             </div>
-          <!-- </template> -->
+          </template>
           <template is="dom-if" if="{{showButtons}}">
             <px-datetime-buttons
               class="dt-p-buttons"
@@ -382,7 +382,7 @@ Custom property | Description
       }.bind(this));
     },
     _updateSelectedDate : function(moment) {
-
+      moment === null ? this.selectedDate = "Select Date" : this.selectedDate = moment.format('YYYY/MM/DD')
     },
 
     _calendarMomentChanged : function(evt) {
@@ -390,7 +390,8 @@ Custom property | Description
       if(this.fillContainer){ this._updateSelectedDate(evt.detail.value); }
     },
 
-    _fieldMomentChanged : function(evt) {
+    _fieldMomentChanged: function (evt) {
+      if (evt.detail.value === null) { this._updateSelectedDate(evt.detail.value); }
       this._tempMomentChanged('field');
     },
 
