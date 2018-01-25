@@ -22,7 +22,6 @@ Predix branding rules go in px-datetime-picker-predix.scss, not in this file.
 
 
 // Generic
-$inuit-base-font-size: 16px;
 @import "px-normalize-design/_generic.normalize.scss";
 @import "px-box-sizing-design/_generic.box-sizing.scss";
 @import "px-helpers-design/_generic.helpers.scss";
@@ -68,6 +67,7 @@ px-datetime-field {
 /*************************************
 * Fill Container
 *************************************/
+
 :host([_fill-container]) .dt-container__box {
   padding: 0;
   height: 100vh;
@@ -77,16 +77,17 @@ px-datetime-field {
 
 :host([_fill-container]) .dt-iron-dropdown {
   width:100%;
-  height: 100%;
+  // height: 100%;
 }
 
 .dt-p__header {
-  position: absolute;
+  position: relative;
   width: 100%;
-  display: flex;
-  flex-shrink: 0;
-  height: 40px;
-  align-items: center;
+  // display: flex;
+  // flex-shrink: 0;
+  flex: none;
+  min-height: 40px;
+  // align-items: center;
   z-index: 1;
   background-color: white;
   padding-left: $inuit-base-spacing-unit--large;
@@ -100,6 +101,7 @@ px-datetime-field {
 
 .dt-p__selected-date {
   width: 100%;
+  // font-size: 10px;
   text-align: center;
 }
 
@@ -109,18 +111,20 @@ px-datetime-field {
   padding-right: $inuit-base-spacing-unit--large;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 120px;
+  // margin-bottom: 120px;
   max-width: 400px;
   position: relative;
-  top: 40px;
+  // top: 40px;
   width: 100%;
-  flex-grow: 1;
+  // flex-grow: 1;
+  flex: auto;
+  overflow-y: scroll;
   --px-btn-height: 41px;
 }
 
 :host([_fill-container]) .dt-p-time-buttons--wrapper{
-  position: absolute;
-  bottom: 0;
+  // position: absolute;
+  // bottom: 0;
   width: 100%;
   background-color: white;
   border-top: solid 1px lightgray;

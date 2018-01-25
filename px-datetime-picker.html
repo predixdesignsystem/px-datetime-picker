@@ -33,7 +33,6 @@ Custom property | Description
 <dom-module id="px-datetime-picker">
   <template>
     <style include="px-datetime-picker-styles"></style>
-
     <template is="dom-if" if="[[_collapseQueryIsValid(collapseAt)]]">
       <iron-media-query query$="(max-width: {{_getCollapseQuery(collapseAt)}})" query-matches="{{_belowCollapseSize}}"></iron-media-query>
     </template>
@@ -50,6 +49,7 @@ Custom property | Description
       is-selected="[[opened]]"
       required="[[required]]"
       prevent-notification-on-change
+      prevent-cell-focus="[[_fillContainer]]"
       block-future-dates="{{blockFutureDates}}"
       block-past-dates="{{blockPastDates}}"
       resources="[[resources]]"
@@ -72,7 +72,7 @@ Custom property | Description
       <div slot="dropdown-content" class="dt-container__box shadow-temporary">
         <template is="dom-if" if="{{_fillContainer}}">
           <div class="dt-p__header shadow-notification">
-            <px-icon class="dt-p__close-btn" icon="px-nav:close"></px-icon>
+            <px-icon class="dt-p__close-btn" icon="px-nav:close" on-tap="_closeIconClicked"></px-icon>
             <p class="dt-p__selected-date">{{selectedDate}}</p>
           </div>
         </template>
@@ -197,7 +197,7 @@ Custom property | Description
        */
        opened: {
         type: Boolean,
-        value: false,
+        value: true,
         reflectToAttribute: true
       },
       /**
@@ -297,7 +297,6 @@ Custom property | Description
     },
     _timeFieldTap: function() {
       var field = Polymer.dom(this.root).querySelector('#time');
-      // field.scrollIntoView();
     },
 
     attached: function() {
@@ -407,6 +406,9 @@ Custom property | Description
           //don't close, can't apply if not valid
         }
       }
+    },
+    _closeIconClicked: function(evt) {
+      this._buttonClicked(evt);
     },
     /**
      */
