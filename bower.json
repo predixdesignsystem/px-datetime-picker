@@ -1,6 +1,6 @@
 {
   "name": "px-datetime-picker",
-  "version": "2.0.3",
+  "version": "2.0.4",
   "main": [
     "px-datetime-picker.html"
   ],
@@ -29,7 +29,7 @@
     "polymer": "#1.9 - 2",
     "px-datetime-field": "^2.0.0",
     "px-calendar-picker": "^2.0.0",
-    "px-datetime-common": "^2.0.0",
+    "px-datetime-common": "^3.0.0",
     "iron-a11y-keys-behavior": "^2.0.0",
     "iron-dropdown": "^2.0.0",
     "iron-media-query": "^2.0.0"
