@@ -78,7 +78,6 @@ Custom property | Description
         <template id="timeTemplate" is="dom-if" if="{{_handleField(hideTime, _fillContainer)}}">
           <div>
             <px-datetime-field
-              on-tap="_timeFieldTap"
               id="time"
               class="dt-p-time"
               moment-obj="{{_tempMomentObj}}"
@@ -294,9 +293,6 @@ Custom property | Description
     keyBindings: {
       'esc' : '_onEsc',
       'enter': '_onEnter'
-    },
-    _timeFieldTap: function() {
-      var field = Polymer.dom(this.root).querySelector('#time');
     },
 
     attached: function() {
