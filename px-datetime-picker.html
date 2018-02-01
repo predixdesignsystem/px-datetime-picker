@@ -72,13 +72,33 @@ Custom property | Description
       <div slot="dropdown-content" class="dt-container__box shadow-temporary">
         <template is="dom-if" if="{{_fillContainer}}">
           <div class="dt-p__header shadow-notification">
-            <px-icon class="dt-p__close-btn" icon="px-nav:close" on-tap="_closeIconClicked"></px-icon>
             <p class="dt-p__selected-date">{{selectedDate}}</p>
           </div>
         </template>
-        <div class="dt-p-calendar">
+        <template id="timeTemplate" is="dom-if" if="{{_handleField(hideTime, _fillContainer)}}">
+          <div>
+            <px-datetime-field
+              on-tap="_timeFieldTap"
+              id="time"
+              class="dt-p-time"
+              moment-obj="{{_tempMomentObj}}"
+              hide-icon
+              hide-date
+              is-valid="{{_toTimeIsValid}}"
+              time-format="{{timeFormat}}"
+              time-zone="[[timeZone]]"
+              resources="[[resources]]"
+              language="[[language]]"
+              formats="[[formats]]"
+              min-date="[[minDate]]"
+              max-date="[[maxDate]]">
+            </px-datetime-field>
+          </div>
+        </template>
+        <div class="dt-p-calendar__wrapper">
           <px-calendar-picker
             id="calendar"
+            class="dt-p-calendar"
             block-future-dates="{{blockFutureDates}}"
             block-past-dates="{{blockPastDates}}"
             prevent-range-selection
@@ -95,26 +115,6 @@ Custom property | Description
           <button class="actionable caps dt-p-today" on-tap="_todayClicked">[[localize('Today')]]</button>
         </div>
         <div class="dt-p-time-buttons--wrapper">
-          <template id="timeTemplate" is="dom-if" if="{{_handleField(hideTime, _fillContainer)}}">
-            <div>
-              <px-datetime-field
-                on-tap="_timeFieldTap"
-                id="time"
-                class="dt-p-time"
-                moment-obj="{{_tempMomentObj}}"
-                hide-icon
-                hide-date
-                is-valid="{{_toTimeIsValid}}"
-                time-format="{{timeFormat}}"
-                time-zone="[[timeZone]]"
-                resources="[[resources]]"
-                language="[[language]]"
-                formats="[[formats]]"
-                min-date="[[minDate]]"
-                max-date="[[maxDate]]">
-              </px-datetime-field>
-            </div>
-          </template>
           <template is="dom-if" if="{{showButtons}}">
             <px-datetime-buttons
               class="dt-p-buttons"

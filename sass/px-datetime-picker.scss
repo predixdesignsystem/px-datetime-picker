@@ -27,11 +27,8 @@ Predix branding rules go in px-datetime-picker-predix.scss, not in this file.
 @import "px-helpers-design/_generic.helpers.scss";
 
 // Base
-@import "px-flexbox-design/_base.flexbox.scss";
 
 //Objects
-$inuit-enable-box--tiny : true;
-@import "px-box-design/_objects.box.scss";
 @import 'px-actionable-design/_objects.actionable.scss';
 @import "px-shadows-design/_objects.shadows.scss";
 
@@ -45,9 +42,8 @@ px-datetime-field {
 *************************************/
 .dt-p-today {
   height: $inuit-base-spacing-unit--huge;
-  display: flex;
-  justify-content: center;
-  margin: auto;
+  text-align: center;
+  width: 100%;
 }
 
 .dt-container__box {
@@ -77,62 +73,15 @@ px-datetime-field {
 
 :host([_fill-container]) .dt-iron-dropdown {
   width:100%;
-  // height: 100%;
-}
-
-.dt-p__header {
-  position: relative;
-  width: 100%;
-  // display: flex;
-  // flex-shrink: 0;
-  flex: none;
-  min-height: 40px;
-  // align-items: center;
-  z-index: 1;
-  background-color: white;
-  padding-left: $inuit-base-spacing-unit--large;
-  padding-right: $inuit-base-spacing-unit--large;
 }
 
 .dt-p__close-btn {
   stroke: var(--px-datetime-picker-panel-close-icon-color, gray);
-  position: absolute; //needs to be absolute to correctly position sected date
+  position: absolute; //needs to be absolute to correctly position selected date
 }
 
 .dt-p__selected-date {
-  width: 100%;
-  // font-size: 10px;
   text-align: center;
-}
-
-:host([_fill-container]) .dt-p-calendar {
-  padding-top: $inuit-base-spacing-unit--large;
-  padding-left: $inuit-base-spacing-unit--large;
-  padding-right: $inuit-base-spacing-unit--large;
-  margin-left: auto;
-  margin-right: auto;
-  // margin-bottom: 120px;
-  max-width: 400px;
-  position: relative;
-  // top: 40px;
-  width: 100%;
-  // flex-grow: 1;
-  flex: auto;
-  overflow-y: scroll;
-  --px-btn-height: 41px;
-}
-
-:host([_fill-container]) .dt-p-time-buttons--wrapper{
-  // position: absolute;
-  // bottom: 0;
-  width: 100%;
-  background-color: white;
-  border-top: solid 1px lightgray;
-}
-
-:host([_fill-container]) .dt-p-buttons {
-  background-color: $gray1;
-  padding: $inuit-base-spacing-unit--small $inuit-base-spacing-unit--large;
 }
 
 /* Only exists in fill-container */
@@ -140,12 +89,34 @@ px-datetime-field {
   --px-datetime-entry-font-size: 30px;
   --px-datetime-field-height: calculateRem(40px);
   --px-btn-height: 1em;
-  --px-dropdown-content-font-size: 15px;
   display: flex;
   justify-content: center;
-  margin-top: $inuit-base-spacing-unit;
-  margin-bottom: $inuit-base-spacing-unit;
+  padding-top: $inuit-base-spacing-unit;
+  padding-bottom: $inuit-base-spacing-unit;
+  border-bottom: 1px solid #C5D1D8;
 }
 
+:host([_fill-container]) .dt-p-calendar__wrapper {
+  padding: $inuit-base-spacing-unit--large;
+  width: 100%;
+  flex-grow: 1;
+  overflow-y: auto;
+}
+
+:host([_fill-container]) .dt-p-calendar {
+  margin-left: auto;
+  margin-right: auto;
+  display: block;
+  max-width: 500px;
+}
+
+:host([_fill-container]) .dt-p-time-buttons--wrapper{
+  border-top: solid 1px lightgray;
+}
+
+:host([_fill-container]) .dt-p-buttons {
+  background-color: $gray1;
+  padding: $inuit-base-spacing-unit--small $inuit-base-spacing-unit--large;
+}
 
 // Trumps
