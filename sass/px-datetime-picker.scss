@@ -111,11 +111,11 @@ px-datetime-field {
 }
 
 :host([_fill-container]) .dt-p-time-buttons--wrapper{
-  border-top: solid 1px lightgray;
+  border-top: solid 1px var(--px-datetime-picker-fill-container-btn-border-color, lightgray);;
 }
 
 :host([_fill-container]) .dt-p-buttons {
-  background-color: $gray1;
+  background-color: var(--px-datetime-picker-fill-container-btn-background-color, lightgray);
   padding: $inuit-base-spacing-unit--small $inuit-base-spacing-unit--large;
 }
 

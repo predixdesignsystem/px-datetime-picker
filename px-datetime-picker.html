@@ -185,7 +185,8 @@ Custom property | Description
         value: 'HH:mm A'
       },
       /**
-       * If true, validation will error if the field is empty.
+       * Boolean stating if the picker is required.
+       * Will result in an error if left blank.
        */
        required: {
         type: Boolean,
@@ -196,7 +197,7 @@ Custom property | Description
        */
        opened: {
         type: Boolean,
-        value: true,
+        value: false,
         reflectToAttribute: true
       },
       /**
