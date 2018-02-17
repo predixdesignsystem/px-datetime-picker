@@ -1,6 +1,6 @@
 {
   "name": "px-datetime-picker",
-  "version": "2.0.5",
+  "version": "2.1.0",
   "main": [
     "px-datetime-picker.html"
   ],
@@ -31,7 +31,8 @@
     "px-calendar-picker": "^2.0.0",
     "px-datetime-common": "^3.0.0",
     "iron-a11y-keys-behavior": "^2.0.0",
-    "iron-dropdown": "^2.0.0"
+    "iron-dropdown": "^2.0.0",
+    "px-overlay": "^2.0.0"
   },
   "devDependencies": {
     "px-theme": "^3.0.0",

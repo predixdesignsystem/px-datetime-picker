@@ -5,6 +5,8 @@
 <link rel="import" href="../px-datetime-common/px-datetime-button-behavior.html"/>
 <link rel="import" href="../app-localize-behavior/app-localize-behavior.html" />
 <link rel="import" href="../iron-dropdown/iron-dropdown.html">
+<link rel="import" href="../px-overlay/px-overlay-content.html">
+<link rel="import" href="../px-overlay/px-overlay-behavior.html"/>
 <link rel="import" href="px-datetime-picker-content.html">
 
 <!--
@@ -53,27 +55,33 @@ Custom property | Description
       date-max="[[maxDate]]"
       is-valid="{{fieldIsValid}}">
     </px-datetime-field>
-    <px-datetime-picker-content
-      id="content"
-      opened="{{opened}}"
-      fill-container="[[fillContainer]]"
-      fit-into-element="[[fitIntoElement]]"
-      block-future-dates="{{blockFutureDates}}"
-      block-past-dates="{{blockPastDates}}"
-      temp-moment-obj="{{_tempMomentObj}}"
-      base-date="[[_tempMomentObj]]"
-      time-zone="[[timeZone]]"
-      day-week-start-index="[[dayWeekStartIndex]]"
-      resources="[[resources]]"
-      language="[[language]]"
-      formats="[[formats]]"
-      min-date="[[minDate]]"
-      max-date="[[maxDate]]"
-      hide-time="[[hideTime]]"
-      time-format="{{timeFormat}}"
-      show-buttons="[[showButtons]]"
-      field-is-valid="[[fieldIsValid]]">
-    </px-datetime-picker-content>
+    <px-overlay-content
+      hoist="[[hoist]]"
+      container-type="[[containerType]]"
+      event-names='["px-datetime-button-clicked"]'>
+      <px-datetime-picker-content
+        id="content"
+        opened="{{opened}}"
+        fill-container="[[fillContainer]]"
+        fit-into-element="[[fitIntoElement]]"
+        block-future-dates="{{blockFutureDates}}"
+        block-past-dates="{{blockPastDates}}"
+        temp-moment-obj="{{_tempMomentObj}}"
+        base-date="[[_tempMomentObj]]"
+        time-zone="[[timeZone]]"
+        day-week-start-index="[[dayWeekStartIndex]]"
+        resources="[[resources]]"
+        language="[[language]]"
+        formats="[[formats]]"
+        min-date="[[minDate]]"
+        max-date="[[maxDate]]"
+        hide-time="[[hideTime]]"
+        time-format="{{timeFormat}}"
+        show-buttons="[[showButtons]]"
+        field-is-valid="[[fieldIsValid]]"
+        field-elem="[[_returnField()]]">
+      </px-datetime-picker-content>
+    </px-overlay-content>
   </template>
 </dom-module>
 
@@ -84,7 +92,8 @@ Custom property | Description
     behaviors:[
       PxDatetimeBehavior.TempMoment,
       PxDatetimeBehavior.Buttons,
-      Polymer.AppLocalizeBehavior
+      Polymer.AppLocalizeBehavior,
+      PxOverlayBehavior.sharedProperties
     ],
 
     /**
@@ -192,7 +201,15 @@ Custom property | Description
      useKeyIfMissing: {
        type: Boolean,
        value: true
-     }
+     },
+
+      /**
+      * Specifies if the dropdown content should get hoisted to a container in order to escape its current stacking context
+      */
+      hoist: {
+        type: Boolean,
+        value: false
+      }
     },
     listeners: {
       'px-datetime-entry-icon-clicked':'_iconClicked',
@@ -302,6 +319,10 @@ Custom property | Description
       if(evt.detail.dateOrTime === "Date") {
         this.$.content._open();
       }
+    },
+
+    _returnField: function() {
+      return this.$.field;
     }
 
   });

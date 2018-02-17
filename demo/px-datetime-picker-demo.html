@@ -55,7 +55,8 @@
           show-time-zone="{{props.showTimeZone.value}}"
           time-zone="{{props.timeZone.value}}"
           min-date="{{props.minDate.value}}"
-          max-date="{{props.maxDate.value}}">
+          max-date="{{props.maxDate.value}}"
+          hoist="[[props.hoist.value]]">
         </px-datetime-picker>
       </px-demo-component>
       <!-- END Component ------------------------------------------------------>
@@ -244,7 +245,13 @@
         defaultValue: Px.moment().add(3, 'month').toISOString(),
         inputType: 'text',
         inputPlaceholder: 'ISOString'
-      }
+      },
+
+      hoist: {
+        type: Boolean,
+        defaultValue: false,
+        inputType: 'toggle'
+      },
     },
 
     ready: function () {

@@ -197,7 +197,9 @@
      tempMomentObj: {
        type: Object,
        notify: true
-     }
+     },
+
+     fieldElem: HTMLElement
     },
 
     attached: function() {
@@ -287,10 +289,10 @@
     // ********************************************************************** //
 
     _getVerticalOffset: function(fillContainer) {
-      return !fillContainer ? 40 : 0;
+      return !fillContainer ? 20 : 0;
     },
     _getPositionTarget: function(fillContainer, fitIntoElement) {
-      return fillContainer ? fitIntoElement : this.$.field;
+      return fillContainer ? fitIntoElement : this.fieldElem;
     },
     getElement: function(elStr) {
       return this.shadowRoot.querySelector(elStr)
