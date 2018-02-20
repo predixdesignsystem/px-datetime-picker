@@ -27,13 +27,13 @@ describe('px-datetime-picker no buttons', function () {
   });
 
   it('check that opened draws the panel for tests validity', function (done) {
-    var panelEl = Polymer.dom(pickerEl.root).querySelector('#dropdown');
+    var panelEl = pickerEl.$.content.$.dropdown;
     expect(panelEl.offsetWidth, 'panel width before open').to.equal(0);
     expect(pickerEl.opened, 'panel is open').to.be.false;
 
     pickerEl.opened = true;
 
-    panelEl = Polymer.dom(pickerEl.root).querySelector('#dropdown');
+    panelEl = pickerEl.$.content.$.dropdown;
     async.until(
       ()=> {
         return panelEl.offsetWidth > 0;
@@ -52,7 +52,7 @@ describe('px-datetime-picker no buttons', function () {
   it('the calendar opens on _open function', function (done) {
 
     expect(pickerEl.opened, 'panel is not visible before open').to.be.false;
-    pickerEl._open();
+    pickerEl.$.content._open();
     flush(() => {
       expect(pickerEl.opened, 'panel is visible after open').to.be.true;
       done();
@@ -99,20 +99,12 @@ describe('px-datetime-picker no buttons', function () {
       expect(pickerEl.opened, 'panel is visible after open').to.be.true;
       expect(pickerEl.momentObj.toISOString(), 'dateTime value before selection').to.equal("2018-01-05T00:30:00.000Z");
 
-      var dropdownEl = Polymer.dom(pickerEl.root).querySelector('iron-dropdown'),
-      calendarEl = Polymer.dom(dropdownEl).querySelector('px-calendar-picker'),
-      allCells = Polymer.dom(calendarEl.root).querySelectorAll('px-calendar-cell'),
-      i = 0;
+      var dropdownEl = pickerEl.$.content.$.dropdown,
+          calendarEl = Polymer.dom(dropdownEl).querySelector('px-calendar-picker'),
+          allCells = Polymer.dom(calendarEl.root).querySelectorAll('px-calendar-cell');
 
-      allCells.forEach(function (cell, index) {
-        var btn = Polymer.dom(cell.root).querySelector('button');
-        if (!btn.hidden) {
-          i++;
-        }
-        if (i === 10) {
-          btn.click();
-        }
-      });
+        var btn = Polymer.dom(allCells[10].root).querySelector('button');
+        btn.click();
 
       flush(() => {
         expect(pickerEl.opened, 'panel is visible after selection').to.be.false;
@@ -131,7 +123,7 @@ describe('px-datetime-picker no buttons', function () {
       expect(pickerEl.opened, 'panel is visible after open').to.be.true;
       expect(pickerEl.momentObj.toISOString(), 'dateTime value before selection').to.equal('2018-01-05T00:30:00.000Z');
 
-      var dropdownEl = Polymer.dom(pickerEl.root).querySelector('iron-dropdown'),
+      var dropdownEl = pickerEl.$.content.$.dropdown,
       todayEl = Polymer.dom(dropdownEl).querySelector('.dt-p-today');
 
       todayEl.click();
@@ -159,23 +151,14 @@ describe('px-datetime-picker with buttons', function () {
   var pickerEl, calendarEl, selectTenthDay;
 
   selectTenthDay = function (calendarEl) {
-    var allCells = Polymer.dom(calendarEl.root).querySelectorAll('px-calendar-cell'),
-      i = 0;
-      allCells.forEach(function (cell, index) {
-      var btn = Polymer.dom(cell.root).querySelector('button');
-      if (!btn.hidden) {
-        i++;
-      }
-      if (i === 10) {
-        btn.click();
-        return;
-      }
-    });
-  };
+    var allCells = Polymer.dom(calendarEl.root).querySelectorAll('px-calendar-cell');
+    var btn = Polymer.dom(allCells[10].root).querySelector('button')
+    btn.click();
+  }
 
   beforeEach(function (done) {
     pickerEl = fixture('datetime-picker-buttons');
-    calendarEl = Polymer.dom(pickerEl.root).querySelector('px-calendar-picker');
+    calendarEl = pickerEl.$.content.$.calendar;
     pickerEl.momentObj = moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone);
     flush(()=>{
       setTimeout(function() {
@@ -213,7 +196,8 @@ describe('px-datetime-picker with buttons', function () {
       expect(pickerEl.opened, 'panel is open before selection').to.be.true;
       expect(pickerEl.momentObj.toISOString(), 'check datetime has not changed').to.equal('2018-01-05T00:30:00.000Z');
 
-      todayEl = Polymer.dom(pickerEl.root).querySelector('.dt-p-today');
+      var dropdownEl = pickerEl.$.content.$.dropdown,
+      todayEl = Polymer.dom(dropdownEl).querySelector('.dt-p-today');
       todayEl.click();
 
       flush(() => {
@@ -227,15 +211,13 @@ describe('px-datetime-picker with buttons', function () {
 
 
   it('pressing cancel cancels selection', function (done) {
-    var calendarEl = Polymer.dom(pickerEl.root).querySelector('px-calendar-picker');
-
     flush(() => {
       pickerEl.opened = true;
       expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
 
       selectTenthDay(calendarEl);
 
-      var pickerButtons = Polymer.dom(pickerEl.root).querySelector('px-datetime-buttons');
+      var pickerButtons = Polymer.dom(pickerEl.$.content.root).querySelector('px-datetime-buttons');
       cancelButton = Polymer.dom(pickerButtons.root).querySelector('button');
 
       expect(cancelButton.id).to.equal('', 'make sure button is not the submit button');
@@ -251,9 +233,6 @@ describe('px-datetime-picker with buttons', function () {
 
 
   it('pressing Escape cancels selection', function (done) {
-
-    var calendarEl = Polymer.dom(pickerEl.root).querySelector('px-calendar-picker');
-
     flush(() => {
       pickerEl.opened = true;
       expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
@@ -272,15 +251,13 @@ describe('px-datetime-picker with buttons', function () {
 
 
   it('pressing the submit button applies selection', function (done) {
-    var calendarEl = Polymer.dom(pickerEl.root).querySelector('px-calendar-picker');
-
     flush(() => {
       pickerEl.opened = true;
       expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
 
       selectTenthDay(calendarEl);
 
-      var pickerButtons = Polymer.dom(pickerEl.root).querySelector('px-datetime-buttons');
+      var pickerButtons = Polymer.dom(pickerEl.$.content.root).querySelector('px-datetime-buttons');
       submit = Polymer.dom(pickerButtons.root).querySelector('#submitButton');
 
 
@@ -296,9 +273,6 @@ describe('px-datetime-picker with buttons', function () {
 
 
   it('pressing enter applies selection', function (done) {
-
-    var calendarEl = Polymer.dom(pickerEl.root).querySelector('px-calendar-picker');
-
     flush(() => {
       pickerEl.opened = true;
       expect(pickerEl.momentObj.toISOString()).to.equal('2018-01-05T00:30:00.000Z', 'dateTime value');
@@ -329,8 +303,8 @@ describe('synchronized date/time zones', function () {
   beforeEach(function () {
     pickerEl = fixture('datetime-picker');
     fieldEl = Polymer.dom(pickerEl.root).querySelector('px-datetime-field');
-    dropdownEl = Polymer.dom(pickerEl.root).querySelector('iron-dropdown');
-    calendarEl = Polymer.dom(dropdownEl).querySelector('px-calendar-picker');
+    dropdownEl = pickerEl.$.content.$.dropdown;
+    calendarEl = pickerEl.$.content.$.calendar;
     pickerEl.momentObj = moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone);
   });
 
@@ -370,7 +344,7 @@ describe('Full Container', function () {
   beforeEach(function (done) {
     templateEl = fixture('datetime-picker-full-container');
     pickerEl = Polymer.dom(templateEl.root).querySelector('px-datetime-picker');
-    dropdownContentEl = Polymer.dom(pickerEl.root).querySelector('.dt-container__box');
+    dropdownContentEl = Polymer.dom(pickerEl.$.content.root).querySelector('.dt-container__box');
     fitEl = Polymer.dom(templateEl.root).querySelector('#fit');
     pickerEl.fitIntoElement = fitEl;
     pickerEl.momentObj = moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone);
@@ -407,8 +381,7 @@ describe('Full Container', function () {
   });
 
   it('has time field', function () {
-
-    var time = Polymer.dom(pickerEl.root).querySelector('#time');
+    var time = Polymer.dom(pickerEl.$.content.root).querySelector('#time');
     expect(time !== null).to.be.true;
   });
 });//end of full container
@@ -423,7 +396,7 @@ describe('Full window', function () {
 
   beforeEach(function (done) {
     pickerEl = fixture('datetime-picker-full-window');
-    dropdownContentEl = Polymer.dom(pickerEl.root).querySelector('.dt-container__box');
+    dropdownContentEl = Polymer.dom(pickerEl.$.content.root).querySelector('.dt-container__box');
     pickerEl.momentObj = moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone);
     setTimeout(function() {
       done();
@@ -458,7 +431,7 @@ describe('Full window', function () {
 
   it('does not have time field', function () {
 
-    var time = Polymer.dom(pickerEl.root).querySelector('#time');
+    var time = Polymer.dom(pickerEl.$.content.root).querySelector('#time');
     expect(time === null).to.be.true;
   });
 });//end of full window

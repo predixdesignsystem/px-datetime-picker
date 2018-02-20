@@ -83,8 +83,7 @@
     is: 'px-datetime-picker-content',
     behaviors:[
       PxDatetimeBehavior.TempMoment,
-      PxDatetimeBehavior.Buttons,
-      Polymer.AppLocalizeBehavior
+      PxDatetimeBehavior.Buttons
     ],
 
     /**
@@ -208,7 +207,7 @@
       //we don't need to listen to the time field from the calendar
       //since it only updates the temp moment but should never trigger an
       //actual validation
-      this.$.calendar.addEventListener('from-moment-changed', this._calendarMomentChanged.bind(this));
+      this.$.calendar.addEventListener('from-moment-changed', this._tempMomentChanged.bind(this));
     },
 
     /*
@@ -232,8 +231,7 @@
       this.$.dropdown.close();
     },
 
-    _tempMomentChanged: function(origin) {
-
+    _tempMomentChanged: function() {
       //this debounce is critical for Polymer 1. We are just putting this
       //call on top of the stack because of how the binding flows:
       //change in calendar => binding updates field moment => field
@@ -245,21 +243,11 @@
       //In Polymer 2 in this scenario only calendar will fire a change
       //event so no problems
       this.debounce('_tempMomentChanged', function() {
-
-        if(origin === 'field') {
-          //field only changes moment when it has been validated, we can trust that change
-          this._applyTempMoment();
-        } else if(origin === 'calendar') {
-          //time changed in calendar. Only process if no button,
-          if(!this.showButtons) {
-            this._validateCalendarMoment();
-          }
+        //time changed in calendar. Only process if no button,
+        if(!this.showButtons) {
+          this._validateCalendarMoment();
         }
-      }.bind(this));
-    },
-
-    _calendarMomentChanged : function(evt) {
-      this._tempMomentChanged('calendar');
+      }, 0);
     },
 
     /**
@@ -270,8 +258,6 @@
         if(this.fieldIsValid) {
           this._applyTempMoment();
           this._close();
-        } else {
-          //don't close, can't apply if not valid
         }
       }
     },

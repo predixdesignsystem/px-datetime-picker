@@ -92,7 +92,6 @@ Custom property | Description
     behaviors:[
       PxDatetimeBehavior.TempMoment,
       PxDatetimeBehavior.Buttons,
-      Polymer.AppLocalizeBehavior,
       PxOverlayBehavior.sharedProperties
     ],
 
@@ -230,7 +229,8 @@ Custom property | Description
       //we don't need to listen to the time field from the calendar
       //since it only updates the temp moment but should never trigger an
       //actual validation
-      this.$.field.addEventListener('moment-obj-changed', this._fieldMomentChanged.bind(this));
+      this.$.field.addEventListener('moment-obj-changed', this._tempMomentChanged.bind(this, 'field'));
+      this.$.content.addEventListener('temp-moment-obj-changed', this._tempMomentChanged.bind(this, 'content'));
     },
 
     /**
@@ -260,7 +260,6 @@ Custom property | Description
     },
 
     _tempMomentChanged: function(origin) {
-
       //this debounce is critical for Polymer 1. We are just putting this
       //call on top of the stack because of how the binding flows:
       //change in calendar => binding updates field moment => field
@@ -272,21 +271,17 @@ Custom property | Description
       //In Polymer 2 in this scenario only calendar will fire a change
       //event so no problems
       this.debounce('_tempMomentChanged', function() {
-
+        // If it is from the field, field has validated and want to update.
+        // If it is from the content and we have no buttons, content has validated and we want to update
+        // Else, wait for button events.
         if(origin === 'field') {
-          //field only changes moment when it has been validated, we can trust that change
           this._applyTempMoment();
-        } else if(origin === 'calendar') {
-          //time changed in calendar. Only process if no button,
-          if(!this.showButtons) {
-            this._validateCalendarMoment();
-          }
-        }
-      }.bind(this));
-    },
 
-    _fieldMomentChanged : function(evt) {
-      this._tempMomentChanged('field');
+        } else if (origin === 'content' && !this.showButtons) {
+          this._applyTempMoment();
+
+        }
+      }, 0);
     },
 
     /**
