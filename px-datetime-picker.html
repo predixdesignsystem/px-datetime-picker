@@ -224,8 +224,6 @@ Custom property | Description
     },
 
     attached: function() {
-      this._isAttached = true;
-
       //we don't need to listen to the time field from the calendar
       //since it only updates the temp moment but should never trigger an
       //actual validation
@@ -319,6 +317,5 @@ Custom property | Description
     _returnField: function() {
       return this.$.field;
     }
-
   });
 </script>
