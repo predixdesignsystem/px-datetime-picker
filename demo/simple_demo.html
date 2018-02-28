@@ -1,28 +1,41 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Predix UI</title>
-    <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
 
-    <link rel="import" href="../../polymer/polymer.html" />
-    <link rel="import" href="../../px-theme/px-theme-styles.html">
-    <custom-style>
-      <style include="px-theme-styles" is="custom-style"></style>
-    </custom-style>
-    <link rel="import" href="../px-datetime-picker.html" />
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Predix UI</title>
+  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
+
+  <link rel="import" href="../../polymer/polymer.html" />
+  <link rel="import" href="../../px-theme/px-theme-styles.html">
+  <custom-style>
+    <style include="px-theme-styles" is="custom-style"></style>
+  </custom-style>
+  <link rel="import" href="../px-datetime-picker.html" />
 
 </head>
 
 <body>
-  <h2>px-datetime-picker</h2>
-  <px-datetime-picker
-    time-zone="UTC"
-    time-format="hh:mm A"
-    fill-container
-    show-buttons>
-  </px-datetime-picker>
+  <dom-bind>
+    <template is="dom-bind">
+      <px-datetime-picker
+        time-zone="UTC"
+        ime-format="hh:mm:ss A"
+        moment-obj="{{momentObj}}">
+      </px-datetime-picker>
+    </template>
+  </dom-bind>
+  <script>
+    window.addEventListener('WebComponentsReady', function () {
+      var template = document.querySelector('template[is=dom-bind]');
+      template.momentObj = Px.moment().startOf('day').subtract(7, 'days');
+
+      // Support hybrid mode
+      var templatev1 = document.querySelector('dom-bind');
+      templatev1.momentObj = template.momentObj;
+    });
+  </script>
 </body>
 
 </html>

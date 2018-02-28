@@ -1,0 +1,260 @@
+<link rel="import" href="css/px-datetime-picker-styles.html"/>
+<link rel="import" href="../px-datetime-field/px-datetime-field.html"/>
+<link rel="import" href="../px-calendar-picker/px-calendar-picker.html"/>
+<link rel="import" href="../px-datetime-common/px-datetime-behavior.html"/>
+<link rel="import" href="../px-datetime-common/px-datetime-buttons.html"/>
+<link rel="import" href="../px-datetime-common/px-datetime-button-behavior.html"/>
+<link rel="import" href="../app-localize-behavior/app-localize-behavior.html" />
+<link rel="import" href="../iron-dropdown/iron-dropdown.html">
+
+
+<dom-module id="px-datetime-picker-content">
+  <template>
+    <style include="px-datetime-picker-styles"></style>
+
+    <iron-dropdown
+      id="dropdown"
+      class="dt-iron-dropdown"
+      opened="{{opened}}"
+      vertical-align="top"
+      horizontal-align="left"
+      no-overlap="[[!_fillContainer]]"
+      dynamic-align="[[!_fillContainer]]"
+      vertical-offset="[[_getVerticalOffset(_fillContainer)]]"
+      position-target="[[_getPositionTarget(_fillContainer, fitIntoElement)]]"
+      fit-into="[[fitIntoElement]]">
+      <div slot="dropdown-content" class="dt-container__box shadow-temporary">
+        <template is="dom-if" if="{{_fillContainer}}">
+          <div class="dt-p__header shadow-notification">
+            <p class="dt-p__selected-date">{{selectedDate}}</p>
+          </div>
+        </template>
+        <template id="timeTemplate" is="dom-if" if="{{_handleField(hideTime, _fillContainer)}}">
+          <div>
+            <px-datetime-field
+              id="time"
+              class="dt-p-time"
+              moment-obj="{{_tempMomentObj}}"
+              hide-icon
+              hide-date
+              is-valid="{{_toTimeIsValid}}"
+              time-format="{{timeFormat}}"
+              time-zone="[[timeZone]]"
+              resources="[[resources]]"
+              language="[[language]]"
+              formats="[[formats]]"
+              min-date="[[minDate]]"
+              max-date="[[maxDate]]">
+            </px-datetime-field>
+          </div>
+        </template>
+        <div class="dt-p-calendar__wrapper">
+          <px-calendar-picker
+            id="calendar"
+            class="dt-p-calendar"
+            block-future-dates="{{blockFutureDates}}"
+            block-past-dates="{{blockPastDates}}"
+            prevent-range-selection
+            from-moment="{{_tempMomentObj}}"
+            base-date="[[_tempMomentObj]]"
+            time-zone="[[timeZone]]"
+            day-week-start-index="[[dayWeekStartIndex]]"
+            resources="[[resources]]"
+            language="[[language]]"
+            formats="[[formats]]"
+            min-date="[[minDate]]"
+            max-date="[[maxDate]]">
+          </px-calendar-picker>
+          <button class="actionable caps dt-p-today" on-tap="_todayClicked">[[localize('Today')]]</button>
+        </div>
+        <div class="dt-p-time-buttons--wrapper">
+          <template is="dom-if" if="{{showButtons}}">
+            <px-datetime-buttons
+              class="dt-p-buttons"
+              is-submit-button-valid
+              space-between="[[_fillContainer]]"
+              resources="[[resources]]"
+              language="[[language]]"
+              formats="[[formats]]">
+            </px-datetime-buttons>
+          </template>
+        </div>
+      </div>
+    </iron-dropdown>
+
+  </template>
+</dom-module>
+
+<script>
+  Polymer({
+
+    is: 'px-datetime-picker-content',
+    behaviors:[
+      PxDatetimeBehavior.TempMoment,
+      PxDatetimeBehavior.Buttons
+    ],
+
+    /**
+     * Properties block, expose attribute values to the DOM via 'notify'
+     *
+     * @property properties
+     * @type Object
+     */
+    properties: {
+      /**
+       * Whether this date picker should allow to pick time as well.
+       *
+       */
+      hideTime: {
+        type: Boolean
+      },
+      /**
+       * Moment format used for the time
+       *
+       */
+       timeFormat: {
+        type: String
+      },
+      /**
+       * Reflects if datetime-picker container is open/visible.
+       */
+       opened: {
+        type: Boolean,
+        reflectToAttribute: true,
+        notify: true
+      },
+      /**
+       * Reflects if the field is valid.
+       */
+       fieldIsValid: {
+        type: Boolean
+      },
+      /**
+       * false : the dt-picker contents will open in a panel.
+       * true : the dt-picker contents will fill the window
+       * or an element defined by the `fitIntoElement`.
+       */
+       fillContainer: {
+        type: Boolean,
+        reflectToAttribute: true
+      },
+      /**
+       * The element that the dt-picker contents will fully expand into
+       * when the dt-picker is open.
+       * `fillContainer` must be true in order for this property to work
+       */
+      fitIntoElement: {
+        type: Object
+      },
+      /**
+       * List of key/values to be included for translating this component
+       */
+      resources: {
+        type: Object,
+      },
+      /**
+      * set a default for localizing
+      */
+     language: {
+       type: String
+     },
+     /**
+      * Use the key for localization if value for language is missing. Should
+      * always be true for  our components
+      *
+      * Value isn't passed down so needs to be set
+      */
+     useKeyIfMissing: {
+       type: Boolean,
+       value: true
+     },
+     tempMomentObj: {
+       type: Object,
+       notify: true
+     },
+
+     fieldElem: HTMLElement
+    },
+
+    attached: function() {
+      //we don't need to listen to the time field from the calendar
+      //since it only updates the temp moment but should never trigger an
+      //actual validation
+      this.$.calendar.addEventListener('from-moment-changed', this._tempMomentChanged.bind(this));
+    },
+
+    /*
+     * 'Today' button/text has been clicked
+     */
+    _todayClicked: function(evt) {
+      var today = this._preserveTime(this.tempMomentObj, Px.moment.tz(Px.moment(), this.timeZone));
+      this.set('tempMomentObj', today);
+      this._tempMomentChanged('calendar');
+    },
+    /**
+     * Opens the calendar
+     */
+    _open: function() {
+      this.$.dropdown.open();
+    },
+    /**
+     * Closes the calendar
+     */
+    _close: function() {
+      this.$.dropdown.close();
+    },
+
+    _tempMomentChanged: function() {
+      //this debounce is critical for Polymer 1. We are just putting this
+      //call on top of the stack because of how the binding flows:
+      //change in calendar => binding updates field moment => field
+      //moment fires change event => binding done => calendar fires
+      //change event.
+      //we are therefore interested in the latest update, hence the
+      //debounce. no need for an actual timing since this will all be
+      //sequential.
+      //In Polymer 2 in this scenario only calendar will fire a change
+      //event so no problems
+      this.debounce('_tempMomentChanged', function() {
+        //time changed in calendar. Only process if no button,
+        if(!this.showButtons) {
+          this._validateCalendarMoment();
+        }
+      }, 0);
+    },
+
+    /**
+     */
+    _validateCalendarMoment: function() {
+      if(this.opened) {
+        //apply: accept if valid
+        if(this.fieldIsValid) {
+          this._applyTempMoment();
+          this._close();
+        }
+      }
+    },
+
+    /**
+     * Determine if field should be displayed in container
+     * The dt-field will only appear in the container if fillContainer is true
+     */
+    _handleField: function(hideTime, fillContainer){
+      return (!hideTime && fillContainer);
+    },
+
+    // ********************************************************************** //
+    // Calculate iron-dropdown properties
+    // ********************************************************************** //
+
+    _getVerticalOffset: function(fillContainer) {
+      return !fillContainer ? 20 : 0;
+    },
+    _getPositionTarget: function(fillContainer, fitIntoElement) {
+      return fillContainer ? fitIntoElement : this.fieldElem;
+    },
+    getElement: function(elStr) {
+      return this.shadowRoot.querySelector(elStr)
+    }
+  });
+</script>

@@ -13,13 +13,12 @@
 <link rel="import" href="../../px-demo/px-demo-code-editor.html" />
 
 <!-- Imports for this component -->
-<link rel="import" href="../../px-demo/css/px-demo-styles.html" />
+
 <link rel="import" href="../px-datetime-picker.html" />
 
 <!-- Demo DOM module -->
 <dom-module id="px-datetime-picker-demo">
   <template>
-    <style include="px-demo-styles" is="custom-style"></style>
 
     <!-- Header -->
     <px-demo-header
@@ -57,7 +56,8 @@
           show-time-zone="{{props.showTimeZone.value}}"
           time-zone="{{props.timeZone.value}}"
           min-date="{{props.minDate.value}}"
-          max-date="{{props.maxDate.value}}">
+          max-date="{{props.maxDate.value}}"
+          hoist="[[props.hoist.value]]">
         </px-datetime-picker>
       </px-demo-component>
       <!-- END Component ------------------------------------------------------>
@@ -252,7 +252,13 @@
         defaultValue: Px.moment().add(3, 'month').toISOString(),
         inputType: 'text',
         inputPlaceholder: 'ISOString'
-      }
+      },
+
+      hoist: {
+        type: Boolean,
+        defaultValue: false,
+        inputType: 'toggle'
+      },
     },
 
     ready: function () {

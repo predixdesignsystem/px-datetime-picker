@@ -1,3 +1,17 @@
+v2.1.1
+==================
+* added a `focus` function
+
+v2.1.0
+==================
+* Broke components up so iron-dropdown content is in a separate component, px-datetime-picker-content
+* Added px-overlay-content to hoist px-datetime-picker-content up the dom
+* Added hoist option, defaulted to false
+* Added containerType option to specify which container it should hoist to
+
+==================
+* fixing demo pages for IE11
+
 v2.0.4
 ==================
 * Updated to newest px-datetime-common behavior versions
