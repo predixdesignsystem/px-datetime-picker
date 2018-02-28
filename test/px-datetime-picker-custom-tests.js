@@ -73,6 +73,13 @@ describe('px-datetime-picker no buttons', function () {
   });
 
 
+  it('host should propagate focus to the px-datetime-field', function () {
+    var fieldEl = Polymer.dom(pickerEl.root).querySelector('px-datetime-field');
+    pickerEl.focus();
+    assert.equal(fieldEl, Polymer.dom(pickerEl.root).activeElement);
+  });
+
+
   //This should pass but there is a bug that needs to be fixed.
   it('focusing on the field doesn\'t close calendar when opened', function (done) {
     pickerEl.opened = true;

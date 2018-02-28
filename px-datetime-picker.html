@@ -231,6 +231,13 @@ Custom property | Description
       this.$.content.addEventListener('temp-moment-obj-changed', this._tempMomentChanged.bind(this, 'content'));
     },
 
+    /*
+     * Propagate focus from the host to px-datetime-field
+     */
+    focus: function() {
+      this.$.field.focus();
+    },
+
     /**
      */
     _onEsc: function(evt) {
