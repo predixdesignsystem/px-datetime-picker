@@ -1,3 +1,7 @@
+v2.1.1
+==================
+* added a `focus` function
+
 v2.1.0
 ==================
 * Broke components up so iron-dropdown content is in a separate component, px-datetime-picker-content
