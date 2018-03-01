@@ -35,6 +35,7 @@ Custom property | Description
 <dom-module id="px-datetime-picker">
   <template>
     <style include="px-datetime-picker-styles"></style>
+
     <template is="dom-if" if="[[_collapseQueryIsValid(collapseAt)]]">
       <iron-media-query query$="(max-width: {{_getCollapseQuery(collapseAt)}})" query-matches="{{_belowCollapseSize}}"></iron-media-query>
     </template>
@@ -42,24 +43,24 @@ Custom property | Description
     <px-datetime-field
       id="field"
       slot="dropdown-trigger"
-      time-zone="{{timeZone}}"
       moment-obj="{{_tempMomentObj}}"
-      hide-time="{{hideTime}}"
-      show-time-zone="{{showTimeZone}}"
       date-format="{{dateFormat}}"
       time-format="{{timeFormat}}"
+      hide-time="{{hideTime}}"
+      time-zone="{{timeZone}}"
+      show-time-zone="{{showTimeZone}}"
       is-selected="[[opened]]"
-      required="[[required]]"
-      prevent-notification-on-change
-      prevent-cell-focus="[[_fillContainer]]"
       block-future-dates="{{blockFutureDates}}"
       block-past-dates="{{blockPastDates}}"
-      resources="[[resources]]"
-      language="[[language]]"
-      formats="[[formats]]"
       date-min="[[minDate]]"
       date-max="[[maxDate]]"
-      is-valid="{{fieldIsValid}}">
+      required="[[required]]"
+      is-valid="{{fieldIsValid}}"
+      prevent-notification-on-change
+      prevent-cell-focus="[[_fillContainer]]"
+      resources="[[resources]]"
+      language="[[language]]"
+      formats="[[formats]]">
     </px-datetime-field>
     <px-overlay-content
       hoist="[[hoist]]"
@@ -68,27 +69,26 @@ Custom property | Description
       <px-datetime-picker-content
         id="content"
         opened="{{opened}}"
-        fill-container="[[fillContainer]]"
-        fit-into-element="[[fitIntoElement]]"
+        temp-moment-obj="{{_tempMomentObj}}"
+        time-format="{{timeFormat}}"
+        hide-time="[[hideTime]]"
+        time-zone="[[timeZone]]"
+        show-buttons="[[showButtons]]"
+        base-date="[[_tempMomentObj]]"
+        day-week-start-index="[[dayWeekStartIndex]]"
         block-future-dates="{{blockFutureDates}}"
         block-past-dates="{{blockPastDates}}"
-        temp-moment-obj="{{_tempMomentObj}}"
-        base-date="[[_tempMomentObj]]"
-        time-zone="[[timeZone]]"
-        day-week-start-index="[[dayWeekStartIndex]]"
-        resources="[[resources]]"
-        language="[[language]]"
-        formats="[[formats]]"
         min-date="[[minDate]]"
         max-date="[[maxDate]]"
-        hide-time="[[hideTime]]"
-        time-format="{{timeFormat}}"
-        show-buttons="[[showButtons]]"
         field-is-valid="[[fieldIsValid]]"
-        field-elem="[[_returnField()]]">
+        fill-container="[[fillContainer]]"
+        fit-into-element="[[fitIntoElement]]"
+        field-elem="[[_returnField()]]"
+        resources="[[resources]]"
+        language="[[language]]"
+        formats="[[formats]]">
       </px-datetime-picker-content>
     </px-overlay-content>
-
 
   </template>
 </dom-module>
@@ -144,7 +144,7 @@ Custom property | Description
        * Moment format used for the time
        *
        */
-       timeFormat: {
+      timeFormat: {
         type: String,
         value: 'HH:mm A'
       },
@@ -152,14 +152,14 @@ Custom property | Description
        * Boolean stating if the picker is required.
        * Will result in an error if left blank.
        */
-       required: {
+      required: {
         type: Boolean,
         value: false
       },
       /**
        * Reflects if datetime-picker container is open/visible.
        */
-       opened: {
+      opened: {
         type: Boolean,
         value: false,
         reflectToAttribute: true
@@ -172,7 +172,7 @@ Custom property | Description
        * regardless of the collapseAt value.
        * Reflects if the field is valid.
        */
-       fieldIsValid: {
+      fieldIsValid: {
         type: Boolean
       },
       /**
@@ -180,7 +180,7 @@ Custom property | Description
        * true : the dt-picker contents will fill the window
        * or an element defined by the `fitIntoElement`.
        */
-       fillContainer: {
+      fillContainer: {
         type: Boolean,
         value: false,
         observer: '_handleFillContainer'
@@ -190,7 +190,7 @@ Custom property | Description
        * without separate variable fillContainer would never be
        * true with a screen size larger then the value of collapseAt
        */
-       _fillContainer: {
+      _fillContainer: {
         type: Boolean,
         reflectToAttribute: true
       },
@@ -212,7 +212,7 @@ Custom property | Description
        * automatically. The collapsed attribute can also be used to manually
        * collapse and un-collapse the datetime picker.
        */
-       collapseAt: {
+      collapseAt: {
         type: Number,
         value: 100
       },
@@ -284,14 +284,12 @@ Custom property | Description
       this.$.field.addEventListener('moment-obj-changed', this._tempMomentChanged.bind(this, 'field'));
       this.$.content.addEventListener('temp-moment-obj-changed', this._tempMomentChanged.bind(this, 'content'));
     },
-
     /*
      * Propagate focus from the host to px-datetime-field
      */
     focus: function() {
       this.$.field.focus();
     },
-
     /**
      */
     _onEsc: function(evt) {
@@ -335,28 +333,28 @@ Custom property | Description
         // Else, wait for button events.
         if(origin === 'field') {
           this._applyTempMoment();
-        } else if(origin === 'calendar') {
-          //time changed in calendar. Only process if no button,
-          if(!this.showButtons) {
-            this._validateCalendarMoment();
-          }
+        } else if (origin === 'content' && !this.showButtons) {
+          this._applyTempMoment();
         }
-      }.bind(this));
+      }, 0);
     },
+    /**
+     */
     _updateSelectedDate : function(moment) {
       moment === null ? this.selectedDate = "Select Date" : this.selectedDate = moment.format('YYYY/MM/DD')
     },
-
+    /**
+     */
     _calendarMomentChanged : function(evt) {
       this._tempMomentChanged('calendar');
       if(this.fillContainer){ this._updateSelectedDate(evt.detail.value); }
     },
-
+    /**
+     */
     _fieldMomentChanged: function (evt) {
       if (evt.detail.value === null) { this._updateSelectedDate(evt.detail.value); }
       this._tempMomentChanged('field');
     },
-
     /**
      */
     _validateCalendarMoment: function() {

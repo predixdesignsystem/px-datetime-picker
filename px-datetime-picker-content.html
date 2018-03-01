@@ -35,16 +35,16 @@
               id="time"
               class="dt-p-time"
               moment-obj="{{_tempMomentObj}}"
+              time-format="{{timeFormat}}"
               hide-icon
               hide-date
-              is-valid="{{_toTimeIsValid}}"
-              time-format="{{timeFormat}}"
               time-zone="[[timeZone]]"
+              is-valid="{{_toTimeIsValid}}"
+              min-date="[[minDate]]"
+              max-date="[[maxDate]]"
               resources="[[resources]]"
               language="[[language]]"
-              formats="[[formats]]"
-              min-date="[[minDate]]"
-              max-date="[[maxDate]]">
+              formats="[[formats]]">
             </px-datetime-field>
           </div>
         </template>
@@ -52,18 +52,18 @@
           <px-calendar-picker
             id="calendar"
             class="dt-p-calendar"
+            from-moment="{{_tempMomentObj}}"
+            base-date="[[_tempMomentObj]]"
+            day-week-start-index="[[dayWeekStartIndex]]"
+            time-zone="[[timeZone]]"
             block-future-dates="{{blockFutureDates}}"
             block-past-dates="{{blockPastDates}}"
             prevent-range-selection
-            from-moment="{{_tempMomentObj}}"
-            base-date="[[_tempMomentObj]]"
-            time-zone="[[timeZone]]"
-            day-week-start-index="[[dayWeekStartIndex]]"
+            min-date="[[minDate]]"
+            max-date="[[maxDate]]"
             resources="[[resources]]"
             language="[[language]]"
-            formats="[[formats]]"
-            min-date="[[minDate]]"
-            max-date="[[maxDate]]">
+            formats="[[formats]]">
           </px-calendar-picker>
           <button class="actionable caps dt-p-today" on-tap="_todayClicked">[[localize('Today')]]</button>
         </div>
@@ -112,13 +112,13 @@
        * Moment format used for the time
        *
        */
-       timeFormat: {
+      timeFormat: {
         type: String
       },
       /**
        * Reflects if datetime-picker container is open/visible.
        */
-       opened: {
+      opened: {
         type: Boolean,
         reflectToAttribute: true,
         notify: true
@@ -126,7 +126,7 @@
       /**
        * Reflects if the field is valid.
        */
-       fieldIsValid: {
+      fieldIsValid: {
         type: Boolean
       },
       /**
@@ -134,7 +134,7 @@
        * true : the dt-picker contents will fill the window
        * or an element defined by the `fitIntoElement`.
        */
-       fillContainer: {
+      fillContainer: {
         type: Boolean,
         reflectToAttribute: true
       },
