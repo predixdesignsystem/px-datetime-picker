@@ -81,8 +81,8 @@ Custom property | Description
         min-date="[[minDate]]"
         max-date="[[maxDate]]"
         field-is-valid="[[fieldIsValid]]"
-        fill-container="[[fillContainer]]"
-        fit-into-element="[[fitIntoElement]]"
+        fill-container="[[_fillContainer]]"
+        fit-into-element="[[_fitIntoElement]]"
         field-elem="[[_returnField()]]"
         resources="[[resources]]"
         language="[[language]]"
@@ -183,7 +183,7 @@ Custom property | Description
       fillContainer: {
         type: Boolean,
         value: false,
-        observer: '_handleFillContainer'
+        observer: '_syncFillContainer'
       },
       /**
        * used to toggle fillContainer from iron-media-query
@@ -201,7 +201,17 @@ Custom property | Description
        */
       fitIntoElement: {
         type: Object,
-        value: window
+        value: window,
+        observer: '_syncFitIntoElement'
+      },
+      /**
+       * used to toggle `fitIntoElement` from iron-media-query
+       * without separate variable each time the screen was
+       * smaller than collpasAt the `fitIntoElement` would
+       * get over written.
+       */
+      _fitIntoElement: {
+        type: Object
       },
       /**
        * The width below which the datetime picker will collapse into a mobile
@@ -214,11 +224,7 @@ Custom property | Description
        */
       collapseAt: {
         type: Number,
-        value: 100
-      },
-      selectedDate: {
-        type: String,
-        value: "Select Date"
+        value: 720
       },
       /**
        * Output of iron-media-query
@@ -283,6 +289,8 @@ Custom property | Description
       //actual validation
       this.$.field.addEventListener('moment-obj-changed', this._tempMomentChanged.bind(this, 'field'));
       this.$.content.addEventListener('temp-moment-obj-changed', this._tempMomentChanged.bind(this, 'content'));
+
+
     },
     /*
      * Propagate focus from the host to px-datetime-field
@@ -304,7 +312,7 @@ Custom property | Description
     /**
      * If the calendar is open and the dropdown is selected, close the calendar
      */
-     _handleTap: function(evt) {
+    _handleTap: function(evt) {
       if(this.opened === true){
         var path = Polymer.dom(evt).path;
         for (var i=0; i<path.length; i++) {
@@ -332,29 +340,26 @@ Custom property | Description
         // If it is from the content and we have no buttons, content has validated and we want to update
         // Else, wait for button events.
         if(origin === 'field') {
+          if (evt.detail.value === null) { this._updateSelectedDate(evt.detail.value); }
           this._applyTempMoment();
         } else if (origin === 'content' && !this.showButtons) {
           this._applyTempMoment();
         }
       }, 0);
     },
+
     /**
      */
-    _updateSelectedDate : function(moment) {
-      moment === null ? this.selectedDate = "Select Date" : this.selectedDate = moment.format('YYYY/MM/DD')
-    },
+    // _calendarMomentChanged : function(evt) {
+    //   this._tempMomentChanged('calendar');
+    //   if(this.fillContainer){ this._updateSelectedDate(evt.detail.value); }
+    // },
     /**
      */
-    _calendarMomentChanged : function(evt) {
-      this._tempMomentChanged('calendar');
-      if(this.fillContainer){ this._updateSelectedDate(evt.detail.value); }
-    },
-    /**
-     */
-    _fieldMomentChanged: function (evt) {
-      if (evt.detail.value === null) { this._updateSelectedDate(evt.detail.value); }
-      this._tempMomentChanged('field');
-    },
+    // _fieldMomentChanged: function (evt) {
+    //   if (evt.detail.value === null) { this._updateSelectedDate(evt.detail.value); }
+    //   this._tempMomentChanged('field');
+    // },
     /**
      */
     _validateCalendarMoment: function() {
@@ -392,9 +397,6 @@ Custom property | Description
     _getVerticalOffset: function(fillContainer) {
       return !fillContainer ? 20 : 0;
     },
-    _getPositionTarget: function(fillContainer, fitIntoElement) {
-      return fillContainer ? fitIntoElement : this.$.field;
-    },
     getElement: function(elStr) {
       return this.shadowRoot.querySelector(elStr)
     },
@@ -416,20 +418,37 @@ Custom property | Description
       }
       return false;
     },
+    /**
+     * If the window is smaller than the `collapseAt` value
+     * set panel to fill the whole window
+     * If the window is larger than the `collapseAt` value
+     * reset `_fillContainer` & `_fitIntoElement` to original
+     * values
+     */
     _handleBelowCollapseSizeChanged(newVal, oldVal) {
       if (newVal) {
         this._fillContainer = true;
+        this._fitIntoElement = window;
       }
-      if (!newVal && !this.fillContainer) {
-        this._fillContainer = false;
+      if (!newVal) {
+        this._fillContainer = this.fillContainer;
+        this._fitIntoElement = this.fitIntoElement;
       }
     },
     /**
      * Sync external fillConatiner with internal _fillConatiner
      */
-    _handleFillContainer(newVal, oldVal) {
+    _syncFillContainer(newVal, oldVal) {
       newVal ? this._fillContainer = true : this._fillContainer = false;
     },
+    /**
+     * Sync external fitIntoElement with internal _fitIntoElement
+     */
+    _syncFitIntoElement(newVal, oldVal) {
+      this._fitIntoElement = newVal;
+    },
+    /**
+     */
     _returnField: function() {
       return this.$.field;
     }

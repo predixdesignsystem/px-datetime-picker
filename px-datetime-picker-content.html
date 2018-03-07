@@ -1,4 +1,4 @@
-<link rel="import" href="css/px-datetime-picker-styles.html"/>
+<link rel="import" href="css/px-datetime-picker-content-styles.html"/>
 <link rel="import" href="../px-datetime-field/px-datetime-field.html"/>
 <link rel="import" href="../px-calendar-picker/px-calendar-picker.html"/>
 <link rel="import" href="../px-datetime-common/px-datetime-behavior.html"/>
@@ -10,7 +10,7 @@
 
 <dom-module id="px-datetime-picker-content">
   <template>
-    <style include="px-datetime-picker-styles"></style>
+    <style include="px-datetime-picker-content-styles"></style>
 
     <iron-dropdown
       id="dropdown"
@@ -18,18 +18,18 @@
       opened="{{opened}}"
       vertical-align="top"
       horizontal-align="left"
-      no-overlap="[[!_fillContainer]]"
-      dynamic-align="[[!_fillContainer]]"
-      vertical-offset="[[_getVerticalOffset(_fillContainer)]]"
-      position-target="[[_getPositionTarget(_fillContainer, fitIntoElement)]]"
+      no-overlap="[[!fillContainer]]"
+      dynamic-align="[[!fillContainer]]"
+      vertical-offset="[[_getVerticalOffset(fillContainer)]]"
+      position-target="[[_getPositionTarget(fillContainer, fitIntoElement)]]"
       fit-into="[[fitIntoElement]]">
       <div slot="dropdown-content" class="dt-container__box shadow-temporary">
-        <template is="dom-if" if="{{_fillContainer}}">
-          <div class="dt-p__header shadow-notification">
+        <template is="dom-if" if="{{fillContainer}}">
+          <div class="dt-p__header shadow-navigation">
             <p class="dt-p__selected-date">{{selectedDate}}</p>
           </div>
         </template>
-        <template id="timeTemplate" is="dom-if" if="{{_handleField(hideTime, _fillContainer)}}">
+        <template id="timeTemplate" is="dom-if" if="{{_handleField(hideTime, fillContainer)}}">
           <div>
             <px-datetime-field
               id="time"
@@ -72,7 +72,7 @@
             <px-datetime-buttons
               class="dt-p-buttons"
               is-submit-button-valid
-              space-between="[[_fillContainer]]"
+              space-between="[[fillContainer]]"
               resources="[[resources]]"
               language="[[language]]"
               formats="[[formats]]">
@@ -146,6 +146,10 @@
       fitIntoElement: {
         type: Object
       },
+      selectedDate: {
+        type: String,
+        value: "Select Date"
+      },
       /**
        * List of key/values to be included for translating this component
        */
@@ -204,7 +208,7 @@
       this.$.dropdown.close();
     },
 
-    _tempMomentChanged: function() {
+    _tempMomentChanged: function(evt) {
       //this debounce is critical for Polymer 1. We are just putting this
       //call on top of the stack because of how the binding flows:
       //change in calendar => binding updates field moment => field
@@ -215,14 +219,19 @@
       //sequential.
       //In Polymer 2 in this scenario only calendar will fire a change
       //event so no problems
-      this.debounce('_tempMomentChanged', function() {
+      this.debounce('_tempMomentChanged', function(evt) {
+        if(this.fillContainer){ this._updateSelectedDate(this.$.calendar.fromMoment);}
         //time changed in calendar. Only process if no button,
         if(!this.showButtons) {
           this._validateCalendarMoment();
         }
       }, 0);
     },
-
+    /**
+     */
+     _updateSelectedDate : function(moment) {
+      moment === null ? this.selectedDate = "Select Date" : this.selectedDate = moment.format('YYYY/MM/DD')
+    },
     /**
      */
     _validateCalendarMoment: function() {
