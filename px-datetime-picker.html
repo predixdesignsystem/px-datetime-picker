@@ -111,8 +111,7 @@ Custom property | Description
      */
     properties: {
       /**
-       *
-       * Can be set to show the timezone in the field. Can have 2 values:
+       * Can be set to show the timezone in the field. values:
        *  'dropdown': shows the time zone as a dropdown which the user can use to
        * select a different time zone. Only contains a subset of all time zones
        *  'extendedDropdown': shows the time zone as a dropdown which the user can use to
@@ -125,8 +124,7 @@ Custom property | Description
         value: ''
       },
       /**
-       * Whether this date picker should allow to pick time as well.
-       *
+       * Doesn't display the time in the field and panel(if applicable)
        */
       hideTime: {
         type: Boolean,
@@ -134,7 +132,6 @@ Custom property | Description
       },
       /**
        * Moment format used for the date
-       *
        */
       dateFormat: {
         type: String,
@@ -142,7 +139,6 @@ Custom property | Description
       },
       /**
        * Moment format used for the time
-       *
        */
       timeFormat: {
         type: String,
@@ -157,7 +153,7 @@ Custom property | Description
         value: false
       },
       /**
-       * Reflects if datetime-picker container is open/visible.
+       * Reflects if datetime-picker container is visible.
        */
       opened: {
         type: Boolean,
@@ -165,11 +161,6 @@ Custom property | Description
         reflectToAttribute: true
       },
       /**
-       * false : the datetime-picker contents will open in a panel
-       * if the screen size is greater than the collapseAt value.
-       * true : the datetime-picker contents will fill the window
-       * or an element defined by the `fitIntoElement`. It fills
-       * regardless of the collapseAt value.
        * Reflects if the field is valid.
        */
       fieldIsValid: {
@@ -186,8 +177,8 @@ Custom property | Description
         observer: '_syncFillContainer'
       },
       /**
-       * used to toggle fillContainer from iron-media-query
-       * without separate variable fillContainer would never be
+       * Used to toggle fillContainer from iron-media-query.
+       * Without a separate variable fillContainer would never be
        * true with a screen size larger then the value of collapseAt
        */
       _fillContainer: {
@@ -205,8 +196,8 @@ Custom property | Description
         observer: '_syncFitIntoElement'
       },
       /**
-       * used to toggle `fitIntoElement` from iron-media-query
-       * without separate variable each time the screen was
+       * Used to toggle `fitIntoElement` from iron-media-query.
+       * Without separate variable each time the screen was
        * smaller than collpasAt the `fitIntoElement` would
        * get over written.
        */
@@ -215,8 +206,8 @@ Custom property | Description
       },
       /**
        * The width below which the datetime picker will collapse into a mobile
-       * friendly menu that slides up from the bottom of the page. Use a number
-       * (e.g. `450`) which will be converted to a pixel value (e.g. '450px').
+       * friendly view. Use a number (e.g. `450`) which will be converted to a
+       * pixel value (e.g. '450px').
        *
        * If no value is provided, the datetime picker will not collapse
        * automatically. The collapsed attribute can also be used to manually
@@ -238,7 +229,7 @@ Custom property | Description
        */
       resources: {
         type: Object,
-        value: function() {
+        value: function () {
           return {
             'en': {
               'Today': 'Today'
@@ -247,24 +238,23 @@ Custom property | Description
         }
       },
       /**
-      * set a default for localizing
-      */
-     language: {
-       type: String,
-       value: 'en'
-     },
-     /**
-      * Use the key for localization if value for  language is missing. Should
-      * always be true for  our components
-      */
-     useKeyIfMissing: {
-       type: Boolean,
-       value: true
-     },
-
+       * set a default for localizing
+       */
+      language: {
+        type: String,
+        value: 'en'
+      },
       /**
-      * Specifies if the dropdown content should get hoisted to a container in order to escape its current stacking context
-      */
+       * Use the key for localization if value for  language is missing. Should
+       * always be true for  our components
+       */
+      useKeyIfMissing: {
+        type: Boolean,
+        value: true
+      },
+      /**
+       * Specifies if the dropdown content should get hoisted to a container in order to escape its current stacking context
+       */
       hoist: {
         type: Boolean,
         value: false
@@ -282,15 +272,14 @@ Custom property | Description
       'esc' : '_onEsc',
       'enter': '_onEnter'
     },
-
+    /**
+     * we don't need to listen to the time field from the calendar
+     * since it only updates the temp moment but should never trigger an
+     * actual validation
+     */
     attached: function() {
-      //we don't need to listen to the time field from the calendar
-      //since it only updates the temp moment but should never trigger an
-      //actual validation
       this.$.field.addEventListener('moment-obj-changed', this._tempMomentChanged.bind(this, 'field'));
       this.$.content.addEventListener('temp-moment-obj-changed', this._tempMomentChanged.bind(this, 'content'));
-
-
     },
     /*
      * Propagate focus from the host to px-datetime-field
@@ -299,12 +288,15 @@ Custom property | Description
       this.$.field.focus();
     },
     /**
+     * rolls back temp moment to the momentObj
+     * closes panel
      */
     _onEsc: function(evt) {
       this._rollbackTempMoment();
       this.$.content._close();
     },
     /**
+     * runs validation
      */
     _onEnter: function(evt) {
       this._validateCalendarMoment();
@@ -323,7 +315,12 @@ Custom property | Description
         }
       }
     },
-
+    /**
+     * Ran when the momentObjs for field or content have been updated
+     * If it is from the field, then apply the momentObj.
+     * If it is from the content and we have no buttons, then apply the momentObj.
+     * Else, wait for button events.
+     */
     _tempMomentChanged: function(origin) {
       //this debounce is critical for Polymer 1. We are just putting this
       //call on top of the stack because of how the binding flows:
@@ -336,35 +333,19 @@ Custom property | Description
       //In Polymer 2 in this scenario only calendar will fire a change
       //event so no problems
       this.debounce('_tempMomentChanged', function() {
-        // If it is from the field, field has validated and want to update.
-        // If it is from the content and we have no buttons, content has validated and we want to update
-        // Else, wait for button events.
         if(origin === 'field') {
-          if (evt.detail.value === null) { this._updateSelectedDate(evt.detail.value); }
           this._applyTempMoment();
         } else if (origin === 'content' && !this.showButtons) {
           this._applyTempMoment();
         }
       }, 0);
     },
-
     /**
-     */
-    // _calendarMomentChanged : function(evt) {
-    //   this._tempMomentChanged('calendar');
-    //   if(this.fillContainer){ this._updateSelectedDate(evt.detail.value); }
-    // },
-    /**
-     */
-    // _fieldMomentChanged: function (evt) {
-    //   if (evt.detail.value === null) { this._updateSelectedDate(evt.detail.value); }
-    //   this._tempMomentChanged('field');
-    // },
-    /**
+     * apply temp moment if the dropdown is opened and
+     * the field is valid
      */
     _validateCalendarMoment: function() {
       if(this.opened) {
-        //apply: accept if valid
         if(this.$.field.isValid) {
           this._applyTempMoment();
           this.$.content._close();
@@ -373,10 +354,9 @@ Custom property | Description
         }
       }
     },
-    _closeIconClicked: function(evt) {
-      this._buttonClicked(evt);
-    },
     /**
+     * submit: validate values
+     * cancel: rolls back temp moment to the momentObj &closes panel
      */
     _buttonClicked: function(evt) {
       if(evt.detail.action) {
@@ -387,6 +367,7 @@ Custom property | Description
       }
     },
     /**
+     * opens content
      */
     _iconClicked: function(evt) {
       if(evt.detail.dateOrTime === "Date") {
@@ -394,13 +375,12 @@ Custom property | Description
       }
     },
 
-    _getVerticalOffset: function(fillContainer) {
-      return !fillContainer ? 20 : 0;
-    },
-    getElement: function(elStr) {
-      return this.shadowRoot.querySelector(elStr)
-    },
-
+    // ********************************************************************** //
+    // Collapse functions
+    // ********************************************************************** //
+    /**
+     * return the collapseAt value with px after it
+     */
     _getCollapseQuery(collapseAt) {
       if (typeof collapseAt === 'number') {
         return collapseAt + 'px';
@@ -409,6 +389,9 @@ Custom property | Description
         return collapseAt;
       }
     },
+    /**
+     * Double checks that the collapseAt value is valid
+     */
     _collapseQueryIsValid(query) {
       if (typeof query === 'number') {
         return true;
@@ -421,9 +404,10 @@ Custom property | Description
     /**
      * If the window is smaller than the `collapseAt` value
      * set panel to fill the whole window
+     *
      * If the window is larger than the `collapseAt` value
-     * reset `_fillContainer` & `_fitIntoElement` to original
-     * values
+     * reset `_fillContainer` & `_fitIntoElement` to their
+     * original values
      */
     _handleBelowCollapseSizeChanged(newVal, oldVal) {
       if (newVal) {
@@ -435,6 +419,10 @@ Custom property | Description
         this._fitIntoElement = this.fitIntoElement;
       }
     },
+
+    // ********************************************************************** //
+    // iron-dropdown functions
+    // ********************************************************************** //
     /**
      * Sync external fillConatiner with internal _fillConatiner
      */
@@ -443,11 +431,16 @@ Custom property | Description
     },
     /**
      * Sync external fitIntoElement with internal _fitIntoElement
+     * make sure `_fitIntoElement` isn't over written if
+     * `_belowCollapseSize` is true
      */
     _syncFitIntoElement(newVal, oldVal) {
-      this._fitIntoElement = newVal;
+      if(!this._belowCollapseSize){
+        this._fitIntoElement = newVal;
+      }
     },
     /**
+     * return field node
      */
     _returnField: function() {
       return this.$.field;

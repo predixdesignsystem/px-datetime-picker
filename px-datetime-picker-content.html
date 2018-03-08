@@ -34,12 +34,12 @@
             <px-datetime-field
               id="time"
               class="dt-p-time"
-              moment-obj="{{_tempMomentObj}}"
+              moment-obj="{{tempMomentObj}}"
               time-format="{{timeFormat}}"
               hide-icon
               hide-date
               time-zone="[[timeZone]]"
-              is-valid="{{_toTimeIsValid}}"
+              is-valid="{{fieldIsValid}}"
               min-date="[[minDate]]"
               max-date="[[maxDate]]"
               resources="[[resources]]"
@@ -52,8 +52,8 @@
           <px-calendar-picker
             id="calendar"
             class="dt-p-calendar"
-            from-moment="{{_tempMomentObj}}"
-            base-date="[[_tempMomentObj]]"
+            from-moment="{{tempMomentObj}}"
+            base-date="[[tempMomentObj]]"
             day-week-start-index="[[dayWeekStartIndex]]"
             time-zone="[[timeZone]]"
             block-future-dates="{{blockFutureDates}}"
@@ -102,21 +102,22 @@
      */
     properties: {
       /**
-       * Whether this date picker should allow to pick time as well.
-       *
+       * Determines if the time will appear in the dropdown-content.
+       * set in datetime-picker
        */
       hideTime: {
         type: Boolean
       },
       /**
-       * Moment format used for the time
-       *
+       * Pass through property
+       * set in datetime-picker
        */
       timeFormat: {
         type: String
       },
       /**
        * Reflects if datetime-picker container is open/visible.
+       * set in datetime-picker
        */
       opened: {
         type: Boolean,
@@ -124,69 +125,83 @@
         notify: true
       },
       /**
-       * Reflects if the field is valid.
+       * Reflects if the field is valid from datetime-picker
+       * set in datetime-picker
        */
       fieldIsValid: {
         type: Boolean
       },
       /**
-       * false : the dt-picker contents will open in a panel.
-       * true : the dt-picker contents will fill the window
-       * or an element defined by the `fitIntoElement`.
+       * false : the dropdown-content will open in a small pop over
+       * true : the dropdown-content will fill the window or
+       * an element defined by the `fitIntoElement`.
+       * set in datetime-picker
        */
       fillContainer: {
         type: Boolean,
         reflectToAttribute: true
       },
       /**
-       * The element that the dt-picker contents will fully expand into
-       * when the dt-picker is open.
+       * The element that the dropdown-content will fully expand into when opened
        * `fillContainer` must be true in order for this property to work
+       * set in datetime-picker
        */
       fitIntoElement: {
         type: Object
       },
+      /**
+       * Displays the calendar's selected date in the dropdown-content
+       * when `fillContainer` is true
+       */
       selectedDate: {
         type: String,
         value: "Select Date"
       },
       /**
        * List of key/values to be included for translating this component
+       * set in datetime-picker
        */
       resources: {
         type: Object,
       },
       /**
-      * set a default for localizing
-      */
-     language: {
-       type: String
-     },
-     /**
-      * Use the key for localization if value for language is missing. Should
-      * always be true for  our components
-      *
-      * Value isn't passed down so needs to be set
-      */
-     useKeyIfMissing: {
-       type: Boolean,
-       value: true
-     },
-     tempMomentObj: {
-       type: Object,
-       notify: true
-     },
-
-     fieldElem: HTMLElement
+       * set a default for localizing
+       * set in datetime-picker
+       */
+      language: {
+        type: String
+      },
+      /**
+       * Use the key for localization if value for language is missing. Should
+       * always be true for  our components
+       */
+      useKeyIfMissing: {
+        type: Boolean,
+        value: true
+      },
+      /**
+       * temporary moment object
+       * Pass through property
+       * set in datetime-picker and by `_todayClicked`
+       */
+      tempMomentObj: {
+        type: Object,
+        notify: true
+      },
+      /**
+       * set in datetime-picker
+       */
+      fieldElem: HTMLElement
     },
 
+    /*
+     * we don't need to listen to the time field from the calendar
+     * since it only updates the temp moment but should never trigger an
+     * actual validation
+     */
     attached: function() {
-      //we don't need to listen to the time field from the calendar
-      //since it only updates the temp moment but should never trigger an
-      //actual validation
       this.$.calendar.addEventListener('from-moment-changed', this._tempMomentChanged.bind(this));
     },
-
     /*
      * 'Today' button/text has been clicked
      */
@@ -197,53 +212,59 @@
     },
     /**
      * Opens the calendar
+     * called in datetime-picker
      */
     _open: function() {
       this.$.dropdown.open();
     },
     /**
      * Closes the calendar
+     * called in datetime-picker
      */
     _close: function() {
       this.$.dropdown.close();
     },
-
+    /**
+     * Closes the calendar
+     * this debounce is critical for Polymer 1. We are just putting this
+     * call on top of the stack because of how the binding flows:
+     * change in calendar => binding updates field moment => field
+     * moment fires change event => binding done => calendar fires
+     * change event.
+     * we are therefore interested in the latest update, hence the
+     * debounce. no need for an actual timing since this will all be
+     * sequential.
+     *
+     * In Polymer 2 in this scenario only calendar will fire a change
+     * event so no problems
+     */
     _tempMomentChanged: function(evt) {
-      //this debounce is critical for Polymer 1. We are just putting this
-      //call on top of the stack because of how the binding flows:
-      //change in calendar => binding updates field moment => field
-      //moment fires change event => binding done => calendar fires
-      //change event.
-      //we are therefore interested in the latest update, hence the
-      //debounce. no need for an actual timing since this will all be
-      //sequential.
-      //In Polymer 2 in this scenario only calendar will fire a change
-      //event so no problems
       this.debounce('_tempMomentChanged', function(evt) {
         if(this.fillContainer){ this._updateSelectedDate(this.$.calendar.fromMoment);}
-        //time changed in calendar. Only process if no button,
+        //Only process if no button,
         if(!this.showButtons) {
           this._validateCalendarMoment();
         }
       }, 0);
     },
     /**
+     * sync `selcetedDate` with calendar's moment obj
      */
      _updateSelectedDate : function(moment) {
       moment === null ? this.selectedDate = "Select Date" : this.selectedDate = moment.format('YYYY/MM/DD')
     },
     /**
+     * apply temp moment if the dropdown is opened and
+     * the field is valid
      */
     _validateCalendarMoment: function() {
       if(this.opened) {
-        //apply: accept if valid
         if(this.fieldIsValid) {
           this._applyTempMoment();
           this._close();
         }
       }
     },
-
     /**
      * Determine if field should be displayed in container
      * The dt-field will only appear in the container if fillContainer is true
@@ -255,15 +276,11 @@
     // ********************************************************************** //
     // Calculate iron-dropdown properties
     // ********************************************************************** //
-
     _getVerticalOffset: function(fillContainer) {
       return !fillContainer ? 20 : 0;
     },
     _getPositionTarget: function(fillContainer, fitIntoElement) {
       return fillContainer ? fitIntoElement : this.fieldElem;
-    },
-    getElement: function(elStr) {
-      return this.shadowRoot.querySelector(elStr)
     }
   });
 </script>
