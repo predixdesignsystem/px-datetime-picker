@@ -208,7 +208,6 @@
     _todayClicked: function(evt) {
       var today = this._preserveTime(this.tempMomentObj, Px.moment.tz(Px.moment(), this.timeZone));
       this.set('tempMomentObj', today);
-      this._tempMomentChanged('calendar');
     },
     /**
      * Opens the calendar
@@ -239,31 +238,15 @@
      * event so no problems
      */
     _tempMomentChanged: function(evt) {
-      this.debounce('_tempMomentChanged', function(evt) {
-        if(this.fillContainer){ this._updateSelectedDate(this.$.calendar.fromMoment);}
-        //Only process if no button,
-        if(!this.showButtons) {
-          this._validateCalendarMoment();
-        }
-      }, 0);
+      if(this.fillContainer){
+        this._updateSelectedDate(this.$.calendar.fromMoment);
+      }
     },
     /**
      * sync `selcetedDate` with calendar's moment obj
      */
-     _updateSelectedDate : function(moment) {
+    _updateSelectedDate : function(moment) {
       moment === null ? this.selectedDate = "Select Date" : this.selectedDate = moment.format('YYYY/MM/DD')
-    },
-    /**
-     * apply temp moment if the dropdown is opened and
-     * the field is valid
-     */
-    _validateCalendarMoment: function() {
-      if(this.opened) {
-        if(this.fieldIsValid) {
-          this._applyTempMoment();
-          this._close();
-        }
-      }
     },
     /**
      * Determine if field should be displayed in container
