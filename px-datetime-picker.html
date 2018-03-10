@@ -158,7 +158,8 @@ Custom property | Description
       opened: {
         type: Boolean,
         value: false,
-        reflectToAttribute: true
+        reflectToAttribute: true,
+        observer: '_processClose'
       },
       /**
        * Reflects if the field is valid.
@@ -267,6 +268,7 @@ Custom property | Description
     },
     /**
      * Key bindings for iron-a11y-keys-behavior
+     * @private
      */
     keyBindings: {
       'esc' : '_onEsc',
@@ -337,6 +339,7 @@ Custom property | Description
           this._applyTempMoment();
         } else if (origin === 'content' && !this.showButtons) {
           this._applyTempMoment();
+          this.$.content._close();
         }
       }, 0);
     },
@@ -372,6 +375,16 @@ Custom property | Description
     _iconClicked: function(evt) {
       if(evt.detail.dateOrTime === "Date") {
         this.$.content._open();
+      }
+    },
+    /**
+     * If opened is false and showButtons true
+     * then cancel selection
+     */
+    _processClose: function(newVal,oldVal) {
+      if(oldVal === undefined || newVal) { return; }
+      if(newVal === false && this.showButtons) {
+        this._rollbackTempMoment();
       }
     },
 

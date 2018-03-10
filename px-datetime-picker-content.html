@@ -1,10 +1,9 @@
 <link rel="import" href="css/px-datetime-picker-content-styles.html"/>
 <link rel="import" href="../px-datetime-field/px-datetime-field.html"/>
 <link rel="import" href="../px-calendar-picker/px-calendar-picker.html"/>
-<link rel="import" href="../px-datetime-common/px-datetime-behavior.html"/>
+<link rel="import" href="../px-datetime-common/px-datetime-shared-behavior.html"/>
 <link rel="import" href="../px-datetime-common/px-datetime-buttons.html"/>
 <link rel="import" href="../px-datetime-common/px-datetime-button-behavior.html"/>
-<link rel="import" href="../app-localize-behavior/app-localize-behavior.html" />
 <link rel="import" href="../iron-dropdown/iron-dropdown.html">
 
 
@@ -68,7 +67,7 @@
           <button class="actionable caps dt-p-today" on-tap="_todayClicked">[[localize('Today')]]</button>
         </div>
         <div class="dt-p-time-buttons--wrapper">
-          <template is="dom-if" if="{{showButtons}}">
+          <template is="dom-if" if="{{_handleShowButtons(showButtons, fillContainer)}}">
             <px-datetime-buttons
               class="dt-p-buttons"
               is-submit-button-valid
@@ -90,7 +89,7 @@
 
     is: 'px-datetime-picker-content',
     behaviors:[
-      PxDatetimeBehavior.TempMoment,
+      PxDatetimeBehavior.Shared,
       PxDatetimeBehavior.Buttons
     ],
 
@@ -254,6 +253,12 @@
      */
     _handleField: function(hideTime, fillContainer){
       return (!hideTime && fillContainer);
+    },
+    /**
+     * If fillContainter is true show buttons
+     */
+    _handleShowButtons: function(showButtons, fillContainer){
+      return fillContainer ? true : showButtons;
     },
 
     // ********************************************************************** //
