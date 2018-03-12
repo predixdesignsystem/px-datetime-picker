@@ -42,6 +42,29 @@ describe('px-datetime-picker no buttons', function () {
         setTimeout(callback, 50);
       },
       ()=> {
+        expect(panelEl.offsetWidth, 'panel width after open').to.be.within(450, 550);
+        done();
+      }
+    );
+  });
+
+  it('collapseAt set to 0 it will open in a panel', function (done) {
+    var panelEl = pickerEl.$.content.$.dropdown;
+    expect(panelEl.offsetWidth, 'panel width before open').to.equal(0);
+    expect(pickerEl.opened, 'panel is open').to.be.false;
+    pickerEl.collapseAt = 0;
+
+    pickerEl.opened = true;
+
+    panelEl = pickerEl.$.content.$.dropdown;
+    async.until(
+      ()=> {
+        return panelEl.offsetWidth > 0;
+      },
+      (callback)=> {
+        setTimeout(callback, 50);
+      },
+      ()=> {
         expect(panelEl.offsetWidth, 'panel width after open').to.be.within(230, 270);
         done();
       }
@@ -354,6 +377,8 @@ describe('Full Container', function () {
     dropdownContentEl = Polymer.dom(pickerEl.$.content.root).querySelector('.dt-container__box');
     fitEl = Polymer.dom(templateEl.root).querySelector('#fit');
     pickerEl.fitIntoElement = fitEl;
+    pickerEl.fillContainer = true;
+    pickerEl.collapseAt = 0;
     pickerEl.momentObj = moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone);
     setTimeout(function() {
       done();
@@ -380,6 +405,7 @@ describe('Full Container', function () {
         setTimeout(callback, 50);
       },
       ()=> {
+        debugger
         expect(dropdownContentEl.offsetWidth, 'panel width after open').to.be.within(330, 355);
         expect(dropdownContentEl.offsetHeight, 'panel height after open').to.be.within(230, 255);
         done();
