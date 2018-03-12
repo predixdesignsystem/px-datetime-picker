@@ -185,21 +185,13 @@
        */
       tempMomentObj: {
         type: Object,
-        notify: true
+        notify: true,
+        observer: '_updateSelectedDate'
       },
       /**
        * set in datetime-picker
        */
       fieldElem: HTMLElement
-    },
-
-    /*
-     * we don't need to listen to the time field from the calendar
-     * since it only updates the temp moment but should never trigger an
-     * actual validation
-     */
-    attached: function() {
-      this.$.calendar.addEventListener('from-moment-changed', this._tempMomentChanged.bind(this));
     },
     /*
      * 'Today' button/text has been clicked
@@ -223,29 +215,12 @@
       this.$.dropdown.close();
     },
     /**
-     * Closes the calendar
-     * this debounce is critical for Polymer 1. We are just putting this
-     * call on top of the stack because of how the binding flows:
-     * change in calendar => binding updates field moment => field
-     * moment fires change event => binding done => calendar fires
-     * change event.
-     * we are therefore interested in the latest update, hence the
-     * debounce. no need for an actual timing since this will all be
-     * sequential.
-     *
-     * In Polymer 2 in this scenario only calendar will fire a change
-     * event so no problems
-     */
-    _tempMomentChanged: function(evt) {
-      if(this.fillContainer){
-        this._updateSelectedDate(this.$.calendar.fromMoment);
-      }
-    },
-    /**
      * sync `selcetedDate` with calendar's moment obj
      */
     _updateSelectedDate : function(moment) {
-      moment === null ? this.selectedDate = "Select Date" : this.selectedDate = moment.format('YYYY/MM/DD')
+      if(this.fillContainer){
+        moment === null ? this.selectedDate = "Select Date" : this.selectedDate = moment.format('YYYY/MM/DD')
+      }
     },
     /**
      * Determine if field should be displayed in container
