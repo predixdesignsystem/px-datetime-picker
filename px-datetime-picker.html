@@ -211,8 +211,7 @@ Custom property | Description
        * pixel value (e.g. '450px').
        *
        * If no value is provided, the datetime picker will not collapse
-       * automatically. The collapsed attribute can also be used to manually
-       * collapse and un-collapse the datetime picker.
+       * automatically.
        */
       collapseAt: {
         type: Number
@@ -418,6 +417,10 @@ Custom property | Description
         return true;
       }
       if (typeof query === 'string' && query.slice(-2) === 'px' && !isNaN(parseInt(query))) {
+        return true;
+      }
+      if (query === null) {
+        this.set('collapseAt', 0);
         return true;
       }
       return false;

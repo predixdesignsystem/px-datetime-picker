@@ -7,7 +7,6 @@ describe('px-datetime-picker no buttons', function () {
 
   beforeEach(function (done) {
     pickerEl = fixture('datetime-picker');
-    pickerEl.momentObj = moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone);
 
     flush(()=>{
       setTimeout(function() {
@@ -42,30 +41,31 @@ describe('px-datetime-picker no buttons', function () {
         setTimeout(callback, 50);
       },
       ()=> {
-        expect(panelEl.offsetWidth, 'panel width after open').to.be.within(450, 550);
+        expect(panelEl.offsetWidth, 'panel width after open').to.be.within(230, 270);
         done();
       }
     );
   });
 
-  it('collapseAt set to 0 it will open in a panel', function (done) {
+  it('collapseAt set to 720 it will open full screen', function (done) {
     var panelEl = pickerEl.$.content.$.dropdown;
+    pickerEl.collapseAt = 720;
     expect(panelEl.offsetWidth, 'panel width before open').to.equal(0);
     expect(pickerEl.opened, 'panel is open').to.be.false;
-    pickerEl.collapseAt = 0;
-
     pickerEl.opened = true;
+
 
     panelEl = pickerEl.$.content.$.dropdown;
     async.until(
       ()=> {
+        console.log(pickerEl.opened)
         return panelEl.offsetWidth > 0;
       },
       (callback)=> {
         setTimeout(callback, 50);
       },
       ()=> {
-        expect(panelEl.offsetWidth, 'panel width after open').to.be.within(230, 270);
+        expect(panelEl.offsetWidth, 'panel width after open').to.be.within(450, 550);
         done();
       }
     );
@@ -119,13 +119,26 @@ describe('px-datetime-picker no buttons', function () {
 
     });
   });
+});
+
+describe('px-datetime-picker no buttons with moment set', function () {
+  var pickerEl;
+
+  beforeEach(function (done) {
+    pickerEl = fixture('datetime-picker');
+    pickerEl.momentObj = moment("2018-01-05T00:30:00.000Z").tz(pickerEl.timeZone);
+
+    flush(()=>{
+      setTimeout(function() {
+        done();
+      }, 200);
+    });
+  });
 
   it('Selecting a day will close panel and apply the value', function (done) {
-
     pickerEl.opened = true;
 
     flush( () => {
-
       expect(pickerEl.opened, 'panel is visible after open').to.be.true;
       expect(pickerEl.momentObj.toISOString(), 'dateTime value before selection').to.equal("2018-01-05T00:30:00.000Z");
 
@@ -146,7 +159,6 @@ describe('px-datetime-picker no buttons', function () {
 
 
   it('Selecting today will close panel and apply the value', function (done) {
-
     pickerEl.opened = true;
 
     flush( () => {
