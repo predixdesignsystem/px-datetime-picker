@@ -215,8 +215,16 @@ Custom property | Description
        * collapse and un-collapse the datetime picker.
        */
       collapseAt: {
-        type: Number,
-        value: 720
+        type: Number
+      },
+      /**
+       * True if all items are collapsed.
+       */
+      collapsed: {
+        type: Boolean,
+        value: false,
+        notify: true,
+        readOnly: true
       },
       /**
        * Output of iron-media-query
@@ -426,10 +434,12 @@ Custom property | Description
       if (newVal) {
         this._fillContainer = true;
         this._fitIntoElement = window;
+        this._setCollapsed(true);
       }
       if (!newVal) {
         this._fillContainer = this.fillContainer;
         this._fitIntoElement = this.fitIntoElement;
+        this._setCollapsed(false);
       }
     },
 
