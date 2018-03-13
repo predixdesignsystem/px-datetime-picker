@@ -33,16 +33,12 @@ Predix branding rules go in px-datetime-picker-predix.scss, not in this file.
 @import "px-shadows-design/_objects.shadows.scss";
 
 //Component
-// px-datetime-field {
-//   display: inline-block;
-// }
 
 /*************************************
 * Panel
 *************************************/
 .dt-p-today {
   height: $inuit-base-spacing-unit--huge;
-  text-align: center;
   width: 100%;
 }
 
@@ -56,14 +52,13 @@ Predix branding rules go in px-datetime-picker-predix.scss, not in this file.
 .dt-p-buttons {
   display: flex;
   justify-content: flex-end;
-  padding-top: $inuit-base-spacing-unit--small;
+  padding-top: $inuit-base-spacing-unit--large;
 }
 
 
 /*************************************
 * Fill Container
 *************************************/
-
 :host([fill-container]) .dt-container__box {
   padding: 0;
   height: 100vh;
@@ -75,18 +70,13 @@ Predix branding rules go in px-datetime-picker-predix.scss, not in this file.
   width:100%;
 }
 
-.dt-p__close-btn {
-  stroke: var(--px-datetime-picker-panel-close-icon-color, gray);
-  position: absolute; //needs to be absolute to correctly position selected date
-}
-
 .dt-p__selected-date {
   text-align: center;
 }
 
 /* Only exists in fill-container */
 .dt-p-time {
-  --px-datetime-entry-font-size: 30px;
+  --px-datetime-entry-font-size: calculateRem(30px);
   --px-datetime-field-height: calculateRem(40px);
   --px-btn-height: 1em;
   display: flex;
@@ -108,10 +98,6 @@ Predix branding rules go in px-datetime-picker-predix.scss, not in this file.
   display: block;
   max-width: 500px;
 }
-
-// :host([fill-container]) .dt-p-time-buttons--wrapper{
-  // border-top: solid 1px var(--px-datetime-picker-fill-container-btn-border-color, lightgray);;
-// }
 
 :host([fill-container]) .dt-p-buttons {
   background-color: var(--px-datetime-picker-fill-container-btn-background-color, #EBEFF2);

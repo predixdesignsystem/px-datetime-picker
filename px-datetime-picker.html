@@ -44,14 +44,14 @@ Custom property | Description
       id="field"
       slot="dropdown-trigger"
       moment-obj="{{_tempMomentObj}}"
-      date-format="{{dateFormat}}"
-      time-format="{{timeFormat}}"
-      hide-time="{{hideTime}}"
+      date-format="[[dateFormat]]"
+      time-format="[[timeFormat]]"
+      hide-time="[[hideTime]]"
       time-zone="{{timeZone}}"
-      show-time-zone="{{showTimeZone}}"
+      show-time-zone="[[showTimeZone]]"
       is-selected="[[opened]]"
-      block-future-dates="{{blockFutureDates}}"
-      block-past-dates="{{blockPastDates}}"
+      block-future-dates="[[blockFutureDates]]"
+      block-past-dates="[[blockPastDates]]"
       date-min="[[minDate]]"
       date-max="[[maxDate]]"
       required="[[required]]"
@@ -70,14 +70,14 @@ Custom property | Description
         id="content"
         opened="{{opened}}"
         temp-moment-obj="{{_tempMomentObj}}"
-        time-format="{{timeFormat}}"
+        time-format="[[timeFormat]]"
         hide-time="[[hideTime]]"
         time-zone="[[timeZone]]"
         show-buttons="[[showButtons]]"
         base-date="[[_tempMomentObj]]"
         day-week-start-index="[[dayWeekStartIndex]]"
-        block-future-dates="{{blockFutureDates}}"
-        block-past-dates="{{blockPastDates}}"
+        block-future-dates="[[blockFutureDates]]"
+        block-past-dates="[[blockPastDates]]"
         min-date="[[minDate]]"
         max-date="[[maxDate]]"
         field-is-valid="[[fieldIsValid]]"
@@ -217,7 +217,7 @@ Custom property | Description
         type: Number
       },
       /**
-       * True if all items are collapsed.
+       * True if screen size is smaller than the `collapseAt` value
        */
       collapsed: {
         type: Boolean,
@@ -246,7 +246,7 @@ Custom property | Description
         }
       },
       /**
-       * set a default for localizing
+       * Set a default for localizing
        */
       language: {
         type: String,
@@ -282,8 +282,8 @@ Custom property | Description
       'enter': '_onEnter'
     },
     /**
-     * we don't need to listen to the time field from the calendar
-     * since it only updates the temp moment but should never trigger an
+     * We don't need to listen to the time field from the calendar
+     * sense it only updates the temp moment but should never trigger an
      * actual validation
      */
     attached: function() {
@@ -297,15 +297,15 @@ Custom property | Description
       this.$.field.focus();
     },
     /**
-     * rolls back temp moment to the momentObj
-     * closes panel
+     * Rolls back temp moment to the momentObj.
+     * Closes panel
      */
     _onEsc: function(evt) {
       this._rollbackTempMoment();
       this.$.content._close();
     },
     /**
-     * runs validation
+     * Runs validation
      */
     _onEnter: function(evt) {
       this._validateCalendarMoment();
@@ -325,22 +325,22 @@ Custom property | Description
       }
     },
     /**
-     * Ran when the momentObjs for field or content have been updated
+     * Ran when the momentObjs for field or content have been updated.
      * If it is from the field, then apply the momentObj.
      * If it is from the content and we have no buttons, then apply the momentObj.
      * Else, wait for button events.
      */
     _tempMomentChanged: function(origin) {
-      //this debounce is critical for Polymer 1. We are just putting this
-      //call on top of the stack because of how the binding flows:
-      //change in calendar => binding updates field moment => field
-      //moment fires change event => binding done => calendar fires
-      //change event.
-      //we are therefore interested in the latest update, hence the
-      //debounce. no need for an actual timing since this will all be
-      //sequential.
-      //In Polymer 2 in this scenario only calendar will fire a change
-      //event so no problems
+      // this debounce is critical for Polymer 1. We are just putting this
+      // call on top of the stack because of how the binding flows:
+      // change in calendar => binding updates field moment => field
+      // moment fires change event => binding done => calendar fires
+      // change event.
+      // we are therefore interested in the latest update, hence the
+      // debounce. no need for an actual timing since this will all be
+      // sequential.
+      // In Polymer 2 in this scenario only calendar will fire a change
+      // event so no problems
       this.debounce('_tempMomentChanged', function() {
         if(origin === 'field') {
           this._applyTempMoment();
@@ -351,7 +351,7 @@ Custom property | Description
       }, 0);
     },
     /**
-     * apply temp moment if the dropdown is opened and
+     * Apply temp moment if the dropdown is opened and
      * the field is valid
      */
     _validateCalendarMoment: function() {
@@ -377,7 +377,7 @@ Custom property | Description
       }
     },
     /**
-     * opens content
+     * Opens content
      */
     _iconClicked: function(evt) {
       if(evt.detail.dateOrTime === "Date") {
@@ -399,7 +399,7 @@ Custom property | Description
     // Collapse functions
     // ********************************************************************** //
     /**
-     * return the collapseAt value with px after it
+     * Return the collapseAt value with px after it
      */
     _getCollapseQuery(collapseAt) {
       if (typeof collapseAt === 'number') {
@@ -456,8 +456,8 @@ Custom property | Description
       newVal ? this._fillContainer = true : this._fillContainer = false;
     },
     /**
-     * Sync external fitIntoElement with internal _fitIntoElement
-     * make sure `_fitIntoElement` isn't over written if
+     * Sync external fitIntoElement with internal _fitIntoElement.
+     * Make sure `_fitIntoElement` isn't over written if
      * `_belowCollapseSize` is true
      */
     _syncFitIntoElement(newVal, oldVal) {
@@ -466,7 +466,7 @@ Custom property | Description
       }
     },
     /**
-     * return field node
+     * Return field node
      */
     _returnField: function() {
       return this.$.field;

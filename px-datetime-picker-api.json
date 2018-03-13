@@ -2,6 +2,1725 @@
   "schema_version": "1.0.0",
   "elements": [
     {
+      "description": "",
+      "summary": "",
+      "path": "px-datetime-picker-content.html",
+      "properties": [
+        {
+          "name": "keyEventTarget",
+          "type": "?EventTarget",
+          "description": "The EventTarget that will be firing relevant KeyboardEvents. Set it to\n`null` to disable the listeners.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 278,
+              "column": 8
+            },
+            "end": {
+              "line": 283,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "stopKeyboardEventPropagation",
+          "type": "boolean",
+          "description": "If true, this property will cause the implementing element to\nautomatically stop propagation on any handled KeyboardEvents.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 289,
+              "column": 8
+            },
+            "end": {
+              "line": 292,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false",
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "_boundKeyHandlers",
+          "type": "Array",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 294,
+              "column": 8
+            },
+            "end": {
+              "line": 299,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "[]",
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "_imperativeKeyBindings",
+          "type": "Object",
+          "description": "own properties of everything on the \"prototype\".",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 303,
+              "column": 8
+            },
+            "end": {
+              "line": 308,
+              "column": 9
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "{}",
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "keyBindings",
+          "type": "!Object",
+          "description": "To be used to express what combination of keys  will trigger the relative\ncallback. e.g. `keyBindings: { 'esc': '_onEscPressed'}`",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 321,
+              "column": 6
+            },
+            "end": {
+              "line": 321,
+              "column": 21
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "blockFutureDates",
+          "type": "boolean",
+          "description": "Set this attribute when you do not want to allow future dates to be selected (future dates will be disabled and unclickable).",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/px-datetime-common/px-datetime-shared-behavior.html",
+            "start": {
+              "line": 18,
+              "column": 6
+            },
+            "end": {
+              "line": 21,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false",
+          "inheritedFrom": "PxDatetimeBehavior.BlockDates"
+        },
+        {
+          "name": "blockPastDates",
+          "type": "boolean",
+          "description": "Set this attribute when you do not want to allow past dates to be selected (past dates will be disabled and unclickable).",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/px-datetime-common/px-datetime-shared-behavior.html",
+            "start": {
+              "line": 25,
+              "column": 6
+            },
+            "end": {
+              "line": 28,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false",
+          "inheritedFrom": "PxDatetimeBehavior.BlockDates"
+        },
+        {
+          "name": "__localizationCache",
+          "type": "Object",
+          "description": "Internal singleton cache. This is the private implementation of the\nbehaviour; don't interact with it directly.",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
+            "start": {
+              "line": 127,
+              "column": 2
+            },
+            "end": {
+              "line": 131,
+              "column": 3
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "inheritedFrom": "Polymer.AppLocalizeBehavior"
+        },
+        {
+          "name": "language",
+          "type": "string",
+          "description": "set a default for localizing\nSet in datetime-picker",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 169,
+              "column": 6
+            },
+            "end": {
+              "line": 171,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "resources",
+          "type": "Object",
+          "description": "List of key/values to be included for translating this component.\nSet in datetime-picker",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 162,
+              "column": 6
+            },
+            "end": {
+              "line": 164,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "formats",
+          "type": "Object",
+          "description": "Optional dictionary of user defined formats, as explained here:\nhttp://formatjs.io/guides/message-syntax/#custom-formats\n\nFor example, a valid dictionary of formats would be:\nthis.formats = {\n   number: { USD: { style: 'currency', currency: 'USD' } }\n}",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
+            "start": {
+              "line": 176,
+              "column": 4
+            },
+            "end": {
+              "line": 179,
+              "column": 5
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "{}",
+          "inheritedFrom": "Polymer.AppLocalizeBehavior"
+        },
+        {
+          "name": "useKeyIfMissing",
+          "type": "boolean",
+          "description": "Use the key for localization if value for language is missing.\nShould always be true for  our components",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 176,
+              "column": 6
+            },
+            "end": {
+              "line": 179,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "true"
+        },
+        {
+          "name": "localize",
+          "type": "Function",
+          "description": "Translates a string to the current `language`. Any parameters to the\nstring should be passed in order, as follows:\n`localize(stringKey, param1Name, param1Value, param2Name, param2Value)`",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
+            "start": {
+              "line": 195,
+              "column": 4
+            },
+            "end": {
+              "line": 198,
+              "column": 5
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "readOnly": true
+            }
+          },
+          "inheritedFrom": "Polymer.AppLocalizeBehavior"
+        },
+        {
+          "name": "bubbleEvent",
+          "type": "boolean",
+          "description": "If true, will bubble up the event to the parents",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
+            "start": {
+              "line": 203,
+              "column": 4
+            },
+            "end": {
+              "line": 206,
+              "column": 5
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false",
+          "inheritedFrom": "Polymer.AppLocalizeBehavior"
+        },
+        {
+          "name": "timeZone",
+          "type": "string",
+          "description": "Moment-timezone string for using a specific timezone. See\nhttp://momentjs.com/timezone/docs/#/data-loading/getting-zone-names/.\n\nIf not provided, tries to guess the current local timezone.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/px-datetime-common/px-datetime-shared-behavior.html",
+            "start": {
+              "line": 48,
+              "column": 6
+            },
+            "end": {
+              "line": 54,
+              "column": 8
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          },
+          "inheritedFrom": "PxDatetimeBehavior.Shared"
+        },
+        {
+          "name": "minDate",
+          "type": "Object",
+          "description": "The minimum / earliest allowed date, as a a Moment object or an ISO 8601 String (dates before this will be disabled and unclickable).",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/px-datetime-common/px-datetime-shared-behavior.html",
+            "start": {
+              "line": 73,
+              "column": 6
+            },
+            "end": {
+              "line": 76,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_minDateChanged\""
+            }
+          },
+          "inheritedFrom": "PxDatetimeBehavior.Shared"
+        },
+        {
+          "name": "maxDate",
+          "type": "Object",
+          "description": "The maximum / latest allowed date, as a a Moment object or an ISO 8601 String (dates after this will be disabled and unclickable).",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/px-datetime-common/px-datetime-shared-behavior.html",
+            "start": {
+              "line": 80,
+              "column": 6
+            },
+            "end": {
+              "line": 83,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_maxDateChanged\""
+            }
+          },
+          "inheritedFrom": "PxDatetimeBehavior.Shared"
+        },
+        {
+          "name": "showButtons",
+          "type": "boolean",
+          "description": "Whether to show Apply and Cancel buttons in the components",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/px-datetime-common/px-datetime-button-behavior.html",
+            "start": {
+              "line": 17,
+              "column": 6
+            },
+            "end": {
+              "line": 21,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false",
+          "inheritedFrom": "PxDatetimeBehavior.Buttons"
+        },
+        {
+          "name": "hideTime",
+          "type": "boolean",
+          "description": "Determines if the time will appear in the dropdown-content.\nSet in datetime-picker",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 106,
+              "column": 6
+            },
+            "end": {
+              "line": 108,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "timeFormat",
+          "type": "string",
+          "description": "Pass through property.\nSet in datetime-picker",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 113,
+              "column": 6
+            },
+            "end": {
+              "line": 115,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "opened",
+          "type": "boolean",
+          "description": "Reflects if datetime-picker container is open/visible.\nSet in datetime-picker",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 120,
+              "column": 6
+            },
+            "end": {
+              "line": 124,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true
+            }
+          }
+        },
+        {
+          "name": "fieldIsValid",
+          "type": "boolean",
+          "description": "Reflects if the field is valid from datetime-picker.\nSet in datetime-picker",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 129,
+              "column": 6
+            },
+            "end": {
+              "line": 131,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "fillContainer",
+          "type": "boolean",
+          "description": "false : the dropdown-content will open in a small pop over\ntrue : the dropdown-content will fill the window or\nan element defined by the `fitIntoElement`.\nSet in datetime-picker",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 138,
+              "column": 6
+            },
+            "end": {
+              "line": 141,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "fitIntoElement",
+          "type": "Object",
+          "description": "The element that the dropdown-content will fully expand into when opened.\n`fillContainer` must be true in order for this property to work\nset in datetime-picker",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 147,
+              "column": 6
+            },
+            "end": {
+              "line": 149,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "selectedDate",
+          "type": "string",
+          "description": "Displays the calendar's selected date in the dropdown-content\nwhen `fillContainer` is true",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 154,
+              "column": 6
+            },
+            "end": {
+              "line": 157,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "\"Select Date\""
+        },
+        {
+          "name": "tempMomentObj",
+          "type": "Object",
+          "description": "Temporary moment object.\nPass through property.\nSet in datetime-picker and by `_todayClicked`",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 185,
+              "column": 6
+            },
+            "end": {
+              "line": 189,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "notify": true,
+              "observer": "\"_updateSelectedDate\""
+            }
+          }
+        },
+        {
+          "name": "fieldElem",
+          "type": "HTMLElement",
+          "description": "Set in datetime-picker",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 193,
+              "column": 6
+            },
+            "end": {
+              "line": 193,
+              "column": 28
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        }
+      ],
+      "methods": [
+        {
+          "name": "registered",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 323,
+              "column": 6
+            },
+            "end": {
+              "line": 325,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "attached",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 327,
+              "column": 6
+            },
+            "end": {
+              "line": 329,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "detached",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 331,
+              "column": 6
+            },
+            "end": {
+              "line": 333,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "addOwnKeyBinding",
+          "description": "Can be used to imperatively add a key binding to the implementing\nelement. This is the imperative equivalent of declaring a keybinding\nin the `keyBindings` prototype property.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 343,
+              "column": 6
+            },
+            "end": {
+              "line": 347,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "eventString",
+              "type": "string"
+            },
+            {
+              "name": "handlerName",
+              "type": "string"
+            }
+          ],
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "removeOwnKeyBindings",
+          "description": "When called, will remove all imperatively-added key bindings.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 352,
+              "column": 6
+            },
+            "end": {
+              "line": 356,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "keyboardEventMatchesKeys",
+          "description": "Returns true if a keyboard event matches `eventString`.",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 365,
+              "column": 6
+            },
+            "end": {
+              "line": 373,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "event",
+              "type": "KeyboardEvent"
+            },
+            {
+              "name": "eventString",
+              "type": "string"
+            }
+          ],
+          "return": {
+            "type": "boolean"
+          },
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "_collectKeyBindings",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 375,
+              "column": 6
+            },
+            "end": {
+              "line": 385,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "_prepKeyBindings",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 387,
+              "column": 6
+            },
+            "end": {
+              "line": 408,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "_addKeyBinding",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 410,
+              "column": 6
+            },
+            "end": {
+              "line": 420,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "eventString"
+            },
+            {
+              "name": "handlerName"
+            }
+          ],
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "_resetKeyEventListeners",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 422,
+              "column": 6
+            },
+            "end": {
+              "line": 428,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "_listenKeyEventListeners",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 430,
+              "column": 6
+            },
+            "end": {
+              "line": 442,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "_unlistenKeyEventListeners",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 444,
+              "column": 6
+            },
+            "end": {
+              "line": 459,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "_onKeyBindingEvent",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 461,
+              "column": 6
+            },
+            "end": {
+              "line": 482,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "keyBindings"
+            },
+            {
+              "name": "event"
+            }
+          ],
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "_triggerKeyHandler",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 484,
+              "column": 6
+            },
+            "end": {
+              "line": 495,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "keyCombo"
+            },
+            {
+              "name": "handlerName"
+            },
+            {
+              "name": "keyboardEvent"
+            }
+          ],
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "loadResources",
+          "description": "",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
+            "start": {
+              "line": 209,
+              "column": 2
+            },
+            "end": {
+              "line": 242,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "path"
+            },
+            {
+              "name": "language"
+            },
+            {
+              "name": "merge"
+            }
+          ],
+          "inheritedFrom": "Polymer.AppLocalizeBehavior"
+        },
+        {
+          "name": "__computeLocalize",
+          "description": "Returns a computed `localize` method, based on the current `language`.",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
+            "start": {
+              "line": 247,
+              "column": 2
+            },
+            "end": {
+              "line": 287,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "language"
+            },
+            {
+              "name": "resources"
+            },
+            {
+              "name": "formats"
+            }
+          ],
+          "inheritedFrom": "Polymer.AppLocalizeBehavior"
+        },
+        {
+          "name": "__onRequestResponse",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
+            "start": {
+              "line": 289,
+              "column": 2
+            },
+            "end": {
+              "line": 317,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "event"
+            },
+            {
+              "name": "language"
+            },
+            {
+              "name": "merge"
+            }
+          ],
+          "inheritedFrom": "Polymer.AppLocalizeBehavior"
+        },
+        {
+          "name": "__onRequestError",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
+            "start": {
+              "line": 319,
+              "column": 2
+            },
+            "end": {
+              "line": 321,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "event"
+            }
+          ],
+          "inheritedFrom": "Polymer.AppLocalizeBehavior"
+        },
+        {
+          "name": "__checkLocalizationCache",
+          "description": "",
+          "privacy": "private",
+          "sourceRange": {
+            "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
+            "start": {
+              "line": 323,
+              "column": 2
+            },
+            "end": {
+              "line": 331,
+              "column": 3
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "proto"
+            }
+          ],
+          "inheritedFrom": "Polymer.AppLocalizeBehavior"
+        },
+        {
+          "name": "_updateMinMaxTz",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/px-datetime-common/px-datetime-shared-behavior.html",
+            "start": {
+              "line": 88,
+              "column": 4
+            },
+            "end": {
+              "line": 97,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "PxDatetimeBehavior.Shared"
+        },
+        {
+          "name": "_minDateChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/px-datetime-common/px-datetime-shared-behavior.html",
+            "start": {
+              "line": 98,
+              "column": 4
+            },
+            "end": {
+              "line": 106,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "PxDatetimeBehavior.Shared"
+        },
+        {
+          "name": "_maxDateChanged",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/px-datetime-common/px-datetime-shared-behavior.html",
+            "start": {
+              "line": 107,
+              "column": 4
+            },
+            "end": {
+              "line": 115,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [],
+          "inheritedFrom": "PxDatetimeBehavior.Shared"
+        },
+        {
+          "name": "_preserveTime",
+          "description": "Copies the time in toPreserve to dest and returns dest.\nused in `px-calendar-picker`, `px-datetime-picker`, and `px-datetime-range-panel`",
+          "privacy": "protected",
+          "sourceRange": {
+            "file": "bower_components/px-datetime-common/px-datetime-shared-behavior.html",
+            "start": {
+              "line": 123,
+              "column": 4
+            },
+            "end": {
+              "line": 131,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "toPreserve"
+            },
+            {
+              "name": "dest"
+            }
+          ],
+          "inheritedFrom": "PxDatetimeBehavior.Shared"
+        },
+        {
+          "name": "_todayClicked",
+          "description": "'Today' button/text has been clicked",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 198,
+              "column": 4
+            },
+            "end": {
+              "line": 201,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "evt"
+            }
+          ]
+        },
+        {
+          "name": "_open",
+          "description": "Opens the calendar.\nCalled in datetime-picker",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 206,
+              "column": 4
+            },
+            "end": {
+              "line": 208,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_close",
+          "description": "Closes the calendar.\nCalled in datetime-picker",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 213,
+              "column": 4
+            },
+            "end": {
+              "line": 215,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": []
+        },
+        {
+          "name": "_updateSelectedDate",
+          "description": "Sync `selcetedDate` with calendar's moment obj",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 219,
+              "column": 4
+            },
+            "end": {
+              "line": 223,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "moment"
+            }
+          ]
+        },
+        {
+          "name": "_handleField",
+          "description": "Determine if field should be displayed in container.\nThe dt-field will only appear in the container if fillContainer is true",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 228,
+              "column": 4
+            },
+            "end": {
+              "line": 230,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "hideTime"
+            },
+            {
+              "name": "fillContainer"
+            }
+          ]
+        },
+        {
+          "name": "_handleShowButtons",
+          "description": "If fillContainter is true show buttons",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 234,
+              "column": 4
+            },
+            "end": {
+              "line": 236,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "showButtons"
+            },
+            {
+              "name": "fillContainer"
+            }
+          ]
+        },
+        {
+          "name": "_getVerticalOffset",
+          "description": "********************************************************************* //",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 241,
+              "column": 4
+            },
+            "end": {
+              "line": 243,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "fillContainer"
+            }
+          ]
+        },
+        {
+          "name": "_getPositionTarget",
+          "description": "",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 244,
+              "column": 4
+            },
+            "end": {
+              "line": 246,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "fillContainer"
+            },
+            {
+              "name": "fitIntoElement"
+            }
+          ]
+        }
+      ],
+      "staticMethods": [],
+      "demos": [],
+      "metadata": {},
+      "sourceRange": {
+        "start": {
+          "line": 87,
+          "column": 10
+        },
+        "end": {
+          "line": 247,
+          "column": 3
+        }
+      },
+      "privacy": "public",
+      "superclass": "HTMLElement",
+      "attributes": [
+        {
+          "name": "key-event-target",
+          "description": "The EventTarget that will be firing relevant KeyboardEvents. Set it to\n`null` to disable the listeners.",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 278,
+              "column": 8
+            },
+            "end": {
+              "line": 283,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "?EventTarget",
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "stop-keyboard-event-propagation",
+          "description": "If true, this property will cause the implementing element to\nautomatically stop propagation on any handled KeyboardEvents.",
+          "sourceRange": {
+            "file": "bower_components/iron-a11y-keys-behavior/iron-a11y-keys-behavior.html",
+            "start": {
+              "line": 289,
+              "column": 8
+            },
+            "end": {
+              "line": 292,
+              "column": 9
+            }
+          },
+          "metadata": {},
+          "type": "boolean",
+          "inheritedFrom": "Polymer.IronA11yKeysBehavior"
+        },
+        {
+          "name": "block-future-dates",
+          "description": "Set this attribute when you do not want to allow future dates to be selected (future dates will be disabled and unclickable).",
+          "sourceRange": {
+            "file": "bower_components/px-datetime-common/px-datetime-shared-behavior.html",
+            "start": {
+              "line": 18,
+              "column": 6
+            },
+            "end": {
+              "line": 21,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "boolean",
+          "inheritedFrom": "PxDatetimeBehavior.BlockDates"
+        },
+        {
+          "name": "block-past-dates",
+          "description": "Set this attribute when you do not want to allow past dates to be selected (past dates will be disabled and unclickable).",
+          "sourceRange": {
+            "file": "bower_components/px-datetime-common/px-datetime-shared-behavior.html",
+            "start": {
+              "line": 25,
+              "column": 6
+            },
+            "end": {
+              "line": 28,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "boolean",
+          "inheritedFrom": "PxDatetimeBehavior.BlockDates"
+        },
+        {
+          "name": "language",
+          "description": "set a default for localizing\nSet in datetime-picker",
+          "sourceRange": {
+            "start": {
+              "line": 169,
+              "column": 6
+            },
+            "end": {
+              "line": 171,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "resources",
+          "description": "List of key/values to be included for translating this component.\nSet in datetime-picker",
+          "sourceRange": {
+            "start": {
+              "line": 162,
+              "column": 6
+            },
+            "end": {
+              "line": 164,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "formats",
+          "description": "Optional dictionary of user defined formats, as explained here:\nhttp://formatjs.io/guides/message-syntax/#custom-formats\n\nFor example, a valid dictionary of formats would be:\nthis.formats = {\n   number: { USD: { style: 'currency', currency: 'USD' } }\n}",
+          "sourceRange": {
+            "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
+            "start": {
+              "line": 176,
+              "column": 4
+            },
+            "end": {
+              "line": 179,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "type": "Object",
+          "inheritedFrom": "Polymer.AppLocalizeBehavior"
+        },
+        {
+          "name": "use-key-if-missing",
+          "description": "Use the key for localization if value for language is missing.\nShould always be true for  our components",
+          "sourceRange": {
+            "start": {
+              "line": 176,
+              "column": 6
+            },
+            "end": {
+              "line": 179,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "localize",
+          "description": "Translates a string to the current `language`. Any parameters to the\nstring should be passed in order, as follows:\n`localize(stringKey, param1Name, param1Value, param2Name, param2Value)`",
+          "sourceRange": {
+            "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
+            "start": {
+              "line": 195,
+              "column": 4
+            },
+            "end": {
+              "line": 198,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "type": "Function",
+          "inheritedFrom": "Polymer.AppLocalizeBehavior"
+        },
+        {
+          "name": "bubble-event",
+          "description": "If true, will bubble up the event to the parents",
+          "sourceRange": {
+            "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
+            "start": {
+              "line": 203,
+              "column": 4
+            },
+            "end": {
+              "line": 206,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "type": "boolean",
+          "inheritedFrom": "Polymer.AppLocalizeBehavior"
+        },
+        {
+          "name": "time-zone",
+          "description": "Moment-timezone string for using a specific timezone. See\nhttp://momentjs.com/timezone/docs/#/data-loading/getting-zone-names/.\n\nIf not provided, tries to guess the current local timezone.",
+          "sourceRange": {
+            "file": "bower_components/px-datetime-common/px-datetime-shared-behavior.html",
+            "start": {
+              "line": 48,
+              "column": 6
+            },
+            "end": {
+              "line": 54,
+              "column": 8
+            }
+          },
+          "metadata": {},
+          "type": "string",
+          "inheritedFrom": "PxDatetimeBehavior.Shared"
+        },
+        {
+          "name": "min-date",
+          "description": "The minimum / earliest allowed date, as a a Moment object or an ISO 8601 String (dates before this will be disabled and unclickable).",
+          "sourceRange": {
+            "file": "bower_components/px-datetime-common/px-datetime-shared-behavior.html",
+            "start": {
+              "line": 73,
+              "column": 6
+            },
+            "end": {
+              "line": 76,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "Object",
+          "inheritedFrom": "PxDatetimeBehavior.Shared"
+        },
+        {
+          "name": "max-date",
+          "description": "The maximum / latest allowed date, as a a Moment object or an ISO 8601 String (dates after this will be disabled and unclickable).",
+          "sourceRange": {
+            "file": "bower_components/px-datetime-common/px-datetime-shared-behavior.html",
+            "start": {
+              "line": 80,
+              "column": 6
+            },
+            "end": {
+              "line": 83,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "Object",
+          "inheritedFrom": "PxDatetimeBehavior.Shared"
+        },
+        {
+          "name": "show-buttons",
+          "description": "Whether to show Apply and Cancel buttons in the components",
+          "sourceRange": {
+            "file": "bower_components/px-datetime-common/px-datetime-button-behavior.html",
+            "start": {
+              "line": 17,
+              "column": 6
+            },
+            "end": {
+              "line": 21,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "boolean",
+          "inheritedFrom": "PxDatetimeBehavior.Buttons"
+        },
+        {
+          "name": "hide-time",
+          "description": "Determines if the time will appear in the dropdown-content.\nSet in datetime-picker",
+          "sourceRange": {
+            "start": {
+              "line": 106,
+              "column": 6
+            },
+            "end": {
+              "line": 108,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "time-format",
+          "description": "Pass through property.\nSet in datetime-picker",
+          "sourceRange": {
+            "start": {
+              "line": 113,
+              "column": 6
+            },
+            "end": {
+              "line": 115,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "opened",
+          "description": "Reflects if datetime-picker container is open/visible.\nSet in datetime-picker",
+          "sourceRange": {
+            "start": {
+              "line": 120,
+              "column": 6
+            },
+            "end": {
+              "line": 124,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "field-is-valid",
+          "description": "Reflects if the field is valid from datetime-picker.\nSet in datetime-picker",
+          "sourceRange": {
+            "start": {
+              "line": 129,
+              "column": 6
+            },
+            "end": {
+              "line": 131,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "fill-container",
+          "description": "false : the dropdown-content will open in a small pop over\ntrue : the dropdown-content will fill the window or\nan element defined by the `fitIntoElement`.\nSet in datetime-picker",
+          "sourceRange": {
+            "start": {
+              "line": 138,
+              "column": 6
+            },
+            "end": {
+              "line": 141,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "fit-into-element",
+          "description": "The element that the dropdown-content will fully expand into when opened.\n`fillContainer` must be true in order for this property to work\nset in datetime-picker",
+          "sourceRange": {
+            "start": {
+              "line": 147,
+              "column": 6
+            },
+            "end": {
+              "line": 149,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "selected-date",
+          "description": "Displays the calendar's selected date in the dropdown-content\nwhen `fillContainer` is true",
+          "sourceRange": {
+            "start": {
+              "line": 154,
+              "column": 6
+            },
+            "end": {
+              "line": 157,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "string"
+        },
+        {
+          "name": "temp-moment-obj",
+          "description": "Temporary moment object.\nPass through property.\nSet in datetime-picker and by `_todayClicked`",
+          "sourceRange": {
+            "start": {
+              "line": 185,
+              "column": 6
+            },
+            "end": {
+              "line": 189,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "Object"
+        },
+        {
+          "name": "field-elem",
+          "description": "Set in datetime-picker",
+          "sourceRange": {
+            "start": {
+              "line": 193,
+              "column": 6
+            },
+            "end": {
+              "line": 193,
+              "column": 28
+            }
+          },
+          "metadata": {},
+          "type": "HTMLElement"
+        }
+      ],
+      "events": [
+        {
+          "type": "CustomEvent",
+          "name": "app-localize-resources-error",
+          "description": "app-localize-resources-error",
+          "metadata": {},
+          "inheritedFrom": "Polymer.AppLocalizeBehavior"
+        },
+        {
+          "type": "CustomEvent",
+          "name": "app-localize-resources-loaded",
+          "description": "app-localize-resources-loaded",
+          "metadata": {},
+          "inheritedFrom": "Polymer.AppLocalizeBehavior"
+        },
+        {
+          "type": "CustomEvent",
+          "name": "time-zone-changed",
+          "description": "Fired when the `timeZone` property changes.",
+          "metadata": {},
+          "inheritedFrom": "PxDatetimeBehavior.Shared"
+        },
+        {
+          "type": "CustomEvent",
+          "name": "opened-changed",
+          "description": "Fired when the `opened` property changes.",
+          "metadata": {}
+        },
+        {
+          "type": "CustomEvent",
+          "name": "temp-moment-obj-changed",
+          "description": "Fired when the `tempMomentObj` property changes.",
+          "metadata": {}
+        }
+      ],
+      "styling": {
+        "cssVariables": [],
+        "selectors": []
+      },
+      "slots": [],
+      "tagname": "px-datetime-picker-content"
+    },
+    {
       "description": "The datetime components rely on [Moment.js](https://momentjs.com/) and [Moment Timezone](https://momentjs.com/timezone/).\n\n#### Usage\n\n    <px-datetime-picker></px-datetime-picker>\n\n\n#### Styling\nThe following custom properties are available for styling. Please also refer to px-forms-design and px-buttons-design for additional style variables used by this component.\n\nCustom property | Description\n:----------------|:-------------\n`--px-datetime-picker-background-color` | Background color for the panel\n`--px-datetime-picker-border-color` | Border color for the panel\n`--px-datetime-picker-z-index` | The z-index of the container",
       "summary": "",
       "path": "px-datetime-picker.html",
@@ -97,14 +1816,14 @@
           "name": "keyBindings",
           "type": "Object",
           "description": "Key bindings for iron-a11y-keys-behavior",
-          "privacy": "public",
+          "privacy": "private",
           "sourceRange": {
             "start": {
-              "line": 293,
+              "line": 279,
               "column": 4
             },
             "end": {
-              "line": 296,
+              "line": 282,
               "column": 5
             }
           },
@@ -164,11 +1883,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 92,
+              "line": 127,
               "column": 2
             },
             "end": {
-              "line": 96,
+              "line": 131,
               "column": 3
             }
           },
@@ -180,16 +1899,16 @@
         {
           "name": "language",
           "type": "string",
-          "description": "set a default for localizing",
+          "description": "Set a default for localizing",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 272,
-              "column": 5
+              "line": 250,
+              "column": 6
             },
             "end": {
-              "line": 275,
-              "column": 6
+              "line": 253,
+              "column": 7
             }
           },
           "metadata": {
@@ -204,11 +1923,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 259,
+              "line": 237,
               "column": 6
             },
             "end": {
-              "line": 268,
+              "line": 246,
               "column": 7
             }
           },
@@ -225,11 +1944,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 141,
+              "line": 176,
               "column": 4
             },
             "end": {
-              "line": 144,
+              "line": 179,
               "column": 5
             }
           },
@@ -246,12 +1965,12 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 280,
-              "column": 5
+              "line": 258,
+              "column": 6
             },
             "end": {
-              "line": 283,
-              "column": 6
+              "line": 261,
+              "column": 7
             }
           },
           "metadata": {
@@ -267,11 +1986,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 160,
+              "line": 195,
               "column": 4
             },
             "end": {
-              "line": 163,
+              "line": 198,
               "column": 5
             }
           },
@@ -290,11 +2009,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 168,
+              "line": 203,
               "column": 4
             },
             "end": {
-              "line": 171,
+              "line": 206,
               "column": 5
             }
           },
@@ -432,7 +2151,7 @@
               "column": 6
             },
             "end": {
-              "line": 20,
+              "line": 21,
               "column": 7
             }
           },
@@ -443,17 +2162,38 @@
           "inheritedFrom": "PxDatetimeBehavior.Buttons"
         },
         {
+          "name": "containerType",
+          "type": "string",
+          "description": "An optional type set on the px-overlay-container and px-overlay-content to associate specific overlay-contents with their container",
+          "privacy": "public",
+          "sourceRange": {
+            "file": "bower_components/px-overlay/px-overlay-behavior.html",
+            "start": {
+              "line": 23,
+              "column": 4
+            },
+            "end": {
+              "line": 23,
+              "column": 25
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "inheritedFrom": "PxOverlayBehavior.sharedProperties"
+        },
+        {
           "name": "showTimeZone",
           "type": "string",
-          "description": "Can be set to show the timezone in the field. Can have 2 values:\n 'dropdown': shows the time zone as a dropdown which the user can use to\nselect a different time zone. Only contains a subset of all timezones\n 'extendedDropdown': shows the time zone as a dropdown which the user can use to\nselect a different time zone. Contains all existing timezones (588)\n 'text': shows the time zone as text, non editable\n 'abbreviatedText': shows the time zone as an abbreviated text, non editable (such as PST, EST...)",
+          "description": "Can be set to show the timezone in the field. values:\n 'dropdown': shows the time zone as a dropdown which the user can use to\nselect a different time zone. Only contains a subset of all time zones\n 'extendedDropdown': shows the time zone as a dropdown which the user can use to\nselect a different time zone. Contains all existing time zones (588)\n 'text': shows the time zone as text, non editable\n 'abbreviatedText': shows the time zone as an abbreviated text, non editable (such as PST, EST...)",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 158,
+              "line": 121,
               "column": 6
             },
             "end": {
-              "line": 161,
+              "line": 124,
               "column": 7
             }
           },
@@ -465,15 +2205,15 @@
         {
           "name": "hideTime",
           "type": "boolean",
-          "description": "Whether this date picker should allow to pick time as well.",
+          "description": "Doesn't display the time in the field and panel(if applicable)",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 166,
+              "line": 128,
               "column": 6
             },
             "end": {
-              "line": 169,
+              "line": 131,
               "column": 7
             }
           },
@@ -489,11 +2229,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 174,
+              "line": 135,
               "column": 6
             },
             "end": {
-              "line": 177,
+              "line": 138,
               "column": 7
             }
           },
@@ -509,11 +2249,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 182,
-              "column": 7
+              "line": 142,
+              "column": 6
             },
             "end": {
-              "line": 185,
+              "line": 145,
               "column": 7
             }
           },
@@ -529,11 +2269,11 @@
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 190,
-              "column": 7
+              "line": 150,
+              "column": 6
             },
             "end": {
-              "line": 193,
+              "line": 153,
               "column": 7
             }
           },
@@ -545,41 +2285,62 @@
         {
           "name": "opened",
           "type": "boolean",
-          "description": "Reflects if datetime-picker container is open/visible.",
+          "description": "Reflects if datetime-picker container is visible.",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 197,
-              "column": 7
+              "line": 157,
+              "column": 6
             },
             "end": {
-              "line": 201,
-              "column": 7
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "defaultValue": "true"
-        },
-        {
-          "name": "fillContainer",
-          "type": "boolean",
-          "description": "false : the datetime-picker contents will open in a panel\nif the screen size is greater than the collapseAt value.\ntrue : the datetime-picker contents will fill the window\nor an element defined by the `fitIntoElement`. It fills\nregardless of the collapseAt value.",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 209,
-              "column": 7
-            },
-            "end": {
-              "line": 213,
+              "line": 162,
               "column": 7
             }
           },
           "metadata": {
             "polymer": {
-              "observer": "\"_handleFillContainer\""
+              "observer": "\"_processClose\""
+            }
+          },
+          "defaultValue": "false"
+        },
+        {
+          "name": "fieldIsValid",
+          "type": "boolean",
+          "description": "Reflects if the field is valid.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 166,
+              "column": 6
+            },
+            "end": {
+              "line": 168,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          }
+        },
+        {
+          "name": "fillContainer",
+          "type": "boolean",
+          "description": "false : the dt-picker contents will open in a panel.\ntrue : the dt-picker contents will fill the window\nor an element defined by the `fitIntoElement`.",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 174,
+              "column": 6
+            },
+            "end": {
+              "line": 178,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_syncFillContainer\""
             }
           },
           "defaultValue": "false"
@@ -587,15 +2348,15 @@
         {
           "name": "_fillContainer",
           "type": "boolean",
-          "description": "used to toggle fillContainer from iron-media-query\nwithout separate variable fillContainer would never be\ntrue with a screen size larger then the value of collapseAt",
+          "description": "Used to toggle fillContainer from iron-media-query.\nWithout a separate variable fillContainer would never be\ntrue with a screen size larger then the value of collapseAt",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 219,
-              "column": 7
+              "line": 184,
+              "column": 6
             },
             "end": {
-              "line": 222,
+              "line": 187,
               "column": 7
             }
           },
@@ -606,15 +2367,36 @@
         {
           "name": "fitIntoElement",
           "type": "Object",
-          "description": "The element that the dt-picker contents will fully exand into\nwhen the dt-picker is open.\n`fillContainer` must be true inorder for this property to work",
+          "description": "The element that the dt-picker contents will fully expand into\nwhen the dt-picker is open.\n`fillContainer` must be true in order for this property to work",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 228,
+              "line": 193,
               "column": 6
             },
             "end": {
-              "line": 231,
+              "line": 197,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {
+              "observer": "\"_syncFitIntoElement\""
+            }
+          }
+        },
+        {
+          "name": "_fitIntoElement",
+          "type": "Object",
+          "description": "Used to toggle `fitIntoElement` from iron-media-query.\nWithout separate variable each time the screen was\nsmaller than collpasAt the `fitIntoElement` would\nget over written.",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 204,
+              "column": 6
+            },
+            "end": {
+              "line": 206,
               "column": 7
             }
           },
@@ -625,42 +2407,44 @@
         {
           "name": "collapseAt",
           "type": "number",
-          "description": "The width below which the datetime picker will collapse into a mobile\nfriendly menu that slides up from the bottom of the page. Use a number\n(e.g. `450`) which will be converted to a pixel value (e.g. '450px').\n\nIf no value is provided, the datetime picker will not collapse\nautomatically. The collapsed attribute can also be used to manually\ncollapse and un-collapse the datetime picker.",
+          "description": "The width below which the datetime picker will collapse into a mobile\nfriendly view. Use a number (e.g. `450`) which will be converted to a\npixel value (e.g. '450px').\n\nIf no value is provided, the datetime picker will not collapse\nautomatically.",
           "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 241,
-              "column": 7
-            },
-            "end": {
-              "line": 244,
-              "column": 7
-            }
-          },
-          "metadata": {
-            "polymer": {}
-          },
-          "defaultValue": "100"
-        },
-        {
-          "name": "selectedDate",
-          "type": "string",
-          "description": "",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 245,
+              "line": 215,
               "column": 6
             },
             "end": {
-              "line": 248,
+              "line": 217,
               "column": 7
             }
           },
           "metadata": {
             "polymer": {}
+          }
+        },
+        {
+          "name": "collapsed",
+          "type": "boolean",
+          "description": "True if screen size is smaller than the `collapseAt` value",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 221,
+              "column": 6
+            },
+            "end": {
+              "line": 226,
+              "column": 7
+            }
           },
-          "defaultValue": "\"Select Date\""
+          "metadata": {
+            "polymer": {
+              "notify": true,
+              "readOnly": true
+            }
+          },
+          "defaultValue": "false"
         },
         {
           "name": "_belowCollapseSize",
@@ -669,11 +2453,11 @@
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 252,
+              "line": 230,
               "column": 6
             },
             "end": {
-              "line": 255,
+              "line": 233,
               "column": 7
             }
           },
@@ -682,6 +2466,26 @@
               "observer": "\"_handleBelowCollapseSizeChanged\""
             }
           }
+        },
+        {
+          "name": "hoist",
+          "type": "boolean",
+          "description": "Specifies if the dropdown content should get hoisted to a container in order to escape its current stacking context",
+          "privacy": "public",
+          "sourceRange": {
+            "start": {
+              "line": 265,
+              "column": 6
+            },
+            "end": {
+              "line": 268,
+              "column": 7
+            }
+          },
+          "metadata": {
+            "polymer": {}
+          },
+          "defaultValue": "false"
         }
       ],
       "methods": [
@@ -706,15 +2510,15 @@
         },
         {
           "name": "attached",
-          "description": "",
+          "description": "We don't need to listen to the time field from the calendar\nsense it only updates the temp moment but should never trigger an\nactual validation",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 298,
+              "line": 288,
               "column": 4
             },
             "end": {
-              "line": 306,
+              "line": 291,
               "column": 5
             }
           },
@@ -1001,11 +2805,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 174,
+              "line": 209,
               "column": 2
             },
             "end": {
-              "line": 202,
+              "line": 242,
               "column": 3
             }
           },
@@ -1013,6 +2817,12 @@
           "params": [
             {
               "name": "path"
+            },
+            {
+              "name": "language"
+            },
+            {
+              "name": "merge"
             }
           ],
           "inheritedFrom": "Polymer.AppLocalizeBehavior"
@@ -1024,11 +2834,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 207,
+              "line": 247,
               "column": 2
             },
             "end": {
-              "line": 247,
+              "line": 287,
               "column": 3
             }
           },
@@ -1053,11 +2863,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 249,
+              "line": 289,
               "column": 2
             },
             "end": {
-              "line": 252,
+              "line": 317,
               "column": 3
             }
           },
@@ -1065,6 +2875,12 @@
           "params": [
             {
               "name": "event"
+            },
+            {
+              "name": "language"
+            },
+            {
+              "name": "merge"
             }
           ],
           "inheritedFrom": "Polymer.AppLocalizeBehavior"
@@ -1076,11 +2892,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 254,
+              "line": 319,
               "column": 2
             },
             "end": {
-              "line": 256,
+              "line": 321,
               "column": 3
             }
           },
@@ -1099,11 +2915,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 258,
+              "line": 323,
               "column": 2
             },
             "end": {
-              "line": 266,
+              "line": 331,
               "column": 3
             }
           },
@@ -1313,37 +3129,33 @@
           "inheritedFrom": "PxDatetimeBehavior.TempMoment"
         },
         {
-          "name": "_todayClicked",
-          "description": "'Today' button/text has been clicked",
-          "privacy": "protected",
+          "name": "focus",
+          "description": "Propagate focus from the host to px-datetime-field",
+          "privacy": "public",
           "sourceRange": {
             "start": {
-              "line": 311,
+              "line": 295,
               "column": 4
             },
             "end": {
-              "line": 315,
+              "line": 297,
               "column": 5
             }
           },
           "metadata": {},
-          "params": [
-            {
-              "name": "evt"
-            }
-          ]
+          "params": []
         },
         {
           "name": "_onEsc",
-          "description": "",
+          "description": "Rolls back temp moment to the momentObj.\nCloses panel",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 318,
+              "line": 302,
               "column": 4
             },
             "end": {
-              "line": 321,
+              "line": 305,
               "column": 5
             }
           },
@@ -1356,15 +3168,15 @@
         },
         {
           "name": "_onEnter",
-          "description": "",
+          "description": "Runs validation",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 324,
+              "line": 309,
               "column": 4
             },
             "end": {
-              "line": 326,
+              "line": 311,
               "column": 5
             }
           },
@@ -1376,50 +3188,16 @@
           ]
         },
         {
-          "name": "_open",
-          "description": "Opens the calendar",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 330,
-              "column": 4
-            },
-            "end": {
-              "line": 332,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": []
-        },
-        {
-          "name": "_close",
-          "description": "Closes the calendar",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 336,
-              "column": 4
-            },
-            "end": {
-              "line": 338,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": []
-        },
-        {
           "name": "_handleTap",
           "description": "If the calendar is open and the dropdown is selected, close the calendar",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 342,
-              "column": 5
+              "line": 315,
+              "column": 4
             },
             "end": {
-              "line": 352,
+              "line": 325,
               "column": 5
             }
           },
@@ -1432,15 +3210,15 @@
         },
         {
           "name": "_tempMomentChanged",
-          "description": "",
+          "description": "Ran when the momentObjs for field or content have been updated.\nIf it is from the field, then apply the momentObj.\nIf it is from the content and we have no buttons, then apply the momentObj.\nElse, wait for button events.",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 354,
+              "line": 332,
               "column": 4
             },
             "end": {
-              "line": 378,
+              "line": 351,
               "column": 5
             }
           },
@@ -1452,79 +3230,16 @@
           ]
         },
         {
-          "name": "_updateSelectedDate",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 379,
-              "column": 4
-            },
-            "end": {
-              "line": 381,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "moment"
-            }
-          ]
-        },
-        {
-          "name": "_calendarMomentChanged",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 383,
-              "column": 4
-            },
-            "end": {
-              "line": 386,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "evt"
-            }
-          ]
-        },
-        {
-          "name": "_fieldMomentChanged",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 388,
-              "column": 4
-            },
-            "end": {
-              "line": 391,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "evt"
-            }
-          ]
-        },
-        {
           "name": "_validateCalendarMoment",
-          "description": "",
+          "description": "Apply temp moment if the dropdown is opened and\nthe field is valid",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 395,
+              "line": 356,
               "column": 4
             },
             "end": {
-              "line": 405,
+              "line": 365,
               "column": 5
             }
           },
@@ -1532,37 +3247,16 @@
           "params": []
         },
         {
-          "name": "_closeIconClicked",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 406,
-              "column": 4
-            },
-            "end": {
-              "line": 408,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "evt"
-            }
-          ]
-        },
-        {
           "name": "_buttonClicked",
-          "description": "",
+          "description": "submit: validate values\ncancel: rolls back temp moment to the momentObj &closes panel",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 411,
+              "line": 370,
               "column": 4
             },
             "end": {
-              "line": 418,
+              "line": 377,
               "column": 5
             }
           },
@@ -1575,15 +3269,15 @@
         },
         {
           "name": "_iconClicked",
-          "description": "",
+          "description": "Opens content",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 421,
+              "line": 381,
               "column": 4
             },
             "end": {
-              "line": 425,
+              "line": 385,
               "column": 5
             }
           },
@@ -1595,106 +3289,40 @@
           ]
         },
         {
-          "name": "_handleField",
-          "description": "Determine if field should be displayed in container\nThe dt-field will only appear in the container if fillContainer is true",
+          "name": "_processClose",
+          "description": "If opened is false and showButtons true\nthen cancel selection",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 430,
+              "line": 390,
               "column": 4
             },
             "end": {
-              "line": 432,
+              "line": 395,
               "column": 5
             }
           },
           "metadata": {},
           "params": [
             {
-              "name": "hideTime"
+              "name": "newVal"
             },
             {
-              "name": "fillContainer"
-            }
-          ]
-        },
-        {
-          "name": "_getVerticalOffset",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 438,
-              "column": 4
-            },
-            "end": {
-              "line": 440,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "fillContainer"
-            }
-          ]
-        },
-        {
-          "name": "_getPositionTarget",
-          "description": "",
-          "privacy": "protected",
-          "sourceRange": {
-            "start": {
-              "line": 441,
-              "column": 4
-            },
-            "end": {
-              "line": 443,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "fillContainer"
-            },
-            {
-              "name": "fitIntoElement"
-            }
-          ]
-        },
-        {
-          "name": "getElement",
-          "description": "",
-          "privacy": "public",
-          "sourceRange": {
-            "start": {
-              "line": 444,
-              "column": 4
-            },
-            "end": {
-              "line": 446,
-              "column": 5
-            }
-          },
-          "metadata": {},
-          "params": [
-            {
-              "name": "elStr"
+              "name": "oldVal"
             }
           ]
         },
         {
           "name": "_getCollapseQuery",
-          "description": "",
+          "description": "Return the collapseAt value with px after it",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 448,
+              "line": 403,
               "column": 4
             },
             "end": {
-              "line": 455,
+              "line": 410,
               "column": 5
             }
           },
@@ -1707,15 +3335,15 @@
         },
         {
           "name": "_collapseQueryIsValid",
-          "description": "",
+          "description": "Double checks that the collapseAt value is valid",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 456,
+              "line": 414,
               "column": 4
             },
             "end": {
-              "line": 464,
+              "line": 426,
               "column": 5
             }
           },
@@ -1728,15 +3356,15 @@
         },
         {
           "name": "_handleBelowCollapseSizeChanged",
-          "description": "",
+          "description": "If the window is smaller than the `collapseAt` value\nset panel to fill the whole window\n\nIf the window is larger than the `collapseAt` value\nreset `_fillContainer` & `_fitIntoElement` to their\noriginal values",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 465,
+              "line": 435,
               "column": 4
             },
             "end": {
-              "line": 472,
+              "line": 446,
               "column": 5
             }
           },
@@ -1751,16 +3379,16 @@
           ]
         },
         {
-          "name": "_handleFillContainer",
+          "name": "_syncFillContainer",
           "description": "Sync external fillConatiner with internal _fillConatiner",
           "privacy": "protected",
           "sourceRange": {
             "start": {
-              "line": 476,
+              "line": 454,
               "column": 4
             },
             "end": {
-              "line": 478,
+              "line": 456,
               "column": 5
             }
           },
@@ -1773,6 +3401,47 @@
               "name": "oldVal"
             }
           ]
+        },
+        {
+          "name": "_syncFitIntoElement",
+          "description": "Sync external fitIntoElement with internal _fitIntoElement.\nMake sure `_fitIntoElement` isn't over written if\n`_belowCollapseSize` is true",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 462,
+              "column": 4
+            },
+            "end": {
+              "line": 466,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": [
+            {
+              "name": "newVal"
+            },
+            {
+              "name": "oldVal"
+            }
+          ]
+        },
+        {
+          "name": "_returnField",
+          "description": "Return field node",
+          "privacy": "protected",
+          "sourceRange": {
+            "start": {
+              "line": 470,
+              "column": 4
+            },
+            "end": {
+              "line": 472,
+              "column": 5
+            }
+          },
+          "metadata": {},
+          "params": []
         }
       ],
       "staticMethods": [],
@@ -1785,11 +3454,11 @@
       "metadata": {},
       "sourceRange": {
         "start": {
-          "line": 133,
+          "line": 96,
           "column": 10
         },
         "end": {
-          "line": 479,
+          "line": 473,
           "column": 3
         }
       },
@@ -1870,15 +3539,15 @@
         },
         {
           "name": "language",
-          "description": "set a default for localizing",
+          "description": "Set a default for localizing",
           "sourceRange": {
             "start": {
-              "line": 272,
-              "column": 5
+              "line": 250,
+              "column": 6
             },
             "end": {
-              "line": 275,
-              "column": 6
+              "line": 253,
+              "column": 7
             }
           },
           "metadata": {},
@@ -1889,11 +3558,11 @@
           "description": "List of key/values to be included for translating this component",
           "sourceRange": {
             "start": {
-              "line": 259,
+              "line": 237,
               "column": 6
             },
             "end": {
-              "line": 268,
+              "line": 246,
               "column": 7
             }
           },
@@ -1906,11 +3575,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 141,
+              "line": 176,
               "column": 4
             },
             "end": {
-              "line": 144,
+              "line": 179,
               "column": 5
             }
           },
@@ -1923,12 +3592,12 @@
           "description": "Use the key for localization if value for  language is missing. Should\nalways be true for  our components",
           "sourceRange": {
             "start": {
-              "line": 280,
-              "column": 5
+              "line": 258,
+              "column": 6
             },
             "end": {
-              "line": 283,
-              "column": 6
+              "line": 261,
+              "column": 7
             }
           },
           "metadata": {},
@@ -1940,11 +3609,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 160,
+              "line": 195,
               "column": 4
             },
             "end": {
-              "line": 163,
+              "line": 198,
               "column": 5
             }
           },
@@ -1958,11 +3627,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 168,
+              "line": 203,
               "column": 4
             },
             "end": {
-              "line": 171,
+              "line": 206,
               "column": 5
             }
           },
@@ -2052,7 +3721,7 @@
               "column": 6
             },
             "end": {
-              "line": 20,
+              "line": 21,
               "column": 7
             }
           },
@@ -2061,15 +3730,33 @@
           "inheritedFrom": "PxDatetimeBehavior.Buttons"
         },
         {
+          "name": "container-type",
+          "description": "An optional type set on the px-overlay-container and px-overlay-content to associate specific overlay-contents with their container",
+          "sourceRange": {
+            "file": "bower_components/px-overlay/px-overlay-behavior.html",
+            "start": {
+              "line": 23,
+              "column": 4
+            },
+            "end": {
+              "line": 23,
+              "column": 25
+            }
+          },
+          "metadata": {},
+          "type": "string",
+          "inheritedFrom": "PxOverlayBehavior.sharedProperties"
+        },
+        {
           "name": "show-time-zone",
-          "description": "Can be set to show the timezone in the field. Can have 2 values:\n 'dropdown': shows the time zone as a dropdown which the user can use to\nselect a different time zone. Only contains a subset of all timezones\n 'extendedDropdown': shows the time zone as a dropdown which the user can use to\nselect a different time zone. Contains all existing timezones (588)\n 'text': shows the time zone as text, non editable\n 'abbreviatedText': shows the time zone as an abbreviated text, non editable (such as PST, EST...)",
+          "description": "Can be set to show the timezone in the field. values:\n 'dropdown': shows the time zone as a dropdown which the user can use to\nselect a different time zone. Only contains a subset of all time zones\n 'extendedDropdown': shows the time zone as a dropdown which the user can use to\nselect a different time zone. Contains all existing time zones (588)\n 'text': shows the time zone as text, non editable\n 'abbreviatedText': shows the time zone as an abbreviated text, non editable (such as PST, EST...)",
           "sourceRange": {
             "start": {
-              "line": 158,
+              "line": 121,
               "column": 6
             },
             "end": {
-              "line": 161,
+              "line": 124,
               "column": 7
             }
           },
@@ -2078,14 +3765,14 @@
         },
         {
           "name": "hide-time",
-          "description": "Whether this date picker should allow to pick time as well.",
+          "description": "Doesn't display the time in the field and panel(if applicable)",
           "sourceRange": {
             "start": {
-              "line": 166,
+              "line": 128,
               "column": 6
             },
             "end": {
-              "line": 169,
+              "line": 131,
               "column": 7
             }
           },
@@ -2097,11 +3784,11 @@
           "description": "Moment format used for the date",
           "sourceRange": {
             "start": {
-              "line": 174,
+              "line": 135,
               "column": 6
             },
             "end": {
-              "line": 177,
+              "line": 138,
               "column": 7
             }
           },
@@ -2113,11 +3800,11 @@
           "description": "Moment format used for the time",
           "sourceRange": {
             "start": {
-              "line": 182,
-              "column": 7
+              "line": 142,
+              "column": 6
             },
             "end": {
-              "line": 185,
+              "line": 145,
               "column": 7
             }
           },
@@ -2129,11 +3816,11 @@
           "description": "Boolean stating if the picker is required.\nWill result in an error if left blank.",
           "sourceRange": {
             "start": {
-              "line": 190,
-              "column": 7
+              "line": 150,
+              "column": 6
             },
             "end": {
-              "line": 193,
+              "line": 153,
               "column": 7
             }
           },
@@ -2142,14 +3829,30 @@
         },
         {
           "name": "opened",
-          "description": "Reflects if datetime-picker container is open/visible.",
+          "description": "Reflects if datetime-picker container is visible.",
           "sourceRange": {
             "start": {
-              "line": 197,
-              "column": 7
+              "line": 157,
+              "column": 6
             },
             "end": {
-              "line": 201,
+              "line": 162,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
+        },
+        {
+          "name": "field-is-valid",
+          "description": "Reflects if the field is valid.",
+          "sourceRange": {
+            "start": {
+              "line": 166,
+              "column": 6
+            },
+            "end": {
+              "line": 168,
               "column": 7
             }
           },
@@ -2158,14 +3861,14 @@
         },
         {
           "name": "fill-container",
-          "description": "false : the datetime-picker contents will open in a panel\nif the screen size is greater than the collapseAt value.\ntrue : the datetime-picker contents will fill the window\nor an element defined by the `fitIntoElement`. It fills\nregardless of the collapseAt value.",
+          "description": "false : the dt-picker contents will open in a panel.\ntrue : the dt-picker contents will fill the window\nor an element defined by the `fitIntoElement`.",
           "sourceRange": {
             "start": {
-              "line": 209,
-              "column": 7
+              "line": 174,
+              "column": 6
             },
             "end": {
-              "line": 213,
+              "line": 178,
               "column": 7
             }
           },
@@ -2174,14 +3877,14 @@
         },
         {
           "name": "fit-into-element",
-          "description": "The element that the dt-picker contents will fully exand into\nwhen the dt-picker is open.\n`fillContainer` must be true inorder for this property to work",
+          "description": "The element that the dt-picker contents will fully expand into\nwhen the dt-picker is open.\n`fillContainer` must be true in order for this property to work",
           "sourceRange": {
             "start": {
-              "line": 228,
+              "line": 193,
               "column": 6
             },
             "end": {
-              "line": 231,
+              "line": 197,
               "column": 7
             }
           },
@@ -2190,14 +3893,14 @@
         },
         {
           "name": "collapse-at",
-          "description": "The width below which the datetime picker will collapse into a mobile\nfriendly menu that slides up from the bottom of the page. Use a number\n(e.g. `450`) which will be converted to a pixel value (e.g. '450px').\n\nIf no value is provided, the datetime picker will not collapse\nautomatically. The collapsed attribute can also be used to manually\ncollapse and un-collapse the datetime picker.",
+          "description": "The width below which the datetime picker will collapse into a mobile\nfriendly view. Use a number (e.g. `450`) which will be converted to a\npixel value (e.g. '450px').\n\nIf no value is provided, the datetime picker will not collapse\nautomatically.",
           "sourceRange": {
             "start": {
-              "line": 241,
-              "column": 7
+              "line": 215,
+              "column": 6
             },
             "end": {
-              "line": 244,
+              "line": 217,
               "column": 7
             }
           },
@@ -2205,20 +3908,36 @@
           "type": "number"
         },
         {
-          "name": "selected-date",
-          "description": "",
+          "name": "collapsed",
+          "description": "True if screen size is smaller than the `collapseAt` value",
           "sourceRange": {
             "start": {
-              "line": 245,
+              "line": 221,
               "column": 6
             },
             "end": {
-              "line": 248,
+              "line": 226,
               "column": 7
             }
           },
           "metadata": {},
-          "type": "string"
+          "type": "boolean"
+        },
+        {
+          "name": "hoist",
+          "description": "Specifies if the dropdown content should get hoisted to a container in order to escape its current stacking context",
+          "sourceRange": {
+            "start": {
+              "line": 265,
+              "column": 6
+            },
+            "end": {
+              "line": 268,
+              "column": 7
+            }
+          },
+          "metadata": {},
+          "type": "boolean"
         }
       ],
       "events": [
@@ -2249,6 +3968,12 @@
           "description": "Fired when the `momentObj` property changes.",
           "metadata": {},
           "inheritedFrom": "PxDatetimeBehavior.SingleMoment"
+        },
+        {
+          "type": "CustomEvent",
+          "name": "collapsed-changed",
+          "description": "Fired when the `collapsed` property changes.",
+          "metadata": {}
         }
       ],
       "styling": {
