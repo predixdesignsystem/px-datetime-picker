@@ -100,7 +100,7 @@ Predix branding rules go in px-datetime-picker-predix.scss, not in this file.
 }
 
 :host([fill-container]) .dt-p-buttons {
-  background-color: var(--px-datetime-picker-fill-container-btn-background-color, #EBEFF2);
+  background-color: var(--px-datetime-picker-btn-container-background-color, lightgray);
   padding: $inuit-base-spacing-unit--small $inuit-base-spacing-unit--large;
 }
 

@@ -57,6 +57,8 @@
           time-zone="{{props.timeZone.value}}"
           min-date="{{props.minDate.value}}"
           max-date="{{props.maxDate.value}}"
+          fill-container="{{props.fillContainer.value}}"
+          collapse-at="{{props.collapseAt.value}}"
           hoist="[[props.hoist.value]]">
         </px-datetime-picker>
       </px-demo-component>
@@ -138,6 +140,7 @@
               blockFutureDates: false,
               blockPastDates: false,
               hideTime: true,
+              collapseAt: "720px",
               showTimeZone: "abbreviatedText",
               timeZone: "America/Los_Angeles",
               momentObj: Px.moment().startOf('day')
@@ -210,6 +213,18 @@
         type: Boolean,
         defaultValue: false,
         inputType: 'toggle'
+      },
+
+      fillContainer: {
+        type: Boolean,
+        defaultValue: false,
+        inputType: 'toggle'
+      },
+
+      collapseAt: {
+        type: String,
+        defaultValue: '720px',
+        inputType: 'text'
       },
 
       dateFormat: {

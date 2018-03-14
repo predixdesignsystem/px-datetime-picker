@@ -15,7 +15,9 @@ The datetime components rely on [Moment.js](https://momentjs.com/) and [Moment T
 
 #### Usage
 
-    <px-datetime-picker></px-datetime-picker>
+    <px-datetime-picker
+      collapse-at="720">
+    </px-datetime-picker>
 
 
 #### Styling
@@ -24,6 +26,7 @@ The following custom properties are available for styling. Please also refer to 
 Custom property | Description
 :----------------|:-------------
 `--px-datetime-picker-background-color` | Background color for the panel
+`--px-datetime-picker-btn-container-background-color` | Background color for the button wrapper When `fillContainer` is true
 `--px-datetime-picker-border-color` | Border color for the panel
 `--px-datetime-picker-z-index` | The z-index of the container
 
@@ -52,8 +55,8 @@ Custom property | Description
       is-selected="[[opened]]"
       block-future-dates="[[blockFutureDates]]"
       block-past-dates="[[blockPastDates]]"
-      date-min="[[minDate]]"
-      date-max="[[maxDate]]"
+      min-date="[[minDate]]"
+      max-date="[[maxDate]]"
       required="[[required]]"
       is-valid="{{fieldIsValid}}"
       prevent-notification-on-change
@@ -112,12 +115,12 @@ Custom property | Description
     properties: {
       /**
        * Can be set to show the timezone in the field. values:
-       *  'dropdown': shows the time zone as a dropdown which the user can use to
+       * - 'dropdown': shows the time zone as a dropdown which the user can use to
        * select a different time zone. Only contains a subset of all time zones
-       *  'extendedDropdown': shows the time zone as a dropdown which the user can use to
+       * - 'extendedDropdown': shows the time zone as a dropdown which the user can use to
        * select a different time zone. Contains all existing time zones (588)
-       *  'text': shows the time zone as text, non editable
-       *  'abbreviatedText': shows the time zone as an abbreviated text, non editable (such as PST, EST...)
+       * - 'text': shows the time zone as text, non editable
+       * - 'abbreviatedText': shows the time zone as an abbreviated text, non editable (such as PST, EST...)
        */
       showTimeZone: {
         type: String,
@@ -146,7 +149,8 @@ Custom property | Description
       },
       /**
        * Boolean stating if the picker is required.
-       * Will result in an error if left blank.
+       * Picker will become invalid if a user leaves
+       * the picker empty when required is true.
        */
       required: {
         type: Boolean,
@@ -168,8 +172,9 @@ Custom property | Description
         type: Boolean
       },
       /**
-       * false : the dt-picker contents will open in a panel.
-       * true : the dt-picker contents will fill the window
+       * If false, the contents will open in a panel.
+       *
+       * If true, the contents will fill the window
        * or an element defined by the `fitIntoElement`.
        */
       fillContainer: {
@@ -187,8 +192,9 @@ Custom property | Description
         reflectToAttribute: true
       },
       /**
-       * The element that the dt-picker contents will fully expand into
-       * when the dt-picker is open.
+       * The element that the contents will fully expand into
+       * when it is opened.
+       *
        * `fillContainer` must be true in order for this property to work
        */
       fitIntoElement: {
@@ -207,7 +213,8 @@ Custom property | Description
       },
       /**
        * The width below which the datetime picker will collapse into a mobile
-       * friendly view. Use a number (e.g. `450`) which will be converted to a
+       * friendly view. This will supersede any other configuration if set.
+       * Use a number (e.g. `450`) which will be converted to a
        * pixel value (e.g. '450px').
        *
        * If no value is provided, the datetime picker will not collapse
