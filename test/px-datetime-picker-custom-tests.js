@@ -71,6 +71,30 @@ describe('px-datetime-picker no buttons', function () {
     );
   });
 
+  it('collapseAt set to null it never collapse', function (done) {
+    var panelEl = pickerEl.$.content.$.dropdown;
+    pickerEl.collapseAt = null;
+    expect(panelEl.offsetWidth, 'panel width before open').to.equal(0);
+    expect(pickerEl.opened, 'panel is open').to.be.false;
+    pickerEl.opened = true;
+
+
+    panelEl = pickerEl.$.content.$.dropdown;
+    async.until(
+      ()=> {
+        console.log(pickerEl.opened)
+        return panelEl.offsetWidth > 0;
+      },
+      (callback)=> {
+        setTimeout(callback, 50);
+      },
+      ()=> {
+        expect(panelEl.offsetWidth, 'panel width after open').to.be.within(230, 270);
+        done();
+      }
+    );
+  });
+
 
   it('the calendar opens on _open function', function (done) {
 
