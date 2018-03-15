@@ -1,3 +1,8 @@
+v2.2.0
+==================
+* added the ability for the picker to go into full screen mode through `collapseAt`
+* added `required`, `collapseAt`, and `collapsed` properties
+
 v2.1.1
 ==================
 * added a `focus` function
