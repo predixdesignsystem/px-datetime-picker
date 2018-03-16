@@ -1,3 +1,7 @@
+v2.2.1
+==================
+* Added ability to hoist timezone dropdown
+
 v2.2.0
 ==================
 * added the ability for the picker to go into full screen mode through `collapseAt`
