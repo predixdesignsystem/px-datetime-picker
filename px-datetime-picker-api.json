@@ -166,11 +166,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 127,
+              "line": 140,
               "column": 2
             },
             "end": {
-              "line": 131,
+              "line": 144,
               "column": 3
             }
           },
@@ -225,11 +225,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 176,
+              "line": 189,
               "column": 4
             },
             "end": {
-              "line": 179,
+              "line": 192,
               "column": 5
             }
           },
@@ -267,11 +267,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 195,
+              "line": 208,
               "column": 4
             },
             "end": {
-              "line": 198,
+              "line": 211,
               "column": 5
             }
           },
@@ -290,11 +290,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 203,
+              "line": 216,
               "column": 4
             },
             "end": {
-              "line": 206,
+              "line": 219,
               "column": 5
             }
           },
@@ -892,11 +892,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 209,
+              "line": 222,
               "column": 2
             },
             "end": {
-              "line": 242,
+              "line": 255,
               "column": 3
             }
           },
@@ -921,11 +921,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 247,
+              "line": 260,
               "column": 2
             },
             "end": {
-              "line": 287,
+              "line": 300,
               "column": 3
             }
           },
@@ -950,11 +950,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 289,
+              "line": 302,
               "column": 2
             },
             "end": {
-              "line": 317,
+              "line": 330,
               "column": 3
             }
           },
@@ -979,11 +979,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 319,
+              "line": 332,
               "column": 2
             },
             "end": {
-              "line": 321,
+              "line": 334,
               "column": 3
             }
           },
@@ -1002,11 +1002,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 323,
+              "line": 336,
               "column": 2
             },
             "end": {
-              "line": 331,
+              "line": 344,
               "column": 3
             }
           },
@@ -1397,11 +1397,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 176,
+              "line": 189,
               "column": 4
             },
             "end": {
-              "line": 179,
+              "line": 192,
               "column": 5
             }
           },
@@ -1431,11 +1431,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 195,
+              "line": 208,
               "column": 4
             },
             "end": {
-              "line": 198,
+              "line": 211,
               "column": 5
             }
           },
@@ -1449,11 +1449,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 203,
+              "line": 216,
               "column": 4
             },
             "end": {
-              "line": 206,
+              "line": 219,
               "column": 5
             }
           },
@@ -1883,11 +1883,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 127,
+              "line": 140,
               "column": 2
             },
             "end": {
-              "line": 131,
+              "line": 144,
               "column": 3
             }
           },
@@ -1944,11 +1944,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 176,
+              "line": 189,
               "column": 4
             },
             "end": {
-              "line": 179,
+              "line": 192,
               "column": 5
             }
           },
@@ -1986,11 +1986,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 195,
+              "line": 208,
               "column": 4
             },
             "end": {
-              "line": 198,
+              "line": 211,
               "column": 5
             }
           },
@@ -2009,11 +2009,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 203,
+              "line": 216,
               "column": 4
             },
             "end": {
-              "line": 206,
+              "line": 219,
               "column": 5
             }
           },
@@ -2169,11 +2169,11 @@
           "sourceRange": {
             "file": "bower_components/px-overlay/px-overlay-behavior.html",
             "start": {
-              "line": 23,
+              "line": 39,
               "column": 4
             },
             "end": {
-              "line": 23,
+              "line": 39,
               "column": 25
             }
           },
@@ -2805,11 +2805,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 209,
+              "line": 222,
               "column": 2
             },
             "end": {
-              "line": 242,
+              "line": 255,
               "column": 3
             }
           },
@@ -2834,11 +2834,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 247,
+              "line": 260,
               "column": 2
             },
             "end": {
-              "line": 287,
+              "line": 300,
               "column": 3
             }
           },
@@ -2863,11 +2863,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 289,
+              "line": 302,
               "column": 2
             },
             "end": {
-              "line": 317,
+              "line": 330,
               "column": 3
             }
           },
@@ -2892,11 +2892,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 319,
+              "line": 332,
               "column": 2
             },
             "end": {
-              "line": 321,
+              "line": 334,
               "column": 3
             }
           },
@@ -2915,11 +2915,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 323,
+              "line": 336,
               "column": 2
             },
             "end": {
-              "line": 331,
+              "line": 344,
               "column": 3
             }
           },
@@ -3575,11 +3575,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 176,
+              "line": 189,
               "column": 4
             },
             "end": {
-              "line": 179,
+              "line": 192,
               "column": 5
             }
           },
@@ -3609,11 +3609,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 195,
+              "line": 208,
               "column": 4
             },
             "end": {
-              "line": 198,
+              "line": 211,
               "column": 5
             }
           },
@@ -3627,11 +3627,11 @@
           "sourceRange": {
             "file": "bower_components/app-localize-behavior/app-localize-behavior.html",
             "start": {
-              "line": 203,
+              "line": 216,
               "column": 4
             },
             "end": {
-              "line": 206,
+              "line": 219,
               "column": 5
             }
           },
@@ -3735,11 +3735,11 @@
           "sourceRange": {
             "file": "bower_components/px-overlay/px-overlay-behavior.html",
             "start": {
-              "line": 23,
+              "line": 39,
               "column": 4
             },
             "end": {
-              "line": 23,
+              "line": 39,
               "column": 25
             }
           },
