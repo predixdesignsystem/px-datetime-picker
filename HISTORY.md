@@ -1,3 +1,7 @@
+v2.3.0
+==================
+* Added i18n support for date picker placeholder text via the `resources` property.
+
 v2.2.1
 ==================
 * Added ability to hoist timezone dropdown
