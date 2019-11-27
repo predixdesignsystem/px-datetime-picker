@@ -21,63 +21,86 @@ limitations under the License.
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Web Component Test : Fixture for px-datetime-picker</title>
-  <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
-  <script src="../../web-component-tester/browser.js"></script>
-  <link rel="import" href="../../polymer/polymer.html" />
-  <script src="../../iron-test-helpers/mock-interactions.js"></script>
-  <link rel="import" href="../../px-theme/px-theme-styles.html" />
-  <link rel="import" href="../px-datetime-picker.html" />
-  <script src="px-datetime-picker-custom-tests.js"></script>
+  <script src="../../@webcomponents/webcomponentsjs/webcomponents-bundle.js"></script>
+  <script src="../../wct-browser-legacy/browser.js"></script>
+  <script type="module" src="../../@polymer/polymer/polymer-legacy.js"></script>
+  <script src="../../@polymer/iron-test-helpers/mock-interactions.js" type="module"></script>
+  <script type="module" src="../../px-theme/px-theme-styles.js"></script>
+  <script type="module" src="../px-datetime-picker.js"></script>
+  <script src="./px-datetime-picker-custom-tests.js"></script>
 </head>
 
 <body>
-  <custom-style>
+  <!-- FIXME(polymer-modulizer):
+        These imperative modules that innerHTML your HTML are
+        a hacky way to be sure that any mixins in included style
+        modules are ready before any elements that reference them are
+        instantiated, otherwise the CSS @apply mixin polyfill won't be
+        able to expand the underlying CSS custom properties.
+        See: https://github.com/Polymer/polymer-modulizer/issues/154
+        -->
+    <script type="module">
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<custom-style>
     <style include="px-theme-styles" is="custom-style"></style>
-  </custom-style>
+  </custom-style>`;
 
-  <test-fixture id="datetime-picker">
+document.body.appendChild($_documentContainer.content);
+</script>
+
+  <script type="module">
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<test-fixture id="datetime-picker">
     <template>
-      <px-datetime-picker
-        id="datetime-picker"
-        time-zone="UTC">
+      <px-datetime-picker id="datetime-picker" time-zone="UTC">
       </px-datetime-picker>
     </template>
-  </test-fixture>
+  </test-fixture>`;
 
-  <test-fixture id="datetime-picker-buttons">
+document.body.appendChild($_documentContainer.content);
+</script>
+
+  <script type="module">
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<test-fixture id="datetime-picker-buttons">
     <template>
-      <px-datetime-picker
-        id="datetime-picker"
-        opened
-        time-zone="UTC"
-        show-buttons>
+      <px-datetime-picker id="datetime-picker" opened="" time-zone="UTC" show-buttons="">
       </px-datetime-picker>
     </template>
-  </test-fixture>
+  </test-fixture>`;
 
-  <test-fixture id="datetime-picker-full-container">
+document.body.appendChild($_documentContainer.content);
+</script>
+
+  <script type="module">
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<test-fixture id="datetime-picker-full-container">
     <template>
       <div id="fit" style="width: 350px; height: 250px; background-color:aliceblue"></div>
-      <px-datetime-picker
-        id="datetime-picker"
-        time-zone="UTC"
-        show-buttons
-        fill-container>
+      <px-datetime-picker id="datetime-picker" time-zone="UTC" show-buttons="" fill-container="">
       </px-datetime-picker>
     </template>
-  </test-fixture>
+  </test-fixture>`;
 
-  <test-fixture id="datetime-picker-full-window">
+document.body.appendChild($_documentContainer.content);
+</script>
+
+  <script type="module">
+const $_documentContainer = document.createElement('template');
+
+$_documentContainer.innerHTML = `<test-fixture id="datetime-picker-full-window">
     <template>
-      <px-datetime-picker
-        id="datetime-picker"
-        time-zone="UTC"
-        show-buttons
-        hide-time
-        fill-container>
+      <px-datetime-picker id="datetime-picker" time-zone="UTC" show-buttons="" hide-time="" fill-container="">
       </px-datetime-picker>
     </template>
-  </test-fixture>
+  </test-fixture>`;
+
+document.body.appendChild($_documentContainer.content);
+</script>
 
 </body>
 

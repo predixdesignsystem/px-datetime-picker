@@ -1,0 +1,473 @@
+/*
+Copyright (c) 2018, General Electric
+
+Licensed under the Apache License, Version 2.0 (the "License");
+you may not use this file except in compliance with the License.
+You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+Unless required by applicable law or agreed to in writing, software
+distributed under the License is distributed on an "AS IS" BASIS,
+WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+See the License for the specific language governing permissions and
+limitations under the License.
+*/
+/**
+The datetime components rely on [Moment.js](https://momentjs.com/) and [Moment Timezone](https://momentjs.com/timezone/).
+
+#### Usage
+
+    <px-datetime-picker
+      collapse-at="720">
+    </px-datetime-picker>
+
+
+#### Styling
+The following custom properties are available for styling. Please also refer to px-forms-design and px-buttons-design for additional style variables used by this component.
+
+Custom property | Description
+:----------------|:-------------
+`--px-datetime-picker-background-color` | Background color for the panel
+`--px-datetime-picker-btn-container-background-color` | Background color for the button wrapper When `fillContainer` is true
+`--px-datetime-picker-border-color` | Border color for the panel
+`--px-datetime-picker-z-index` | The z-index of the container
+
+@element px-datetime-picker
+@blurb Element allowing to pick a date using a calendar or by typing it
+@homepage index.html
+@demo index.html
+*/
+/*
+  FIXME(polymer-modulizer): the above comments were extracted
+  from HTML and may be out of place here. Review them and
+  then delete this comment!
+*/
+import './css/px-datetime-picker-styles.js';
+
+import 'px-datetime-field/px-datetime-field.js';
+import 'px-datetime-common/px-datetime-behavior.js';
+import 'px-datetime-common/px-datetime-buttons.js';
+import 'px-datetime-common/px-datetime-button-behavior.js';
+import '@polymer/app-localize-behavior/app-localize-behavior.js';
+import '@polymer/iron-dropdown/iron-dropdown.js';
+import '@polymer/iron-media-query/iron-media-query.js';
+import 'px-overlay/px-overlay-content.js';
+import 'px-overlay/px-overlay-behavior.js';
+import './px-datetime-picker-content.js';
+import { Polymer } from '@polymer/polymer/lib/legacy/polymer-fn.js';
+import { html } from '@polymer/polymer/lib/utils/html-tag.js';
+import { dom } from '@polymer/polymer/lib/legacy/polymer.dom.js';
+Polymer({
+  _template: html`
+    <style include="px-datetime-picker-styles"></style>
+
+    <template is="dom-if" if="[[_collapseQueryIsValid(collapseAt)]]">
+      <iron-media-query query\$="(max-width: {{_getCollapseQuery(collapseAt)}})" query-matches="{{_belowCollapseSize}}"></iron-media-query>
+    </template>
+
+    <px-datetime-field id="field" slot="dropdown-trigger" moment-obj="{{_tempMomentObj}}" date-format="[[dateFormat]]" time-format="[[timeFormat]]" hide-time="[[hideTime]]" time-zone="{{timeZone}}" show-time-zone="[[showTimeZone]]" is-selected="[[opened]]" block-future-dates="[[blockFutureDates]]" block-past-dates="[[blockPastDates]]" min-date="[[minDate]]" max-date="[[maxDate]]" required="[[required]]" is-valid="{{fieldIsValid}}" prevent-notification-on-change="" prevent-cell-focus="[[_fillContainer]]" resources="[[resources]]" language="[[language]]" formats="[[formats]]" hoist="[[hoist]]" container-type="[[containerType]]">
+    </px-datetime-field>
+    <px-overlay-content hoist="[[hoist]]" container-type="[[containerType]]" event-names="[&quot;px-datetime-button-clicked&quot;]">
+      <px-datetime-picker-content id="content" opened="{{opened}}" temp-moment-obj="{{_tempMomentObj}}" time-format="[[timeFormat]]" hide-time="[[hideTime]]" time-zone="[[timeZone]]" show-buttons="[[showButtons]]" base-date="[[_tempMomentObj]]" day-week-start-index="[[dayWeekStartIndex]]" block-future-dates="[[blockFutureDates]]" block-past-dates="[[blockPastDates]]" min-date="[[minDate]]" max-date="[[maxDate]]" field-is-valid="[[fieldIsValid]]" fill-container="[[_fillContainer]]" fit-into-element="[[_fitIntoElement]]" field-elem="[[_returnField()]]" resources="[[resources]]" language="[[language]]" formats="[[formats]]">
+      </px-datetime-picker-content>
+    </px-overlay-content>
+`,
+
+  is: 'px-datetime-picker',
+
+  behaviors:[
+    PxDatetimeBehavior.TempMoment,
+    PxDatetimeBehavior.Buttons,
+    PxOverlayBehavior.sharedProperties
+  ],
+
+  /**
+   * Properties block, expose attribute values to the DOM via 'notify'
+   *
+   * @property properties
+   * @type Object
+   */
+  properties: {
+    /**
+     * Can be set to show the timezone in the field. values:
+     * - 'dropdown': shows the time zone as a dropdown which the user can use to
+     * select a different time zone. Only contains a subset of all time zones
+     * - 'extendedDropdown': shows the time zone as a dropdown which the user can use to
+     * select a different time zone. Contains all existing time zones (588)
+     * - 'text': shows the time zone as text, non editable
+     * - 'abbreviatedText': shows the time zone as an abbreviated text, non editable (such as PST, EST...)
+     */
+    showTimeZone: {
+      type: String,
+      value: ''
+    },
+    /**
+     * Doesn't display the time in the field and panel(if applicable)
+     */
+    hideTime: {
+      type: Boolean,
+      value: false
+    },
+    /**
+     * Moment format used for the date
+     */
+    dateFormat: {
+      type: String,
+      value: 'MM/DD/YYYY'
+    },
+    /**
+     * Moment format used for the time
+     */
+    timeFormat: {
+      type: String,
+      value: 'HH:mm A'
+    },
+    /**
+     * Boolean stating if the picker is required.
+     * Picker will become invalid if a user leaves
+     * the picker empty when required is true.
+     */
+    required: {
+      type: Boolean,
+      value: false
+    },
+    /**
+     * Reflects if datetime-picker container is visible.
+     */
+    opened: {
+      type: Boolean,
+      value: false,
+      reflectToAttribute: true,
+      observer: '_processClose'
+    },
+    /**
+     * Reflects if the field is valid.
+     */
+    fieldIsValid: {
+      type: Boolean
+    },
+    /**
+     * If false, the contents will open in a panel.
+     *
+     * If true, the contents will fill the window
+     * or an element defined by the `fitIntoElement`.
+     */
+    fillContainer: {
+      type: Boolean,
+      value: false,
+      observer: '_syncFillContainer'
+    },
+    /**
+     * Used to toggle fillContainer from iron-media-query.
+     * Without a separate variable fillContainer would never be
+     * true with a screen size larger then the value of collapseAt
+     */
+    _fillContainer: {
+      type: Boolean,
+      reflectToAttribute: true
+    },
+    /**
+     * The element that the contents will fully expand into
+     * when it is opened.
+     *
+     * `fillContainer` must be true in order for this property to work
+     */
+    fitIntoElement: {
+      type: Object,
+      value: window,
+      observer: '_syncFitIntoElement'
+    },
+    /**
+     * Used to toggle `fitIntoElement` from iron-media-query.
+     * Without separate variable each time the screen was
+     * smaller than collpasAt the `fitIntoElement` would
+     * get over written.
+     */
+    _fitIntoElement: {
+      type: Object
+    },
+    /**
+     * The width below which the datetime picker will collapse into a mobile
+     * friendly view. This will supersede any other configuration if set.
+     * Use a number (e.g. `450`) which will be converted to a
+     * pixel value (e.g. '450px').
+     *
+     * If no value is provided, the datetime picker will not collapse
+     * automatically.
+     */
+    collapseAt: {
+      type: Number
+    },
+    /**
+     * True if screen size is smaller than the `collapseAt` value
+     */
+    collapsed: {
+      type: Boolean,
+      value: false,
+      notify: true,
+      readOnly: true
+    },
+    /**
+     * Output of iron-media-query
+     */
+    _belowCollapseSize: {
+      type: Boolean,
+      observer: '_handleBelowCollapseSizeChanged'
+    },
+    /**
+     * List of key/values to be included for translating this component
+     */
+    resources: {
+      type: Object,
+      value: function () {
+        return {
+          'en': {
+            'Today': 'Today'
+          }
+        };
+      }
+    },
+    /**
+     * Set a default for localizing
+     */
+    language: {
+      type: String,
+      value: 'en'
+    },
+    /**
+     * Use the key for localization if value for  language is missing. Should
+     * always be true for  our components
+     */
+    useKeyIfMissing: {
+      type: Boolean,
+      value: true
+    },
+    /**
+     * Specifies if the dropdown content should get hoisted to a container in order to escape its current stacking context
+     */
+    hoist: {
+      type: Boolean,
+      value: false
+    }
+  },
+
+  listeners: {
+    'px-datetime-entry-icon-clicked':'_iconClicked',
+    'px-datetime-button-clicked': '_buttonClicked',
+    'tap' : '_handleTap'
+  },
+
+  /**
+   * Key bindings for iron-a11y-keys-behavior
+   * @private
+   */
+  keyBindings: {
+    'esc' : '_onEsc',
+    'enter': '_onEnter'
+  },
+
+  /**
+   * We don't need to listen to the time field from the calendar
+   * sense it only updates the temp moment but should never trigger an
+   * actual validation
+   */
+  attached: function() {
+    this.$.field.addEventListener('moment-obj-changed', this._tempMomentChanged.bind(this, 'field'));
+    this.$.content.addEventListener('temp-moment-obj-changed', this._tempMomentChanged.bind(this, 'content'));
+  },
+
+  /*
+   * Propagate focus from the host to px-datetime-field
+   */
+  focus: function() {
+    this.$.field.focus();
+  },
+
+  /**
+   * Rolls back temp moment to the momentObj.
+   * Closes panel
+   */
+  _onEsc: function(evt) {
+    this._rollbackTempMoment();
+    this.$.content._close();
+  },
+
+  /**
+   * Runs validation
+   */
+  _onEnter: function(evt) {
+    this._validateCalendarMoment();
+  },
+
+  /**
+   * If the calendar is open and the dropdown is selected, close the calendar
+   */
+  _handleTap: function(evt) {
+    if(this.opened === true){
+      var path = dom(evt).path;
+      for (var i=0; i<path.length; i++) {
+        if (path[i].nodeName === 'PX-DROPDOWN') {
+          this.$.content._close();
+          return;
+        }
+      }
+    }
+  },
+
+  /**
+   * Ran when the momentObjs for field or content have been updated.
+   * If it is from the field, then apply the momentObj.
+   * If it is from the content and we have no buttons, then apply the momentObj.
+   * Else, wait for button events.
+   */
+  _tempMomentChanged: function(origin) {
+    // this debounce is critical for Polymer 1. We are just putting this
+    // call on top of the stack because of how the binding flows:
+    // change in calendar => binding updates field moment => field
+    // moment fires change event => binding done => calendar fires
+    // change event.
+    // we are therefore interested in the latest update, hence the
+    // debounce. no need for an actual timing since this will all be
+    // sequential.
+    // In Polymer 2 in this scenario only calendar will fire a change
+    // event so no problems
+    this.debounce('_tempMomentChanged', function() {
+      if(origin === 'field') {
+        this._applyTempMoment();
+      } else if (origin === 'content' && !this.showButtons) {
+        this._applyTempMoment();
+        this.$.content._close();
+      }
+    }, 0);
+  },
+
+  /**
+   * Apply temp moment if the dropdown is opened and
+   * the field is valid
+   */
+  _validateCalendarMoment: function() {
+    if(this.opened) {
+      if(this.$.field.isValid) {
+        this._applyTempMoment();
+        this.$.content._close();
+      } else {
+        //don't close, can't apply if not valid
+      }
+    }
+  },
+
+  /**
+   * submit: validate values
+   * cancel: rolls back temp moment to the momentObj &closes panel
+   */
+  _buttonClicked: function(evt) {
+    if(evt.detail.action) {
+     this._validateCalendarMoment();
+    } else {
+      this._rollbackTempMoment();
+      this.$.content._close();
+    }
+  },
+
+  /**
+   * Opens content
+   */
+  _iconClicked: function(evt) {
+    if(evt.detail.dateOrTime === "Date") {
+      this.$.content._open();
+    }
+  },
+
+  /**
+   * If opened is false and showButtons true
+   * then cancel selection
+   */
+  _processClose: function(newVal,oldVal) {
+    if(oldVal === undefined || newVal) { return; }
+    if(newVal === false && this.showButtons) {
+      this._rollbackTempMoment();
+    }
+  },
+
+  // ********************************************************************** //
+  // Collapse functions
+  // ********************************************************************** //
+  /**
+   * Return the collapseAt value with px after it
+   */
+  _getCollapseQuery(collapseAt) {
+    if (typeof collapseAt === 'number') {
+      return collapseAt + 'px';
+    }
+    if (typeof collapseAt === 'string' && collapseAt.slice(-2) === 'px' || !isNaN(parseInt(collapseAt))) {
+      return collapseAt;
+    }
+  },
+
+  /**
+   * Double checks that the collapseAt value is valid
+   */
+  _collapseQueryIsValid(query) {
+    if (typeof query === 'number') {
+      return true;
+    }
+    if (typeof query === 'string' && query.slice(-2) === 'px' && !isNaN(parseInt(query))) {
+      return true;
+    }
+    if (query === null) {
+      this.set('collapseAt', 0);
+      return true;
+    }
+    return false;
+  },
+
+  /**
+   * If the window is smaller than the `collapseAt` value
+   * set panel to fill the whole window
+   *
+   * If the window is larger than the `collapseAt` value
+   * reset `_fillContainer` & `_fitIntoElement` to their
+   * original values
+   */
+  _handleBelowCollapseSizeChanged(newVal, oldVal) {
+    if (newVal) {
+      this._fillContainer = true;
+      this._fitIntoElement = window;
+      this._setCollapsed(true);
+    }
+    if (!newVal) {
+      this._fillContainer = this.fillContainer;
+      this._fitIntoElement = this.fitIntoElement;
+      this._setCollapsed(false);
+    }
+  },
+
+  // ********************************************************************** //
+  // iron-dropdown functions
+  // ********************************************************************** //
+  /**
+   * Sync external fillConatiner with internal _fillConatiner
+   */
+  _syncFillContainer(newVal, oldVal) {
+    newVal ? this._fillContainer = true : this._fillContainer = false;
+  },
+
+  /**
+   * Sync external fitIntoElement with internal _fitIntoElement.
+   * Make sure `_fitIntoElement` isn't over written if
+   * `_belowCollapseSize` is true
+   */
+  _syncFitIntoElement(newVal, oldVal) {
+    if(!this._belowCollapseSize){
+      this._fitIntoElement = newVal;
+    }
+  },
+
+  /**
+   * Return field node
+   */
+  _returnField: function() {
+    return this.$.field;
+  }
+});
